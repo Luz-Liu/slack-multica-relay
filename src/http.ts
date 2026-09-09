@@ -6,7 +6,7 @@ import {
   isSupportedMessage,
   type SlackMessageEvent,
 } from "./mentions.js";
-import { addSlackReaction } from "./reaction.js";
+import { addSlackReaction, reactionErrorDetails } from "./reaction.js";
 import {
   routeSlackThreadEvent,
   digest,
@@ -285,10 +285,11 @@ export async function consumeQueue(
         config.slackReactionName,
         boundedFetch,
       );
-    } catch {
+    } catch (error) {
       console.warn("relay_reaction", {
         messageKey: messageKey(event),
         reason: "reaction_failed",
+        ...reactionErrorDetails(error),
       });
     }
     console.info("relay_dispatch", {

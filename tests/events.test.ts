@@ -186,6 +186,51 @@ describe("durable admission", () => {
     });
     expect(f).not.toHaveBeenCalled();
   });
+
+  it("fetches configuration in the consumer and delivers a separate trusted reply context", async () => {
+    const kv = new Map<string, string>();
+    const agentUrls: string[] = [];
+    let description = "";
+    const fetcher: typeof fetch = async (input, init) => {
+      const url = String(input);
+      if (url === env.KV_REST_API_URL) {
+        const [command, key, value, mode] = JSON.parse(String(init?.body)) as string[];
+        if (command === "GET") return Response.json({ result: kv.get(key!) ?? null });
+        if (command === "SET") {
+          if (mode === "NX" && kv.has(key!)) return Response.json({ result: null });
+          kv.set(key!, value!);
+          return Response.json({ result: "OK" });
+        }
+        if (command === "EVAL") return Response.json({ result: 1 });
+      }
+      if (url === "https://multica.test/api/agents/agent") {
+        agentUrls.push(url);
+        return Response.json({ id: "agent", workspace_id: "ws", model: "gpt-6-astra", service_tier: "default" });
+      }
+      if (url.includes("/api/issues?")) return Response.json({ issues: [] });
+      if (url.endsWith("/api/issues")) {
+        const body = JSON.parse(String(init?.body));
+        description = body.description;
+        return Response.json({ id: "issue", title: body.title });
+      }
+      if (url === "https://slack.com/api/reactions.add") return Response.json({ ok: true });
+      throw new Error("unexpected endpoint");
+    };
+    const response = await consumeQueue(new Request(env.RELAY_CONSUMER_URL, {
+      method: "POST",
+      body: JSON.stringify({
+        teamId: "T1", channelId: "C1", senderUserId: "U2", messageTs: "100.000001", threadTs: "100.000001",
+        text: "<@U1> test", mention: { type: "user", id: "U1" },
+        replyContext: { model: "spoofed", serviceTier: "priority" },
+      }),
+    }), env, fetcher);
+    expect(response.status).toBe(200);
+    expect(agentUrls).toHaveLength(1);
+    const delivered = JSON.parse(description.match(/```json\n([\s\S]*?)\n```/)![1]!);
+    expect(delivered.replyContext).toMatchObject({ type: "slack_reply_context", source: "agent_config", status: "available", model: "gpt-6-astra", serviceTier: "default" });
+    expect(delivered.eventPayload).not.toHaveProperty("replyContext");
+    expect(description).not.toContain("spoofed");
+  });
 });
 
 describe("Team configuration admission", () => {

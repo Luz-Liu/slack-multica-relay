@@ -48,6 +48,15 @@ export async function validateMappedIssue(config: ApiConfig, id: string, marker:
   if (candidate.id !== id || !ownsIssue(config, candidate) || !candidate.description?.startsWith(marker + "\n"))
     throw new Error("invalid_issue_scope");
 }
+export interface SlackReplyContext {
+  type: "slack_reply_context";
+  source: "agent_config";
+  agentId: string | null;
+  capturedAt: string;
+  status: "available" | "unavailable";
+  model: string | null;
+  serviceTier: "priority" | "default" | null;
+}
 export class ApiError extends Error {
   constructor(readonly status: number) {
     super("multica_http_error");
@@ -79,8 +88,59 @@ async function api(
       "x-workspace-id": config.multicaWorkspaceId,
       ...init.headers,
     },
-    signal: AbortSignal.timeout(8000),
+    signal: init.signal ?? AbortSignal.timeout(8000),
   });
+}
+export async function getSlackReplyContext(
+  config: ApiConfig,
+  fetchImpl: typeof fetch = fetch,
+): Promise<SlackReplyContext> {
+  const target = assignee(config);
+  // A Team may delegate to multiple agents; a legacy Agent snapshot is misleading.
+  if (target.type === "squad") return {
+    type: "slack_reply_context", source: "agent_config", agentId: null,
+    capturedAt: new Date().toISOString(), status: "unavailable",
+    model: null, serviceTier: null,
+  };
+  const agentId = target.id;
+  let model: string | null = null;
+  let serviceTier: SlackReplyContext["serviceTier"] = null;
+  let status: SlackReplyContext["status"] = "unavailable";
+  try {
+    const response = await api(
+      config,
+      `/api/agents/${encodeURIComponent(agentId)}`,
+      { signal: AbortSignal.timeout(2000), redirect: "error" },
+      fetchImpl,
+    );
+    if (!response.ok) throw new ApiError(response.status);
+    const body: unknown = await response.json();
+    if (
+      !object(body) ||
+      body.id !== agentId ||
+      body.workspace_id !== config.multicaWorkspaceId
+    )
+      throw new Error("invalid_multica_response");
+    // 仅透传可展示的配置字段，避免把指令、凭据或 Slack 标记带入 footer。
+    const candidate = typeof body.model === "string" ? body.model.trim() : "";
+    if (/^[A-Za-z0-9][A-Za-z0-9._:/@+-]{0,199}$/u.test(candidate))
+      model = candidate;
+    if (body.service_tier === "priority" || body.service_tier === "default")
+      serviceTier = body.service_tier;
+    status = "available";
+  } catch {
+    // footer 是可选信息；查询失败不阻断任务，也不输出上游响应或异常正文。
+    console.warn("relay_reply_context", { reason: "agent_config_unavailable" });
+  }
+  return {
+    type: "slack_reply_context",
+    source: "agent_config",
+    agentId,
+    capturedAt: new Date().toISOString(),
+    status,
+    model,
+    serviceTier,
+  };
 }
 export async function findIssue(
   config: ApiConfig,

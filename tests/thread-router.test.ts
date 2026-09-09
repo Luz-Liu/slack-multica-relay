@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import {
   routeSlackThreadEvent,
   type SlackThreadEvent,
@@ -25,11 +25,21 @@ function fixture() {
   }[] = [];
   const comments: { id: string; content: string }[] = [];
   let issuePosts = 0,
+    agentGets = 0,
     commentPosts = 0,
     failIssue = false,
     failComment = false;
+  const agentConfig = { model: "gpt-6-astra", service_tier: "priority" };
   const fetcher: typeof fetch = async (input, init) => {
     const url = String(input);
+    if (url.includes("/api/agents/")) {
+      agentGets++;
+      return Response.json({
+        id: decodeURIComponent(url.split("/").at(-1)!),
+        workspace_id: "ws",
+        ...agentConfig,
+      });
+    }
     if (url.includes("/api/issues?")) return Response.json({ issues });
     if (url.endsWith("/api/issues")) {
       issuePosts++;
@@ -77,6 +87,10 @@ function fixture() {
     fetcher,
     issues,
     comments,
+    agentConfig,
+    get agentGets() {
+      return agentGets;
+    },
     get issuePosts() {
       return issuePosts;
     },
@@ -91,7 +105,55 @@ function fixture() {
     },
   };
 }
+afterEach(() => vi.restoreAllMocks());
 describe("direct Issue routing", () => {
+  function payload(description: string) {
+    return JSON.parse(description.match(/```json\n([\s\S]*?)\n```/)![1]!);
+  }
+
+  it("attaches a fresh configuration snapshot to each new message, not each duplicate", async () => {
+    const f = fixture();
+    await routeSlackThreadEvent(root, f.config, f.fetcher);
+    expect(payload(f.issues[0]!.description).replyContext).toMatchObject({
+      type: "slack_reply_context",
+      source: "agent_config",
+      status: "available",
+      agentId: "agent",
+      model: "gpt-6-astra",
+      serviceTier: "priority",
+    });
+    f.agentConfig.model = "gpt-5.6-sol";
+    f.agentConfig.service_tier = "default";
+    await routeSlackThreadEvent(root, f.config, f.fetcher);
+    const next = { ...root, messageTs: "102.000001" };
+    await routeSlackThreadEvent(next, f.config, f.fetcher);
+    await routeSlackThreadEvent(next, f.config, f.fetcher);
+    expect(payload(f.comments[0]!.content)).toMatchObject({
+      eventPayload: { messageTs: next.messageTs },
+      replyContext: { model: "gpt-5.6-sol", serviceTier: "default" },
+    });
+    expect(payload(f.issues[0]!.description).replyContext.model).toBe("gpt-6-astra");
+    expect(f.agentGets).toBe(2);
+  });
+
+  it("continues both initial and followup writes when Agent configuration times out", async () => {
+    vi.spyOn(console, "warn").mockImplementation(() => {});
+    const f = fixture();
+    const fetcher: typeof fetch = async (input, init) => {
+      if (String(input).includes("/api/agents/"))
+        throw new DOMException("timeout", "TimeoutError");
+      return f.fetcher(input, init);
+    };
+    expect((await routeSlackThreadEvent(root, f.config, fetcher)).action).toBe("created");
+    const next = { ...root, messageTs: "102.000001" };
+    expect((await routeSlackThreadEvent(next, f.config, fetcher)).action).toBe("comment_persisted");
+    for (const text of [f.issues[0]!.description, f.comments[0]!.content]) {
+      expect(payload(text).replyContext).toMatchObject({
+        status: "unavailable", model: null, serviceTier: null,
+      });
+      expect(payload(text).eventPayload.text).toBe(root.text);
+    }
+  });
   it("creates distinct issues for two simultaneous different Slack threads", async () => {
     const f = fixture();
     await Promise.all([
@@ -115,6 +177,7 @@ describe("direct Issue routing", () => {
     await routeSlackThreadEvent(next, f.config, f.fetcher);
     await routeSlackThreadEvent(next, f.config, f.fetcher);
     expect(f.issuePosts).toBe(1);
+    expect(f.agentGets).toBe(2);
     expect(f.commentPosts).toBe(1);
   });
   it("recovers a committed Issue after lost response without second POST", async () => {
@@ -127,6 +190,7 @@ describe("direct Issue routing", () => {
       (await routeSlackThreadEvent(root, f.config, f.fetcher)).issueId,
     ).toBe("issue-1");
     expect(f.issuePosts).toBe(1);
+    expect(f.agentGets).toBe(1);
   });
   it("does not blindly replay an ambiguous unconfirmed Issue POST", async () => {
     const f = fixture();
@@ -150,6 +214,7 @@ describe("direct Issue routing", () => {
     ).rejects.toThrow();
     await routeSlackThreadEvent(next, f.config, f.fetcher);
     expect(f.commentPosts).toBe(1);
+    expect(f.agentGets).toBe(2);
   });
   it("recovers original root identity after KV mapping expires", async () => {
     const f = fixture();
@@ -171,6 +236,7 @@ describe("direct Issue routing", () => {
       routeSlackThreadEvent(root, f.config, f.fetcher),
     ).rejects.toThrow("thread_lock_busy");
     expect(f.issuePosts).toBe(0);
+    expect(f.agentGets).toBe(0);
   });
   it("recovers a legacy description after KV expiry without creating a second Issue", async () => {
     const f = fixture();

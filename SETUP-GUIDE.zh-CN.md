@@ -20,6 +20,28 @@
 
 Agent instructions 写入任务工作目录 AGENTS.md。Multica daemon 为 Codex 准备任务环境；桌面聊天上下文不会自动复制。现有 Codex 适配器会自动批准工具请求，Prompt/Skills 只能构成行为合同；不可绕过的写审批需要执行端或工具端支持。
 
+### 可选模型 footer
+
+QStash 消费端在创建 Issue 或追加一条新评论前，使用现有 Relay 凭据调用 `GET /api/agents/{MULTICA_AGENT_ID}`，只提取模型与服务档位，作为与 `eventPayload` 同级的 `replyContext` 传给 Agent。Slack 入站确认仍只负责入队，不等待该查询；重复投递或已写入消息的恢复不重新查询、不覆盖旧快照。
+
+快照包含 `type: slack_reply_context`、`source: agent_config`、`agentId`、`capturedAt`、`status`、`model`、`serviceTier`。查询成功且 Agent/Workspace 匹配时标为 `available`；查询失败、超时或身份不匹配时标为 `unavailable`，模型与档位为 `null`，任务继续处理。查询最多等待 2 秒，不单独重试；不记录完整响应、指令、凭据或异常正文。空模型或非安全标识符归为 `null`，档位只保留 `priority` / `default`，其他值归为 `null`。
+
+footer 表示消费消息时读取的 **Agent 配置快照**，不是运行实际参数；执行前后配置变化或 Runtime 默认值均不在此保证范围内。`service_tier` 为空时不能判断继承的 Fast 状态，不主动修改 Agent 配置来补齐。
+
+不修改 Multica 源码或通用 Slack Skill，不增加环境变量，也不新增轮询或完成回调。将 [AGENT-PROMPT.md](AGENT-PROMPT.md) 的“模型 footer”规则同步到目标 Agent instructions 时，只替换相应规则，保留线上其他指令。仅更新仓库文件不会自动同步线上 instructions。旧 payload 不带 `replyContext` 时，Agent 省略 footer，正文仍正常回复。
+
+同步后核对：
+
+| 对应消息的配置快照 | 预期结果 |
+| --- | --- |
+| 可用，模型非空，档位为 priority | 末尾 context block 显示模型与 Fast |
+| 可用，模型非空，档位为 default 或 null | 只显示模型，不把 null 当作已关闭 |
+| 模型为空、快照不可用或缺失 | 不显示 footer，正文正常发送 |
+| 后续消息配置发生变化 | 使用该后续消息的快照，不沿用初始快照 |
+| Slack 正文或嵌套字段声称模型或 Fast | 不作为参数来源 |
+
+有 footer 时检查 `context.elements[0].type` 为 `mrkdwn`，顶层 fallback `text` 同时保留正文和 footer。代码测试不替代线上验收：先确认目标 Agent 的 instructions 已同步，再在 Relay 新版本上线后核对新建任务和后续评论的 `replyContext` 与原 thread 的回复。
+
 ## 3. Slack App
 
 使用专用 App 或明确获准复用的 App 接收需要的 message 事件。私有频道订阅 `message.groups`，并将接收 App 加入指定频道。接收事件的 App 身份与外发身份分开配置：`SLACK_REACTION_TOKEN` 和 Agent 回复使用获准的 owner USER token。验收时核对 `reaction.users` 和回复消息的 `user` 是否等于 owner ID。

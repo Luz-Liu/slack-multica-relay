@@ -52,3 +52,5 @@ pnpm lint
 先发布兼容代码，再配置 Team。按原 scope marker 核验历史任务，以 `multica issue assign <id> --to-id <Team UUID> --no-start` 迁移空闲任务；指派可能中断正在运行的任务，因此活动任务应完成后再迁移。不得改写原描述 marker 或清空 Redis。切换后等待旧请求结束并补查遗漏任务。过渡期旧任务仍可由原 Agent 处理；完成归属核验后可以移除 LEGACY 参数。旧版本回滚时也必须同时恢复任务归属，不能只回滚代码。
 
 Team 指令只注入 Leader。子任务仍需主动结果交接和回复去重；`in_review` 保留人工验收，不能仅依赖 run completed 自动回复 Slack。Token、签名密钥保留 Secret；上述类型和 ID 使用可查看的 Config。
+
+Team 模式不将旧 Agent 的配置快照当作实际执行模型：relay 的 `slack_reply_context` 标记为 unavailable、agentId 为 null；最终回复 Skill 应从实际运行记录获取模型与统计。

@@ -1,0 +1,5573 @@
+{
+  "workspace": {
+    "id": "T011CF3CMJN",
+    "name": "MoeGo"
+  },
+  "captured_at": "2026-09-09T06:08:42.494Z",
+  "source_url": "https://moegoworkspace.slack.com/customize/emoji",
+  "source": "网页自定义表情目录",
+  "scope": "自定义表情；不包含 Slack 标准 Unicode 表情",
+  "count": 1111,
+  "complete": true,
+  "alias_status": "网页未提供别名指向，alias_of 为 null 表示未知，不代表没有别名",
+  "disabled_names": [
+    "slackbot"
+  ],
+  "emoji": [
+    {
+      "name": "0thumb128",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/0thumb128/9418a305517ff407.png",
+      "alias_of": null
+    },
+    {
+      "name": "10_10",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/10_10/db9bdd0ac82983a1.png",
+      "alias_of": null
+    },
+    {
+      "name": "1000",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/1000/17f6d41391d7d6d8.png",
+      "alias_of": null
+    },
+    {
+      "name": "1000000",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/1000000/a69748821e44bac1.png",
+      "alias_of": null
+    },
+    {
+      "name": "1545040039500436",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/1545040039500436/790de72a11bf2ceb.png",
+      "alias_of": null
+    },
+    {
+      "name": "1747-sonicrun",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/1747-sonicrun/cb8cb0850819fc28.gif",
+      "alias_of": null
+    },
+    {
+      "name": "1e9c44834d8a358448bd8b0cb045f7ba",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/1e9c44834d8a358448bd8b0cb045f7ba/d93030734e454301.png",
+      "alias_of": null
+    },
+    {
+      "name": "3_0-drink-tea",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/3_0-drink-tea/ab9a75f4508e2ac2.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "666",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/666/0b6856f7454e1b2f.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "7-eleven",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/7-eleven/74d9004b2956b07a.png",
+      "alias_of": null
+    },
+    {
+      "name": "747px-132ditto_ranger3",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/747px-132ditto_ranger3/2396bef663623195.png",
+      "alias_of": null
+    },
+    {
+      "name": "95754d6d7d12a3cd5d40cdddae2974af",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/95754d6d7d12a3cd5d40cdddae2974af/171cf0bcbd2ede7a.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "aaaaaa-cat",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/aaaaaa-cat/567a749d6d1f8eed.gif",
+      "alias_of": null
+    },
+    {
+      "name": "abra_pokemon",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/abra_pokemon/5b8ee022b9e60ca8.gif",
+      "alias_of": null
+    },
+    {
+      "name": "ack",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/ack/b3e2db80a100f885.png",
+      "alias_of": null
+    },
+    {
+      "name": "aerodactyl_pokemon",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/aerodactyl_pokemon/73ba430856bacc2b.gif",
+      "alias_of": null
+    },
+    {
+      "name": "afk",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/afk/50f425e953b615b8.png",
+      "alias_of": null
+    },
+    {
+      "name": "agent_lucide_bot",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/agent_lucide_bot/54678efad8f8f089.png",
+      "alias_of": null
+    },
+    {
+      "name": "agent_mark",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/agent_mark/88b0ceb7a4c548b4.png",
+      "alias_of": null
+    },
+    {
+      "name": "agent_mdi_github",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/agent_mdi_github/f91f3daa7c8003c7.png",
+      "alias_of": null
+    },
+    {
+      "name": "agent_mdi_robot_outline",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/agent_mdi_robot_outline/9de435b5d495d8b2.png",
+      "alias_of": null
+    },
+    {
+      "name": "agent_mdi_robot_outline_muted",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/agent_mdi_robot_outline_muted/d47220ed7b81cf6a.png",
+      "alias_of": null
+    },
+    {
+      "name": "agent_memory",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/agent_memory/0cef9ed45fad61b1.png",
+      "alias_of": null
+    },
+    {
+      "name": "agent_skill",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/agent_skill/66e85e719eaa45e7.png",
+      "alias_of": null
+    },
+    {
+      "name": "agent_thinkg",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/agent_thinkg/bc8773912737010f.png",
+      "alias_of": null
+    },
+    {
+      "name": "agent_thinking",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/agent_thinking/e4be1da89765df9e.png",
+      "alias_of": null
+    },
+    {
+      "name": "agent_time",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/agent_time/6ff6356bab64e9e7.png",
+      "alias_of": null
+    },
+    {
+      "name": "agent_tool",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/agent_tool/e39add70ab141635.png",
+      "alias_of": null
+    },
+    {
+      "name": "agree",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/agree/0d9985deac60c7f5.png",
+      "alias_of": null
+    },
+    {
+      "name": "ai-vibe-coding",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/ai-vibe-coding/0c8df2e74167aec7.png",
+      "alias_of": null
+    },
+    {
+      "name": "air_quotes",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/air_quotes/8c8bfcaaea8f194d.gif",
+      "alias_of": null
+    },
+    {
+      "name": "akward",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/akward/9b45a8a29126a84a.png",
+      "alias_of": null
+    },
+    {
+      "name": "alert",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/alert/fcdfd5493e3e4063.gif",
+      "alias_of": null
+    },
+    {
+      "name": "alien-ack",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/alien-ack/b9ca291c0802b180.png",
+      "alias_of": null
+    },
+    {
+      "name": "aliensguy",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/aliensguy/5659bb356e212106.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "aligned",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/aligned/a2629a5fe73bd5bf.png",
+      "alias_of": null
+    },
+    {
+      "name": "alphabet-white-a",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/alphabet-white-a/c9b8487c37c1e0ca.png",
+      "alias_of": null
+    },
+    {
+      "name": "alphabet-white-at",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/alphabet-white-at/c9b8487c37c1e0ca.png",
+      "alias_of": null
+    },
+    {
+      "name": "alphabet-white-b",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/alphabet-white-b/c9b8487c37c1e0ca.png",
+      "alias_of": null
+    },
+    {
+      "name": "alphabet-white-c",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/alphabet-white-c/c9b8487c37c1e0ca.png",
+      "alias_of": null
+    },
+    {
+      "name": "alphabet-white-d",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/alphabet-white-d/c9b8487c37c1e0ca.png",
+      "alias_of": null
+    },
+    {
+      "name": "alphabet-white-e",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/alphabet-white-e/c9b8487c37c1e0ca.png",
+      "alias_of": null
+    },
+    {
+      "name": "alphabet-white-exclamation",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/alphabet-white-exclamation/c9b8487c37c1e0ca.png",
+      "alias_of": null
+    },
+    {
+      "name": "alphabet-white-f",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/alphabet-white-f/c9b8487c37c1e0ca.png",
+      "alias_of": null
+    },
+    {
+      "name": "alphabet-white-g",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/alphabet-white-g/c9b8487c37c1e0ca.png",
+      "alias_of": null
+    },
+    {
+      "name": "alphabet-white-h",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/alphabet-white-h/c9b8487c37c1e0ca.png",
+      "alias_of": null
+    },
+    {
+      "name": "alphabet-white-hash",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/alphabet-white-hash/c9b8487c37c1e0ca.png",
+      "alias_of": null
+    },
+    {
+      "name": "alphabet-white-i",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/alphabet-white-i/c9b8487c37c1e0ca.png",
+      "alias_of": null
+    },
+    {
+      "name": "alphabet-white-j",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/alphabet-white-j/c9b8487c37c1e0ca.png",
+      "alias_of": null
+    },
+    {
+      "name": "alphabet-white-k",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/alphabet-white-k/c9b8487c37c1e0ca.png",
+      "alias_of": null
+    },
+    {
+      "name": "alphabet-white-l",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/alphabet-white-l/c9b8487c37c1e0ca.png",
+      "alias_of": null
+    },
+    {
+      "name": "alphabet-white-m",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/alphabet-white-m/c9b8487c37c1e0ca.png",
+      "alias_of": null
+    },
+    {
+      "name": "alphabet-white-n",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/alphabet-white-n/c9b8487c37c1e0ca.png",
+      "alias_of": null
+    },
+    {
+      "name": "alphabet-white-o",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/alphabet-white-o/c9b8487c37c1e0ca.png",
+      "alias_of": null
+    },
+    {
+      "name": "alphabet-white-p",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/alphabet-white-p/c9b8487c37c1e0ca.png",
+      "alias_of": null
+    },
+    {
+      "name": "alphabet-white-q",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/alphabet-white-q/c9b8487c37c1e0ca.png",
+      "alias_of": null
+    },
+    {
+      "name": "alphabet-white-question",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/alphabet-white-question/c9b8487c37c1e0ca.png",
+      "alias_of": null
+    },
+    {
+      "name": "alphabet-white-r",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/alphabet-white-r/c9b8487c37c1e0ca.png",
+      "alias_of": null
+    },
+    {
+      "name": "alphabet-white-s",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/alphabet-white-s/c9b8487c37c1e0ca.png",
+      "alias_of": null
+    },
+    {
+      "name": "alphabet-white-t",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/alphabet-white-t/c9b8487c37c1e0ca.png",
+      "alias_of": null
+    },
+    {
+      "name": "alphabet-white-u",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/alphabet-white-u/c9b8487c37c1e0ca.png",
+      "alias_of": null
+    },
+    {
+      "name": "alphabet-white-v",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/alphabet-white-v/c9b8487c37c1e0ca.png",
+      "alias_of": null
+    },
+    {
+      "name": "alphabet-white-w",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/alphabet-white-w/c9b8487c37c1e0ca.png",
+      "alias_of": null
+    },
+    {
+      "name": "alphabet-white-x",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/alphabet-white-x/c9b8487c37c1e0ca.png",
+      "alias_of": null
+    },
+    {
+      "name": "alphabet-white-y",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/alphabet-white-y/c9b8487c37c1e0ca.png",
+      "alias_of": null
+    },
+    {
+      "name": "alphabet-white-z",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/alphabet-white-z/c9b8487c37c1e0ca.png",
+      "alias_of": null
+    },
+    {
+      "name": "alphabet-yellow-a",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/alphabet-yellow-a/c9b8487c37c1e0ca.png",
+      "alias_of": null
+    },
+    {
+      "name": "alphabet-yellow-at",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/alphabet-yellow-at/c9b8487c37c1e0ca.png",
+      "alias_of": null
+    },
+    {
+      "name": "alphabet-yellow-b",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/alphabet-yellow-b/c9b8487c37c1e0ca.png",
+      "alias_of": null
+    },
+    {
+      "name": "alphabet-yellow-c",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/alphabet-yellow-c/c9b8487c37c1e0ca.png",
+      "alias_of": null
+    },
+    {
+      "name": "alphabet-yellow-d",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/alphabet-yellow-d/c9b8487c37c1e0ca.png",
+      "alias_of": null
+    },
+    {
+      "name": "alphabet-yellow-e",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/alphabet-yellow-e/c9b8487c37c1e0ca.png",
+      "alias_of": null
+    },
+    {
+      "name": "alphabet-yellow-exclamation",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/alphabet-yellow-exclamation/c9b8487c37c1e0ca.png",
+      "alias_of": null
+    },
+    {
+      "name": "alphabet-yellow-f",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/alphabet-yellow-f/c9b8487c37c1e0ca.png",
+      "alias_of": null
+    },
+    {
+      "name": "alphabet-yellow-g",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/alphabet-yellow-g/c9b8487c37c1e0ca.png",
+      "alias_of": null
+    },
+    {
+      "name": "alphabet-yellow-h",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/alphabet-yellow-h/c9b8487c37c1e0ca.png",
+      "alias_of": null
+    },
+    {
+      "name": "alphabet-yellow-hash",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/alphabet-yellow-hash/c9b8487c37c1e0ca.png",
+      "alias_of": null
+    },
+    {
+      "name": "alphabet-yellow-i",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/alphabet-yellow-i/c9b8487c37c1e0ca.png",
+      "alias_of": null
+    },
+    {
+      "name": "alphabet-yellow-j",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/alphabet-yellow-j/c9b8487c37c1e0ca.png",
+      "alias_of": null
+    },
+    {
+      "name": "alphabet-yellow-k",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/alphabet-yellow-k/c9b8487c37c1e0ca.png",
+      "alias_of": null
+    },
+    {
+      "name": "alphabet-yellow-l",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/alphabet-yellow-l/c9b8487c37c1e0ca.png",
+      "alias_of": null
+    },
+    {
+      "name": "alphabet-yellow-m",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/alphabet-yellow-m/c9b8487c37c1e0ca.png",
+      "alias_of": null
+    },
+    {
+      "name": "alphabet-yellow-n",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/alphabet-yellow-n/c9b8487c37c1e0ca.png",
+      "alias_of": null
+    },
+    {
+      "name": "alphabet-yellow-o",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/alphabet-yellow-o/c9b8487c37c1e0ca.png",
+      "alias_of": null
+    },
+    {
+      "name": "alphabet-yellow-p",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/alphabet-yellow-p/c9b8487c37c1e0ca.png",
+      "alias_of": null
+    },
+    {
+      "name": "alphabet-yellow-q",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/alphabet-yellow-q/c9b8487c37c1e0ca.png",
+      "alias_of": null
+    },
+    {
+      "name": "alphabet-yellow-question",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/alphabet-yellow-question/c9b8487c37c1e0ca.png",
+      "alias_of": null
+    },
+    {
+      "name": "alphabet-yellow-r",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/alphabet-yellow-r/c9b8487c37c1e0ca.png",
+      "alias_of": null
+    },
+    {
+      "name": "alphabet-yellow-s",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/alphabet-yellow-s/c9b8487c37c1e0ca.png",
+      "alias_of": null
+    },
+    {
+      "name": "alphabet-yellow-t",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/alphabet-yellow-t/c9b8487c37c1e0ca.png",
+      "alias_of": null
+    },
+    {
+      "name": "alphabet-yellow-u",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/alphabet-yellow-u/c9b8487c37c1e0ca.png",
+      "alias_of": null
+    },
+    {
+      "name": "alphabet-yellow-v",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/alphabet-yellow-v/c9b8487c37c1e0ca.png",
+      "alias_of": null
+    },
+    {
+      "name": "alphabet-yellow-w",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/alphabet-yellow-w/c9b8487c37c1e0ca.png",
+      "alias_of": null
+    },
+    {
+      "name": "alphabet-yellow-x",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/alphabet-yellow-x/c9b8487c37c1e0ca.png",
+      "alias_of": null
+    },
+    {
+      "name": "alphabet-yellow-y",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/alphabet-yellow-y/b84e8865045ee71b.png",
+      "alias_of": null
+    },
+    {
+      "name": "alphabet-yellow-z",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/alphabet-yellow-z/b84e8865045ee71b.png",
+      "alias_of": null
+    },
+    {
+      "name": "already-freaking-out",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/already-freaking-out/2d1aa3372d3bfdd4.png",
+      "alias_of": null
+    },
+    {
+      "name": "amazed",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/amazed/84ffb98a893fb52b.gif",
+      "alias_of": null
+    },
+    {
+      "name": "amazing_yangtaisu",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/amazing_yangtaisu/8a7361f6d3c8bc51.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "andioop",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/andioop/87f081704b8cf86d.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "andrei",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/andrei/b5e3391cd730f66c.png",
+      "alias_of": null
+    },
+    {
+      "name": "andrew-working",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/andrew-working/f486dc1d01b52e3b.gif",
+      "alias_of": null
+    },
+    {
+      "name": "android_logo",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/android_logo/c82b9d00af69b069.png",
+      "alias_of": null
+    },
+    {
+      "name": "angry-wechat",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/angry-wechat/44a52b5d3739ec3e.png",
+      "alias_of": null
+    },
+    {
+      "name": "announcement",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/announcement/ff15010ca64a6674.png",
+      "alias_of": null
+    },
+    {
+      "name": "anya-smile",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/anya-smile/39c5fc470f2603e3.png",
+      "alias_of": null
+    },
+    {
+      "name": "apple_logo",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/apple_logo/2ae423a8117e3904.png",
+      "alias_of": null
+    },
+    {
+      "name": "approved_stamp",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/approved_stamp/96ca6fcaa7db808b.png",
+      "alias_of": null
+    },
+    {
+      "name": "are_you_ok",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/are_you_ok/2a2bb56947ef2e27.png",
+      "alias_of": null
+    },
+    {
+      "name": "are-u-sure",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/are-u-sure/aa0608b76cdc84d3.png",
+      "alias_of": null
+    },
+    {
+      "name": "arigato",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/arigato/d2c0f6d1ed4c3637.png",
+      "alias_of": null
+    },
+    {
+      "name": "ark-cool",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/ark-cool/610720657fb71639.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "arthur_dance",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/arthur_dance/5835a79d169f2fc8.gif",
+      "alias_of": null
+    },
+    {
+      "name": "aru-yes",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/aru-yes/cb7ef36c3994037d.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "aru-yes-3",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/aru-yes-3/81086a05c111167e.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "askmoe-pet",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/askmoe-pet/c5511b7c99359f2e.gif",
+      "alias_of": null
+    },
+    {
+      "name": "aur_naur",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/aur_naur/30dacb0adbe6aef1.png",
+      "alias_of": null
+    },
+    {
+      "name": "awaken",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/awaken/468224fdc9b2e5fe.gif",
+      "alias_of": null
+    },
+    {
+      "name": "away",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/away/8454aeef633100ec.png",
+      "alias_of": null
+    },
+    {
+      "name": "awesome",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/awesome/bbcf06ae0f1e8d67.png",
+      "alias_of": null
+    },
+    {
+      "name": "awesome_pink",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/awesome_pink/9b9cb1c2cc84c21b.gif",
+      "alias_of": null
+    },
+    {
+      "name": "awesome-sauce",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/awesome-sauce/0637485c6bee4df0.gif",
+      "alias_of": null
+    },
+    {
+      "name": "awesome1",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/awesome1/6412013fe3911441.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "awesomeness",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/awesomeness/b14687d5dc54efc5.png",
+      "alias_of": null
+    },
+    {
+      "name": "awesomer",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/awesomer/d937a5d363603fe7.gif",
+      "alias_of": null
+    },
+    {
+      "name": "awkward",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/awkward/1702092d23b249db.gif",
+      "alias_of": null
+    },
+    {
+      "name": "baby-sun",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/baby-sun/6600416f53bf464c.gif",
+      "alias_of": null
+    },
+    {
+      "name": "baga",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/baga/afa8daf5df2c20dd.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "bah_l",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/bah_l/27bbe721319e1fbd.png",
+      "alias_of": null
+    },
+    {
+      "name": "bah_r",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/bah_r/9bc47210c116eba1.png",
+      "alias_of": null
+    },
+    {
+      "name": "balance",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/balance/8454aeef633100ec.png",
+      "alias_of": null
+    },
+    {
+      "name": "bald-head",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/bald-head/a5ec77fcdd76fdb5.gif",
+      "alias_of": null
+    },
+    {
+      "name": "bam",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/bam/3b51ff4f43589abf.png",
+      "alias_of": null
+    },
+    {
+      "name": "bart_dancing",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/bart_dancing/f795f510a45042ab.gif",
+      "alias_of": null
+    },
+    {
+      "name": "batman",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/batman/ad8f248740873388.png",
+      "alias_of": null
+    },
+    {
+      "name": "bb_run",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/bb_run/bd9c106ab0ab5af0.png",
+      "alias_of": null
+    },
+    {
+      "name": "bbb",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/bbb/53ef584b91fd2e48.png",
+      "alias_of": null
+    },
+    {
+      "name": "be-right-back",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/be-right-back/40edd436e41e5cbb.gif",
+      "alias_of": null
+    },
+    {
+      "name": "beat_the_table",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/beat_the_table/e6b0829f8b738cd5.png",
+      "alias_of": null
+    },
+    {
+      "name": "beckon",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/beckon/0ec80ae2b4838867.png",
+      "alias_of": null
+    },
+    {
+      "name": "beizhi",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/beizhi/38743830cb148184.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "ben-deal-with-it",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/ben-deal-with-it/6d84e7a7d13190ef.gif",
+      "alias_of": null
+    },
+    {
+      "name": "ben-party-blob",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/ben-party-blob/0efc014e89326073.gif",
+      "alias_of": null
+    },
+    {
+      "name": "betcha",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/betcha/36fe022c14b68346.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "better-god",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/better-god/20ce2995c2f2414a.png",
+      "alias_of": null
+    },
+    {
+      "name": "betty-white",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/betty-white/0770a8bdbc0e79de.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "big_brain",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/big_brain/5dc5da889f0b3a35.png",
+      "alias_of": null
+    },
+    {
+      "name": "bigeye",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/bigeye/997611c61829c620.png",
+      "alias_of": null
+    },
+    {
+      "name": "bite-you",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/bite-you/1960dc18067fc6c6.gif",
+      "alias_of": null
+    },
+    {
+      "name": "blastoise_what",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/blastoise_what/4c21ecb6b65bad68.png",
+      "alias_of": null
+    },
+    {
+      "name": "blastoisecoolstory",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/blastoisecoolstory/8717dd9d3e2b17f1.gif",
+      "alias_of": null
+    },
+    {
+      "name": "blob_aww",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/blob_aww/97c005f14522ca37.png",
+      "alias_of": null
+    },
+    {
+      "name": "blob-hearts",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/blob-hearts/c565ccaa323bb29d.gif",
+      "alias_of": null
+    },
+    {
+      "name": "blob-muscle",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/blob-muscle/a59e5b20588788e5.png",
+      "alias_of": null
+    },
+    {
+      "name": "blob-out-of-office",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/blob-out-of-office/c11708115dd0fb4c.png",
+      "alias_of": null
+    },
+    {
+      "name": "blob-sun",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/blob-sun/d4359272779ba6ca.gif",
+      "alias_of": null
+    },
+    {
+      "name": "blob-wave",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/blob-wave/76d7bb1d3204efb7.gif",
+      "alias_of": null
+    },
+    {
+      "name": "blobgoodnight",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/blobgoodnight/aca41a085226040e.png",
+      "alias_of": null
+    },
+    {
+      "name": "blobheart",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/blobheart/5160ab7a8f4f79d8.png",
+      "alias_of": null
+    },
+    {
+      "name": "blobhighfive",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/blobhighfive/04a6a5ca3daa16b5.png",
+      "alias_of": null
+    },
+    {
+      "name": "blobmeltsoblove",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/blobmeltsoblove/a0b3da7927d2b057.png",
+      "alias_of": null
+    },
+    {
+      "name": "blobpeek",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/blobpeek/50ac2524356b0e16.png",
+      "alias_of": null
+    },
+    {
+      "name": "blobthinking",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/blobthinking/7db851cc51de49d9.png",
+      "alias_of": null
+    },
+    {
+      "name": "blobthumbsup",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/blobthumbsup/a079802d46b2b5d5.png",
+      "alias_of": null
+    },
+    {
+      "name": "blobwink",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/blobwink/308a01306fe22c4a.png",
+      "alias_of": null
+    },
+    {
+      "name": "blush-wechat",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/blush-wechat/58716346b14c5b19.png",
+      "alias_of": null
+    },
+    {
+      "name": "bob-gun",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/bob-gun/f07766072fdce578.gif",
+      "alias_of": null
+    },
+    {
+      "name": "bob-km3",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/bob-km3/e34af67fa3cabed4.gif",
+      "alias_of": null
+    },
+    {
+      "name": "bolo-confused",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/bolo-confused/0ddec8d09ae5b199.png",
+      "alias_of": null
+    },
+    {
+      "name": "bolo-happy",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/bolo-happy/a0d60008c0488498.png",
+      "alias_of": null
+    },
+    {
+      "name": "bomb_gif",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/bomb_gif/4c061a8add9139c7.gif",
+      "alias_of": null
+    },
+    {
+      "name": "boom1",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/boom1/eeab7da190abf049.png",
+      "alias_of": null
+    },
+    {
+      "name": "brandon-party",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/brandon-party/c1f71223928349f5.gif",
+      "alias_of": null
+    },
+    {
+      "name": "brb",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/brb/8454aeef633100ec.png",
+      "alias_of": null
+    },
+    {
+      "name": "brb_red",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/brb_red/3c5f66a87cf1b163.gif",
+      "alias_of": null
+    },
+    {
+      "name": "breakdance",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/breakdance/3e790cb8b08b06c3.gif",
+      "alias_of": null
+    },
+    {
+      "name": "breakin",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/breakin/55497f2b995619b4.gif",
+      "alias_of": null
+    },
+    {
+      "name": "broken_blob",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/broken_blob/29103d5c142e41fd.gif",
+      "alias_of": null
+    },
+    {
+      "name": "broken_heart_wechat",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/broken_heart_wechat/94a4d07f04f98763.png",
+      "alias_of": null
+    },
+    {
+      "name": "bruh-cat",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/bruh-cat/d80fc4fea661cc77.gif",
+      "alias_of": null
+    },
+    {
+      "name": "bug_badface",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/bug_badface/b65c5ec15575b92b.gif",
+      "alias_of": null
+    },
+    {
+      "name": "bug_beat",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/bug_beat/97b736793602293b.gif",
+      "alias_of": null
+    },
+    {
+      "name": "bug_celebrate",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/bug_celebrate/d39a4e809f735bcf.gif",
+      "alias_of": null
+    },
+    {
+      "name": "bug_cry_1",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/bug_cry_1/cb490d44ab8bcf51.gif",
+      "alias_of": null
+    },
+    {
+      "name": "bug_cry_2",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/bug_cry_2/88f123443aa552f0.gif",
+      "alias_of": null
+    },
+    {
+      "name": "bug_eyes",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/bug_eyes/3c54983ecd18de3d.gif",
+      "alias_of": null
+    },
+    {
+      "name": "bug_flower",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/bug_flower/0fe3222863380085.gif",
+      "alias_of": null
+    },
+    {
+      "name": "bug_fragile",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/bug_fragile/c2a48e5b67c98558.gif",
+      "alias_of": null
+    },
+    {
+      "name": "bug_fret",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/bug_fret/a04ee183144e634b.gif",
+      "alias_of": null
+    },
+    {
+      "name": "bug_love",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/bug_love/c655384abd63195b.gif",
+      "alias_of": null
+    },
+    {
+      "name": "bug_overheat",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/bug_overheat/b8187df015ecf722.gif",
+      "alias_of": null
+    },
+    {
+      "name": "bug_running",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/bug_running/8c532dfcfa9103ee.gif",
+      "alias_of": null
+    },
+    {
+      "name": "bug_shit_mountain",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/bug_shit_mountain/1ef2d2950dce840c.gif",
+      "alias_of": null
+    },
+    {
+      "name": "bug_watching",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/bug_watching/9bd758ace90fe76f.gif",
+      "alias_of": null
+    },
+    {
+      "name": "bug_whipping",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/bug_whipping/34ca8061ed25938a.gif",
+      "alias_of": null
+    },
+    {
+      "name": "bulbasaur_head",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/bulbasaur_head/2edb6d1e15dfe21f.png",
+      "alias_of": null
+    },
+    {
+      "name": "bun-vacation",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/bun-vacation/af6f70aff04705cd.png",
+      "alias_of": null
+    },
+    {
+      "name": "bunny-slippers",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/bunny-slippers/50f425e953b615b8.png",
+      "alias_of": null
+    },
+    {
+      "name": "businesscat",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/businesscat/ebc798424e399ffc.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "buster_baxter",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/buster_baxter/4a8f1cf32ec7b49b.png",
+      "alias_of": null
+    },
+    {
+      "name": "byebyebye_nsync",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/byebyebye_nsync/d40880788f5b6f4a.gif",
+      "alias_of": null
+    },
+    {
+      "name": "ca192ce5e871feddc7b419346b2636a0",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/ca192ce5e871feddc7b419346b2636a0/6bff0109887c030f.png",
+      "alias_of": null
+    },
+    {
+      "name": "cal",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/cal/9925838d3fae500d.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "care",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/care/bb94098abcefe706.png",
+      "alias_of": null
+    },
+    {
+      "name": "carlton",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/carlton/1bf610115fee08c1.gif",
+      "alias_of": null
+    },
+    {
+      "name": "cat_party",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/cat_party/293ae6ea26ed0b0f.gif",
+      "alias_of": null
+    },
+    {
+      "name": "cat-0-10",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/cat-0-10/3336e065eb8c1766.png",
+      "alias_of": null
+    },
+    {
+      "name": "cat-chips",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/cat-chips/c38f95378bccdc06.gif",
+      "alias_of": null
+    },
+    {
+      "name": "cat-confused",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/cat-confused/ba40e11740e9a2a9.png",
+      "alias_of": null
+    },
+    {
+      "name": "cat-dont-know",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/cat-dont-know/2e383b40a1a8eb3c.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "cat-nod",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/cat-nod/29d872b51d0c878e.gif",
+      "alias_of": null
+    },
+    {
+      "name": "cat-on-keyboard",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/cat-on-keyboard/8454aeef633100ec.png",
+      "alias_of": null
+    },
+    {
+      "name": "cat-roomba-exceptionally-fast",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/cat-roomba-exceptionally-fast/81018b1f27a45b27.gif",
+      "alias_of": null
+    },
+    {
+      "name": "cat-see",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/cat-see/544b459eec88bd47.png",
+      "alias_of": null
+    },
+    {
+      "name": "catjam",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/catjam/db34c1956a574ef4.gif",
+      "alias_of": null
+    },
+    {
+      "name": "chad",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/chad/e703b20d8c1197ad.png",
+      "alias_of": null
+    },
+    {
+      "name": "change-oncall",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/change-oncall/c4898976ff7793a0.png",
+      "alias_of": null
+    },
+    {
+      "name": "change-oncall-new",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/change-oncall-new/a4a74dcf1af124c0.png",
+      "alias_of": null
+    },
+    {
+      "name": "cheems",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/cheems/874fe7fc176faa2b.png",
+      "alias_of": null
+    },
+    {
+      "name": "cheers_together",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/cheers_together/11b67b9cc015eb61.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "cheese-wawa",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/cheese-wawa/2c208508eee16cdd.png",
+      "alias_of": null
+    },
+    {
+      "name": "chef-brb",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/chef-brb/8454aeef633100ec.png",
+      "alias_of": null
+    },
+    {
+      "name": "chefs-kiss",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/chefs-kiss/d7f128490d6cc34f.gif",
+      "alias_of": null
+    },
+    {
+      "name": "chiikawa",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/chiikawa/8ce71078f34879f0.png",
+      "alias_of": null
+    },
+    {
+      "name": "chiikawa-swim",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/chiikawa-swim/bbddc07e37d4ae9e.png",
+      "alias_of": null
+    },
+    {
+      "name": "chiikawa-think",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/chiikawa-think/e7207a413cc3129b.png",
+      "alias_of": null
+    },
+    {
+      "name": "child-stunned",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/child-stunned/1c5eaaa5aa70bb22.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "chill",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/chill/e27d15d78832c542.png",
+      "alias_of": null
+    },
+    {
+      "name": "chill_guy",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/chill_guy/dc9efe228f0986fe.png",
+      "alias_of": null
+    },
+    {
+      "name": "chill-guy",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/chill-guy/0bfb0e595fc00dd5.png",
+      "alias_of": null
+    },
+    {
+      "name": "chill-out",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/chill-out/70e059a7969f9786.gif",
+      "alias_of": null
+    },
+    {
+      "name": "china-flag",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/china-flag/ac04492eecd887a3.png",
+      "alias_of": null
+    },
+    {
+      "name": "china-flag-2",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/china-flag-2/b52f13ec9b98bfca.png",
+      "alias_of": null
+    },
+    {
+      "name": "chit",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/chit/455d299609c90d8a.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "chong-qian",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/chong-qian/43941dbd796f8206.png",
+      "alias_of": null
+    },
+    {
+      "name": "chongqian",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/chongqian/96416e5f5c975bd7.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "chris",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/chris/8bedec3c86d1a135.gif",
+      "alias_of": null
+    },
+    {
+      "name": "chris-gun",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/chris-gun/dd8e4a52a070d805.gif",
+      "alias_of": null
+    },
+    {
+      "name": "christmas-pop-cat",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/christmas-pop-cat/bec8dd59c55b8826.gif",
+      "alias_of": null
+    },
+    {
+      "name": "chuckle",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/chuckle/8bfdd5ecad46f98d.png",
+      "alias_of": null
+    },
+    {
+      "name": "clap-wechat",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/clap-wechat/acd82c9c8762ed7a.png",
+      "alias_of": null
+    },
+    {
+      "name": "clapping",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/clapping/20fe8ed881114c90.gif",
+      "alias_of": null
+    },
+    {
+      "name": "cleanshot_2025-06-17_at_142749_2x-removebg-preview",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/cleanshot_2025-06-17_at_142749_2x-removebg-preview/eaa7301dd67cf56b.png",
+      "alias_of": null
+    },
+    {
+      "name": "cleanshot-2024-04-09-at-1211582x",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/cleanshot-2024-04-09-at-1211582x/39ea08dce1402e33.png",
+      "alias_of": null
+    },
+    {
+      "name": "cleanshot-2024-08-07-at-1148052x",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/cleanshot-2024-08-07-at-1148052x/3e55432a47deb004.png",
+      "alias_of": null
+    },
+    {
+      "name": "cleanshot-2025-03-07-at-094632",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/cleanshot-2025-03-07-at-094632/1f42b68f390dcabc.png",
+      "alias_of": null
+    },
+    {
+      "name": "clockit",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/clockit/1cb145e0c9bde583.png",
+      "alias_of": null
+    },
+    {
+      "name": "closed",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/closed/b2c095213b1b25e4.gif",
+      "alias_of": null
+    },
+    {
+      "name": "closed-store",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/closed-store/4e66df02c0b11c36.png",
+      "alias_of": null
+    },
+    {
+      "name": "clown2",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/clown2/2d15fe6546c4f5ad.png",
+      "alias_of": null
+    },
+    {
+      "name": "coach",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/coach/48f70649672a8e4d.png",
+      "alias_of": null
+    },
+    {
+      "name": "coach1",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/coach1/5c0e55ea61483de3.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "comment",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/comment/01a5146479f82889.png",
+      "alias_of": null
+    },
+    {
+      "name": "commuting",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/commuting/50f425e953b615b8.png",
+      "alias_of": null
+    },
+    {
+      "name": "conceit",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/conceit/7558681f21f70f10.png",
+      "alias_of": null
+    },
+    {
+      "name": "confuse",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/confuse/914a4d0383117466.png",
+      "alias_of": null
+    },
+    {
+      "name": "confused_dog",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/confused_dog/2bb7e82d36c6f2c2.gif",
+      "alias_of": null
+    },
+    {
+      "name": "confused_wing",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/confused_wing/683aa167275151e8.png",
+      "alias_of": null
+    },
+    {
+      "name": "confused-numbers",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/confused-numbers/e20e2ca9c9e4dd2b.gif",
+      "alias_of": null
+    },
+    {
+      "name": "confusedspongebob",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/confusedspongebob/50f32961583cd7fa.png",
+      "alias_of": null
+    },
+    {
+      "name": "cong-1",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/cong-1/4b5a0ecd39b11a2d.gif",
+      "alias_of": null
+    },
+    {
+      "name": "cong-2",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/cong-2/166f302c2de2bdc3.gif",
+      "alias_of": null
+    },
+    {
+      "name": "congrats",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/congrats/6e7fc9eedbb718d2.gif",
+      "alias_of": null
+    },
+    {
+      "name": "continuing-to-think",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/continuing-to-think/1ff50e3ac179da12.gif",
+      "alias_of": null
+    },
+    {
+      "name": "cool_doge",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/cool_doge/cfa3b3159e1b65f8.gif",
+      "alias_of": null
+    },
+    {
+      "name": "cool_guy",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/cool_guy/b222da33d77330cb.png",
+      "alias_of": null
+    },
+    {
+      "name": "cool-1",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/cool-1/9e8a9b7208507b50.gif",
+      "alias_of": null
+    },
+    {
+      "name": "cool-bob",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/cool-bob/7ac7f9a7d28aff40.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "copythat",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/copythat/d28c939f4a587871.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "cornershaking",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/cornershaking/89536766821d2e5e.gif",
+      "alias_of": null
+    },
+    {
+      "name": "cr7",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/cr7/cfd9df6e9e3e0675.gif",
+      "alias_of": null
+    },
+    {
+      "name": "criminal_side_eye",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/criminal_side_eye/eb09a20cd56012bc.png",
+      "alias_of": null
+    },
+    {
+      "name": "cry-cry",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/cry-cry/47200a7a9edc1ccb.gif",
+      "alias_of": null
+    },
+    {
+      "name": "crycat",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/crycat/1851e3770bbb34dd.png",
+      "alias_of": null
+    },
+    {
+      "name": "cs-go",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/cs-go/712cb3f0d0946abc.png",
+      "alias_of": null
+    },
+    {
+      "name": "cs-on-shift",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/cs-on-shift/1816b3ffcc752fff.gif",
+      "alias_of": null
+    },
+    {
+      "name": "cute",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/cute/700d49e9ac03dd86.png",
+      "alias_of": null
+    },
+    {
+      "name": "da-ge-dddd",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/da-ge-dddd/5fa9caaf17dcbfbb.png",
+      "alias_of": null
+    },
+    {
+      "name": "dadhat",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/dadhat/c42c0846e90bfba4.png",
+      "alias_of": null
+    },
+    {
+      "name": "daisy",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/daisy/08f541520b114ba1.png",
+      "alias_of": null
+    },
+    {
+      "name": "daxiao",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/daxiao/09391933dd2f0991.png",
+      "alias_of": null
+    },
+    {
+      "name": "dayile",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/dayile/a688dc56a6b1b4d3.gif",
+      "alias_of": null
+    },
+    {
+      "name": "daysmart",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/daysmart/624c0c9013c5a53a.png",
+      "alias_of": null
+    },
+    {
+      "name": "dead",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/dead/90793082727991d2.png",
+      "alias_of": null
+    },
+    {
+      "name": "ded",
+      "url": "https://a.slack-edge.com/production-standard-emoji-assets/16.0/apple-large/1f480.png",
+      "alias_of": null
+    },
+    {
+      "name": "dig-cat-burn",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/dig-cat-burn/c6d5fa246d0f58a7.gif",
+      "alias_of": null
+    },
+    {
+      "name": "dig-cat-party-parrot",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/dig-cat-party-parrot/6878bac59fb59bb6.gif",
+      "alias_of": null
+    },
+    {
+      "name": "dig-cat-spin",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/dig-cat-spin/cf8af1f6615d699f.gif",
+      "alias_of": null
+    },
+    {
+      "name": "dig-cat-zoom-close",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/dig-cat-zoom-close/1ae868daf797a538.gif",
+      "alias_of": null
+    },
+    {
+      "name": "dig-cat-zoom-out",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/dig-cat-zoom-out/6daac9b1bc92e44d.gif",
+      "alias_of": null
+    },
+    {
+      "name": "dillon-deal-with-it",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/dillon-deal-with-it/e99d7ed92896a4f7.gif",
+      "alias_of": null
+    },
+    {
+      "name": "distorted_face",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/distorted_face/2135e3d4e3733e7b.png",
+      "alias_of": null
+    },
+    {
+      "name": "ditto_number_1",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/ditto_number_1/e90cb5bee16b49dd.png",
+      "alias_of": null
+    },
+    {
+      "name": "dj-khaled",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/dj-khaled/3d3205a33c327f6a.png",
+      "alias_of": null
+    },
+    {
+      "name": "do-m",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/do-m/117ac49e68830f26.png",
+      "alias_of": null
+    },
+    {
+      "name": "doctor-pet",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/doctor-pet/6e04f2d977b97c89.gif",
+      "alias_of": null
+    },
+    {
+      "name": "doesn't_matter",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/doesn%2527t_matter/b96258d16e8729e6.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "dog_tongue",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/dog_tongue/120e81e1ef8f373c.gif",
+      "alias_of": null
+    },
+    {
+      "name": "dog-cry",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/dog-cry/7c299f127f516671.png",
+      "alias_of": null
+    },
+    {
+      "name": "dog-walk",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/dog-walk/b4a25f3b0894affa.gif",
+      "alias_of": null
+    },
+    {
+      "name": "doge",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/doge/c27b5683ecaaeac6.png",
+      "alias_of": null
+    },
+    {
+      "name": "doge_finger_guns",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/doge_finger_guns/21e449f26e26bcb7.png",
+      "alias_of": null
+    },
+    {
+      "name": "doge2",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/doge2/347046811c8c0c28.png",
+      "alias_of": null
+    },
+    {
+      "name": "doge3",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/doge3/a82e7aa2924737f7.png",
+      "alias_of": null
+    },
+    {
+      "name": "doge4",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/doge4/dad75db02d5bc1c8.png",
+      "alias_of": null
+    },
+    {
+      "name": "dogshighfive",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/dogshighfive/91acce7cff59c760.png",
+      "alias_of": null
+    },
+    {
+      "name": "doit",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/doit/d8d5ab8deab02f4b.gif",
+      "alias_of": null
+    },
+    {
+      "name": "dollar-deal-with-it",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/dollar-deal-with-it/c63116f856ac58cd.gif",
+      "alias_of": null
+    },
+    {
+      "name": "dollar-excited",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/dollar-excited/b0d8c9b0b12c0165.gif",
+      "alias_of": null
+    },
+    {
+      "name": "dollar-flip-1",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/dollar-flip-1/e1baa5d4dfd487ed.gif",
+      "alias_of": null
+    },
+    {
+      "name": "dollar-gun",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/dollar-gun/5cc493121a4ab4dc.gif",
+      "alias_of": null
+    },
+    {
+      "name": "dollar-intensifies",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/dollar-intensifies/1badad9e05ab12db.gif",
+      "alias_of": null
+    },
+    {
+      "name": "dollar-jam",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/dollar-jam/5ba7d72bb41f2bf4.gif",
+      "alias_of": null
+    },
+    {
+      "name": "dollar-nyan-cat",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/dollar-nyan-cat/bc95fa6c8804c2fc.gif",
+      "alias_of": null
+    },
+    {
+      "name": "dollar-party",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/dollar-party/67f65887502c7b41.gif",
+      "alias_of": null
+    },
+    {
+      "name": "dollar-party-parrot-1",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/dollar-party-parrot-1/04c929a26327f422.gif",
+      "alias_of": null
+    },
+    {
+      "name": "dollar-pet",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/dollar-pet/1af6f0ad2ca723a5.gif",
+      "alias_of": null
+    },
+    {
+      "name": "dollar-shake",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/dollar-shake/4c8b9e1a2eb8b688.gif",
+      "alias_of": null
+    },
+    {
+      "name": "dollar-spin-2",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/dollar-spin-2/328b131bcc03ef42.gif",
+      "alias_of": null
+    },
+    {
+      "name": "dollar-tilt",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/dollar-tilt/aaa902d7fd8814bd.gif",
+      "alias_of": null
+    },
+    {
+      "name": "dollar-zoom-1",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/dollar-zoom-1/b291c4eb5c58e30f.gif",
+      "alias_of": null
+    },
+    {
+      "name": "dollar-zoom-close-2",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/dollar-zoom-close-2/67a5fd7c53dbb226.gif",
+      "alias_of": null
+    },
+    {
+      "name": "dollar-zoom-out-2",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/dollar-zoom-out-2/7857c187d7b6fd42.gif",
+      "alias_of": null
+    },
+    {
+      "name": "done",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/done/aad0d16e0e63f7e1.png",
+      "alias_of": null
+    },
+    {
+      "name": "done_banner",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/done_banner/f3860e6b02e5b6c8.png",
+      "alias_of": null
+    },
+    {
+      "name": "done_stamp",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/done_stamp/633d9744fa56219b.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "dongqiu",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/dongqiu/5b1c5447065a15eb.png",
+      "alias_of": null
+    },
+    {
+      "name": "dont_worry_be_happy",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/dont_worry_be_happy/6faa733d2710a9b2.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "dont-fight",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/dont-fight/490e2dc53a1e801e.gif",
+      "alias_of": null
+    },
+    {
+      "name": "donthurry",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/donthurry/2c3e751fb5e1988a.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "doo-doo",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/doo-doo/d8c877b4610ddef0.png",
+      "alias_of": null
+    },
+    {
+      "name": "dooo",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/dooo/00f80218e37482e7.png",
+      "alias_of": null
+    },
+    {
+      "name": "doraemon-chashoushou",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/doraemon-chashoushou/3dd813f5c781b844.png",
+      "alias_of": null
+    },
+    {
+      "name": "doraemon-sweat",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/doraemon-sweat/bdeeace843f996bf.png",
+      "alias_of": null
+    },
+    {
+      "name": "dori-deal-with-it",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/dori-deal-with-it/651a289f15eab268.gif",
+      "alias_of": null
+    },
+    {
+      "name": "dori-gun",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/dori-gun/52a07620b27ed5cd.gif",
+      "alias_of": null
+    },
+    {
+      "name": "dori-party-parrot",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/dori-party-parrot/88868b721360f052.gif",
+      "alias_of": null
+    },
+    {
+      "name": "dota",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/dota/6f5099a971923343.png",
+      "alias_of": null
+    },
+    {
+      "name": "download",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/download/a81afc91c96b8601.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "drink",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/drink/a60d44d300f4961c.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "drooling_cat_face",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/drooling_cat_face/be080440eef6514f.png",
+      "alias_of": null
+    },
+    {
+      "name": "duck_question",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/duck_question/0c85e29d56bd2e40.gif",
+      "alias_of": null
+    },
+    {
+      "name": "dumpster-fire",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/dumpster-fire/bd437c4aa4938f9f.gif",
+      "alias_of": null
+    },
+    {
+      "name": "dz",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/dz/cc66c78fce03a172.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "dz1",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/dz1/8bb5139068ddfedd.png",
+      "alias_of": null
+    },
+    {
+      "name": "eevee",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/eevee/1efac48adaf38fa5.gif",
+      "alias_of": null
+    },
+    {
+      "name": "eeveexpika_highfive",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/eeveexpika_highfive/5a809749ce477421.gif",
+      "alias_of": null
+    },
+    {
+      "name": "eggo",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/eggo/d84f3e24c8009289.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "eid",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/eid/9aad13e49004c909.gif",
+      "alias_of": null
+    },
+    {
+      "name": "eid-mubarak",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/eid-mubarak/bac9d653f4db9718.png",
+      "alias_of": null
+    },
+    {
+      "name": "eid-mubarak-2",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/eid-mubarak-2/ec2b1f9f1f1b1994.png",
+      "alias_of": null
+    },
+    {
+      "name": "eid-mubarak-3",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/eid-mubarak-3/685a38f07006444f.png",
+      "alias_of": null
+    },
+    {
+      "name": "eid-mubarak-4",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/eid-mubarak-4/1e03e8f5430e1747.png",
+      "alias_of": null
+    },
+    {
+      "name": "elmo-fire",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/elmo-fire/cc1b5d3152a2d2c0.gif",
+      "alias_of": null
+    },
+    {
+      "name": "elon-musk",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/elon-musk/45291189bd80879f.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "emerald",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/emerald/d50e46a02a74b661.gif",
+      "alias_of": null
+    },
+    {
+      "name": "emma",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/emma/0f81dce338b5fa12.png",
+      "alias_of": null
+    },
+    {
+      "name": "emma-deal-with-it",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/emma-deal-with-it/3f3fe18df94d1086.gif",
+      "alias_of": null
+    },
+    {
+      "name": "emma-gun",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/emma-gun/9dd789a06c45a0bc.gif",
+      "alias_of": null
+    },
+    {
+      "name": "emma-nyan-cat",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/emma-nyan-cat/bdc4b6c91af3a9fe.gif",
+      "alias_of": null
+    },
+    {
+      "name": "emma-party-blob",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/emma-party-blob/7e865f3c2b70a62c.gif",
+      "alias_of": null
+    },
+    {
+      "name": "ethan-spin-colors-fast",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/ethan-spin-colors-fast/e7099060f59d7c1b.gif",
+      "alias_of": null
+    },
+    {
+      "name": "excellent",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/excellent/54aee4abd8e6e950.png",
+      "alias_of": null
+    },
+    {
+      "name": "excuseme",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/excuseme/be73723b89e0a27e.gif",
+      "alias_of": null
+    },
+    {
+      "name": "expression_142x",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/expression_142x/5ea9ac7a84afc051.png",
+      "alias_of": null
+    },
+    {
+      "name": "expression_532x",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/expression_532x/f0a2809bd2d617fc.png",
+      "alias_of": null
+    },
+    {
+      "name": "expression_55",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/expression_55/ec1229d877ac2f16.png",
+      "alias_of": null
+    },
+    {
+      "name": "extreme-teamwork",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/extreme-teamwork/57e618cb71c66155.gif",
+      "alias_of": null
+    },
+    {
+      "name": "eyes_gif",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/eyes_gif/1a5fa47173d0e679.gif",
+      "alias_of": null
+    },
+    {
+      "name": "feelsbadman",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/feelsbadman/86d3eceb6d46387d.png",
+      "alias_of": null
+    },
+    {
+      "name": "feishu",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/feishu/d5041d68ed926e55.png",
+      "alias_of": null
+    },
+    {
+      "name": "feiyangyang-laugh",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/feiyangyang-laugh/34fc199f7b151a53.png",
+      "alias_of": null
+    },
+    {
+      "name": "fight",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/fight/aefdcc01dd0b03d1.png",
+      "alias_of": null
+    },
+    {
+      "name": "figma",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/figma/8a1d711c38bdbafb.png",
+      "alias_of": null
+    },
+    {
+      "name": "finished",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/finished/a3b9a63355c0c823.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "fiona",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/fiona/ea30865553804e53.gif",
+      "alias_of": null
+    },
+    {
+      "name": "fiona-shake",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/fiona-shake/a17733d0d440f92a.gif",
+      "alias_of": null
+    },
+    {
+      "name": "fiona-tilt",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/fiona-tilt/1d36158fc33ac944.gif",
+      "alias_of": null
+    },
+    {
+      "name": "firedog",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/firedog/7c93b185c54664b5.gif",
+      "alias_of": null
+    },
+    {
+      "name": "fistbump",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/fistbump/65ce40b4f2f2c5ef.gif",
+      "alias_of": null
+    },
+    {
+      "name": "fixed",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/fixed/12b61090224a2186.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "fixed-stamp",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/fixed-stamp/15bb3543510abad2.png",
+      "alias_of": null
+    },
+    {
+      "name": "fixing",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/fixing/e116de0eedce6053.gif",
+      "alias_of": null
+    },
+    {
+      "name": "flex",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/flex/23fb20d73d709dca.gif",
+      "alias_of": null
+    },
+    {
+      "name": "fluent-thinking-3d",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/fluent-thinking-3d/33fae7b97e9da831.png",
+      "alias_of": null
+    },
+    {
+      "name": "focused_eyes",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/focused_eyes/d5b2616630751b43.gif",
+      "alias_of": null
+    },
+    {
+      "name": "frank-ark-happy",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/frank-ark-happy/d9a068b0422735c3.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "frank-flip",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/frank-flip/81165aa97e5eaba0.gif",
+      "alias_of": null
+    },
+    {
+      "name": "frank-happy",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/frank-happy/d3dd1445c2b100de.gif",
+      "alias_of": null
+    },
+    {
+      "name": "freeman-flip",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/freeman-flip/53ba0e176fb342f9.gif",
+      "alias_of": null
+    },
+    {
+      "name": "freeman-scroll",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/freeman-scroll/3a2f8ad89031a194.gif",
+      "alias_of": null
+    },
+    {
+      "name": "freeman-zoom-close",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/freeman-zoom-close/ec9a7a47ea7f56e8.gif",
+      "alias_of": null
+    },
+    {
+      "name": "fresh-bro",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/fresh-bro/05cca7aef30d4a55.gif",
+      "alias_of": null
+    },
+    {
+      "name": "fucking-crazy",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/fucking-crazy/444485c0d7d5cd03.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "gagcat",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/gagcat/96add1ca5c0585a3.png",
+      "alias_of": null
+    },
+    {
+      "name": "ganhuo",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/ganhuo/77466fbb6ce78a41.png",
+      "alias_of": null
+    },
+    {
+      "name": "gary",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/gary/5ed103f60e5b0514.png",
+      "alias_of": null
+    },
+    {
+      "name": "gengar",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/gengar/b3567a5a8f17b5c9.png",
+      "alias_of": null
+    },
+    {
+      "name": "gengar_lay",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/gengar_lay/d863c61de97b8c17.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "genie-chibi",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/genie-chibi/359148343f5ee6d8.gif",
+      "alias_of": null
+    },
+    {
+      "name": "genie-help",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/genie-help/4ec2d693047f65dd.gif",
+      "alias_of": null
+    },
+    {
+      "name": "genie-smith",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/genie-smith/f394d7e3a4f13342.png",
+      "alias_of": null
+    },
+    {
+      "name": "get",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/get/247ce6dda065785a.png",
+      "alias_of": null
+    },
+    {
+      "name": "gianna",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/gianna/d1fc5a46a57ceaa3.gif",
+      "alias_of": null
+    },
+    {
+      "name": "gingr",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/gingr/cdb7dc7e3b4c07d8.png",
+      "alias_of": null
+    },
+    {
+      "name": "github",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/github/956aa55a5219cc65.png",
+      "alias_of": null
+    },
+    {
+      "name": "give-me-5",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/give-me-5/2a8090ebaf29162b.png",
+      "alias_of": null
+    },
+    {
+      "name": "giveme",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/giveme/5d0bfdfe9215f6e1.png",
+      "alias_of": null
+    },
+    {
+      "name": "giveyoualook",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/giveyoualook/df76a0493b65cade.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "gmail",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/gmail/210e239d3c2591c5.png",
+      "alias_of": null
+    },
+    {
+      "name": "gnightq",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/gnightq/6338bffcafb02516.gif",
+      "alias_of": null
+    },
+    {
+      "name": "go",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/go/cb5cd116dd9f279d.png",
+      "alias_of": null
+    },
+    {
+      "name": "go-team",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/go-team/20cd75fa2d4f14f5.png",
+      "alias_of": null
+    },
+    {
+      "name": "gold-good",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/gold-good/b78b0c24c7cda6a2.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "golden-phone",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/golden-phone/e9ac130f608006ca.png",
+      "alias_of": null
+    },
+    {
+      "name": "golden-phone2",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/golden-phone2/a910affff9779c23.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "goldenretriever",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/goldenretriever/3643882e81c4335f.png",
+      "alias_of": null
+    },
+    {
+      "name": "good_fixed",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/good_fixed/4cb7eaea52841ab1.png",
+      "alias_of": null
+    },
+    {
+      "name": "good-catch",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/good-catch/7cf0c74abaedcfdd.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "goodmorning",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/goodmorning/1d231d8a71b80daa.gif",
+      "alias_of": null
+    },
+    {
+      "name": "gooseee",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/gooseee/80e07f5867664495.gif",
+      "alias_of": null
+    },
+    {
+      "name": "gopher-scream",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/gopher-scream/d0f56ca1d141dc5b.gif",
+      "alias_of": null
+    },
+    {
+      "name": "got-it",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/got-it/827903c53dafe222.gif",
+      "alias_of": null
+    },
+    {
+      "name": "gp",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/gp/dc3cb558ec672950.png",
+      "alias_of": null
+    },
+    {
+      "name": "gq",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/gq/c70ffd926490749f.gif",
+      "alias_of": null
+    },
+    {
+      "name": "grammarly",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/grammarly/891caef5c03d23a5.png",
+      "alias_of": null
+    },
+    {
+      "name": "grand-rapids",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/grand-rapids/8162970be790ced4.png",
+      "alias_of": null
+    },
+    {
+      "name": "gratitude-arigatou-gozaimasu",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/gratitude-arigatou-gozaimasu/6e70e90efea8e309.png",
+      "alias_of": null
+    },
+    {
+      "name": "gratitude-asl",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/gratitude-asl/6e70e90efea8e309.gif",
+      "alias_of": null
+    },
+    {
+      "name": "gratitude-danke",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/gratitude-danke/6e70e90efea8e309.png",
+      "alias_of": null
+    },
+    {
+      "name": "gratitude-gamsahamnida",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/gratitude-gamsahamnida/6e70e90efea8e309.png",
+      "alias_of": null
+    },
+    {
+      "name": "gratitude-gracias",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/gratitude-gracias/6e70e90efea8e309.png",
+      "alias_of": null
+    },
+    {
+      "name": "gratitude-grazie",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/gratitude-grazie/6e70e90efea8e309.png",
+      "alias_of": null
+    },
+    {
+      "name": "gratitude-merci",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/gratitude-merci/6e70e90efea8e309.png",
+      "alias_of": null
+    },
+    {
+      "name": "gratitude-obrigada",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/gratitude-obrigada/6e70e90efea8e309.png",
+      "alias_of": null
+    },
+    {
+      "name": "gratitude-obrigado",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/gratitude-obrigado/6e70e90efea8e309.png",
+      "alias_of": null
+    },
+    {
+      "name": "gratitude-spasibo",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/gratitude-spasibo/6e70e90efea8e309.png",
+      "alias_of": null
+    },
+    {
+      "name": "gratitude-thank-you",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/gratitude-thank-you/6e70e90efea8e309.png",
+      "alias_of": null
+    },
+    {
+      "name": "gratitude-xiexie",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/gratitude-xiexie/6e70e90efea8e309.png",
+      "alias_of": null
+    },
+    {
+      "name": "gratitude-xiexieni",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/gratitude-xiexieni/6e70e90efea8e309.png",
+      "alias_of": null
+    },
+    {
+      "name": "great",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/great/556f9432088c23af.png",
+      "alias_of": null
+    },
+    {
+      "name": "greydog",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/greydog/0333e5c17096845a.png",
+      "alias_of": null
+    },
+    {
+      "name": "grimacing_cat",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/grimacing_cat/3e866da1c582fd90.png",
+      "alias_of": null
+    },
+    {
+      "name": "grinning-slackbot",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/grinning-slackbot/f52a3401cf31d3a8.png",
+      "alias_of": null
+    },
+    {
+      "name": "guangong",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/guangong/828e0f043ca4e27c.png",
+      "alias_of": null
+    },
+    {
+      "name": "gude",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/gude/782b0efee6efc774.png",
+      "alias_of": null
+    },
+    {
+      "name": "gugugu",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/gugugu/c2495e20b3425342.gif",
+      "alias_of": null
+    },
+    {
+      "name": "guinness",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/guinness/b323e79b8c3e2464.png",
+      "alias_of": null
+    },
+    {
+      "name": "gyarados",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/gyarados/48885f227ee37741.png",
+      "alias_of": null
+    },
+    {
+      "name": "hachiware-hui-huang",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/hachiware-hui-huang/222b06d8666f01c6.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "hachiware-walk-with-stick",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/hachiware-walk-with-stick/26b73e2593b935fc.png",
+      "alias_of": null
+    },
+    {
+      "name": "hachiware-wan-du-zi",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/hachiware-wan-du-zi/0f6772a1a5c34e62.gif",
+      "alias_of": null
+    },
+    {
+      "name": "haha",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/haha/1a5767123430b6dc.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "hahah",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/hahah/e886788a6e69005f.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "hajimi-motou",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/hajimi-motou/8b24240299d0560d.png",
+      "alias_of": null
+    },
+    {
+      "name": "handclap",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/handclap/7b9432c7baaf5623.gif",
+      "alias_of": null
+    },
+    {
+      "name": "handsome-bao",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/handsome-bao/bce531028c93c143.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "handsome-vision",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/handsome-vision/7454ff23486a81b4.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "handsome-well",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/handsome-well/ef372d5ccff87aab.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "hao-hao-hao",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/hao-hao-hao/619d30c08192f718.png",
+      "alias_of": null
+    },
+    {
+      "name": "haolemei",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/haolemei/c8de16fbe658ce92.png",
+      "alias_of": null
+    },
+    {
+      "name": "haoyong",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/haoyong/c1b772d74b62cb4a.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "haozhi-deal-with-it",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/haozhi-deal-with-it/30fad5f84ffaec23.gif",
+      "alias_of": null
+    },
+    {
+      "name": "haozhi-zoom-close",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/haozhi-zoom-close/9c5addf80c231e37.gif",
+      "alias_of": null
+    },
+    {
+      "name": "happy-cat",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/happy-cat/0fc2ce2ac1bd937c.png",
+      "alias_of": null
+    },
+    {
+      "name": "happy-dance",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/happy-dance/287ed1666d765fa3.gif",
+      "alias_of": null
+    },
+    {
+      "name": "happy-shark",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/happy-shark/e424e15bf2caaa72.png",
+      "alias_of": null
+    },
+    {
+      "name": "happydog",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/happydog/721ff0a4098b119a.gif",
+      "alias_of": null
+    },
+    {
+      "name": "happyfi",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/happyfi/44e7ef8c60545da5.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "haven't-gotten-in-the-car",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/haven%2527t-gotten-in-the-car/ff1439c4b062adec.gif",
+      "alias_of": null
+    },
+    {
+      "name": "headache",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/headache/76d121d38bdef1f7.gif",
+      "alias_of": null
+    },
+    {
+      "name": "heads-down",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/heads-down/8454aeef633100ec.png",
+      "alias_of": null
+    },
+    {
+      "name": "heart_pizza",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/heart_pizza/c75087ae12d875e8.png",
+      "alias_of": null
+    },
+    {
+      "name": "heart-eyes-slackbot",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/heart-eyes-slackbot/f52a3401cf31d3a8.png",
+      "alias_of": null
+    },
+    {
+      "name": "heart-hopping",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/heart-hopping/9bf95a6a64940673.gif",
+      "alias_of": null
+    },
+    {
+      "name": "heart-love",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/heart-love/55963a58f8297c58.gif",
+      "alias_of": null
+    },
+    {
+      "name": "heart-moe",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/heart-moe/af2d3ee8506e6a53.gif",
+      "alias_of": null
+    },
+    {
+      "name": "heart-thx",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/heart-thx/b004ef5a78ecad46.png",
+      "alias_of": null
+    },
+    {
+      "name": "hehehe",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/hehehe/b7d857da5cba780e.gif",
+      "alias_of": null
+    },
+    {
+      "name": "heihei",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/heihei/5a3f646c26a2efe5.png",
+      "alias_of": null
+    },
+    {
+      "name": "here",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/here/8454aeef633100ec.png",
+      "alias_of": null
+    },
+    {
+      "name": "high-priority",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/high-priority/c7f68fb6d212409e.png",
+      "alias_of": null
+    },
+    {
+      "name": "highfive",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/highfive/6b28026fb672939c.gif",
+      "alias_of": null
+    },
+    {
+      "name": "hina-force-a-smile",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/hina-force-a-smile/0f87735777025863.png",
+      "alias_of": null
+    },
+    {
+      "name": "hmmmmm",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/hmmmmm/091de157e6c257e9.gif",
+      "alias_of": null
+    },
+    {
+      "name": "hold-nose",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/hold-nose/f4ab8e3916f9c33a.gif",
+      "alias_of": null
+    },
+    {
+      "name": "holding-back-tears-slackbot",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/holding-back-tears-slackbot/f52a3401cf31d3a8.png",
+      "alias_of": null
+    },
+    {
+      "name": "hongwen",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/hongwen/2917d905a70923d3.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "horatio-caine-means-business-csi",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/horatio-caine-means-business-csi/8b74f8443eb3514e.gif",
+      "alias_of": null
+    },
+    {
+      "name": "hot-desking",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/hot-desking/50f425e953b615b8.png",
+      "alias_of": null
+    },
+    {
+      "name": "hug-pika",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/hug-pika/a8615e03695a7107.gif",
+      "alias_of": null
+    },
+    {
+      "name": "huh",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/huh/36d721607356485e.gif",
+      "alias_of": null
+    },
+    {
+      "name": "i_am_so_vegetable",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/i_am_so_vegetable/3766f8576f01e7a9.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "i_laugh_you",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/i_laugh_you/29bd5cd40583fc74.png",
+      "alias_of": null
+    },
+    {
+      "name": "i_peter_heart_this",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/i_peter_heart_this/7c33f064d1e814ef.png",
+      "alias_of": null
+    },
+    {
+      "name": "i-am-sb",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/i-am-sb/7d95ba059a510f9e.png",
+      "alias_of": null
+    },
+    {
+      "name": "i-dont-understand",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/i-dont-understand/061e91fda735b1cb.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "i-got-you",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/i-got-you/becec4076232f5d5.png",
+      "alias_of": null
+    },
+    {
+      "name": "i-need-a-break",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/i-need-a-break/d61acd111267db1f.gif",
+      "alias_of": null
+    },
+    {
+      "name": "i-want-them-all",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/i-want-them-all/6666b0f85c13899b.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "icy-deal-with-it",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/icy-deal-with-it/8331f2126e47105b.gif",
+      "alias_of": null
+    },
+    {
+      "name": "icy-gun",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/icy-gun/b86ee320284aabae.gif",
+      "alias_of": null
+    },
+    {
+      "name": "icy-jam",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/icy-jam/23b0472781e7f3b6.gif",
+      "alias_of": null
+    },
+    {
+      "name": "icy-pet",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/icy-pet/46a7b038e68d8f3b.gif",
+      "alias_of": null
+    },
+    {
+      "name": "icy-pet2",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/icy-pet2/b1f59ac73ba6a538.gif",
+      "alias_of": null
+    },
+    {
+      "name": "icy-zoom-in",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/icy-zoom-in/226ef3be0e44f528.gif",
+      "alias_of": null
+    },
+    {
+      "name": "im-sick",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/im-sick/8dc425c3cece1e02.gif",
+      "alias_of": null
+    },
+    {
+      "name": "image",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/image/52073671b957c493.png",
+      "alias_of": null
+    },
+    {
+      "name": "image-3",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/image-3/cbe74121f2789292.png",
+      "alias_of": null
+    },
+    {
+      "name": "images",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/images/124c287c1a2f03a1.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "img_20230705_143635",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/img_20230705_143635/82b507361bc19f8b.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "img_5292",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/img_5292/512099337593cec8.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "img_已进山",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/img_%25E5%25B7%25B2%25E8%25BF%259B%25E5%25B1%25B1/b1186c225d0affb6.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "img_暂停营业",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/img_%25E6%259A%2582%25E5%2581%259C%25E8%2590%25A5%25E4%25B8%259A/61d14982ad12483e.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "inbound_lead",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/inbound_lead/a63c8492d1a57296.gif",
+      "alias_of": null
+    },
+    {
+      "name": "internet-problems",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/internet-problems/8454aeef633100ec.png",
+      "alias_of": null
+    },
+    {
+      "name": "it_help_desk",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/it_help_desk/5bb7e83dc60a2cf5.gif",
+      "alias_of": null
+    },
+    {
+      "name": "jake_wink",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/jake_wink/f5da7d8d2364d4e9.gif",
+      "alias_of": null
+    },
+    {
+      "name": "jam",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/jam/9fccf0b44b8baaef.gif",
+      "alias_of": null
+    },
+    {
+      "name": "james",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/james/b7bf8e6854f01964.png",
+      "alias_of": null
+    },
+    {
+      "name": "james_bond",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/james_bond/33287f8b9e3c9df6.gif",
+      "alias_of": null
+    },
+    {
+      "name": "james-jam",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/james-jam/b7b4e6043a0cf453.gif",
+      "alias_of": null
+    },
+    {
+      "name": "james-pet",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/james-pet/bfa69c04f8055df1.gif",
+      "alias_of": null
+    },
+    {
+      "name": "jamesyuan-shake",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/jamesyuan-shake/4d066be1dc3dbf0e.gif",
+      "alias_of": null
+    },
+    {
+      "name": "jason-easy",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/jason-easy/adf7bd8761e7eb26.png",
+      "alias_of": null
+    },
+    {
+      "name": "jason-easy-zoom",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/jason-easy-zoom/58d6ea3b5df01651.gif",
+      "alias_of": null
+    },
+    {
+      "name": "jason-greeting",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/jason-greeting/ea57ba6a0068b1e3.png",
+      "alias_of": null
+    },
+    {
+      "name": "java",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/java/c418e8dab076545c.png",
+      "alias_of": null
+    },
+    {
+      "name": "jay_yyds",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/jay_yyds/89718bc017897425.png",
+      "alias_of": null
+    },
+    {
+      "name": "jerrys_gaze",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/jerrys_gaze/7fdd9e8324dc66a7.png",
+      "alias_of": null
+    },
+    {
+      "name": "jet",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/jet/31c749b34af33daa.png",
+      "alias_of": null
+    },
+    {
+      "name": "jia-qian",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/jia-qian/a6c3bc514d44a8d5.gif",
+      "alias_of": null
+    },
+    {
+      "name": "jiaxi-spin-colors-fast",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/jiaxi-spin-colors-fast/87a0693c4bf3dce9.gif",
+      "alias_of": null
+    },
+    {
+      "name": "jim-tilt",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/jim-tilt/a54a9bcf7232c8b4.gif",
+      "alias_of": null
+    },
+    {
+      "name": "jin-wan-8-dian",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/jin-wan-8-dian/7e174189d5e5cc91.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "jira",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/jira/972e4450e0ff8470.png",
+      "alias_of": null
+    },
+    {
+      "name": "jiuweilezhedianshi",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/jiuweilezhedianshi/f96d994080186334.gif",
+      "alias_of": null
+    },
+    {
+      "name": "joe-deal-with-it",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/joe-deal-with-it/c682fa03559dcb83.gif",
+      "alias_of": null
+    },
+    {
+      "name": "jolin-deal-with-it",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/jolin-deal-with-it/2f9c37bfded83f7a.gif",
+      "alias_of": null
+    },
+    {
+      "name": "jolin-scroll",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/jolin-scroll/07ca3a9863080076.gif",
+      "alias_of": null
+    },
+    {
+      "name": "joseph",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/joseph/c2de95f5bf295c93.png",
+      "alias_of": null
+    },
+    {
+      "name": "joy-laugh",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/joy-laugh/46b5ca672b1e3d91.png",
+      "alias_of": null
+    },
+    {
+      "name": "jquery-lao-fu",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/jquery-lao-fu/3bec2db938c9ab5e.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "js",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/js/b4be7a00d8ce6c13.png",
+      "alias_of": null
+    },
+    {
+      "name": "junbao-deal-with-it",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/junbao-deal-with-it/e7fd4d488502f780.gif",
+      "alias_of": null
+    },
+    {
+      "name": "juya",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/juya/e174f27499459f5e.png",
+      "alias_of": null
+    },
+    {
+      "name": "jynx",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/jynx/fb227e4f5259eb95.gif",
+      "alias_of": null
+    },
+    {
+      "name": "kaopu",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/kaopu/ed1b22d54e12de05.png",
+      "alias_of": null
+    },
+    {
+      "name": "kawaii",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/kawaii/a44e07b89bed4444.png",
+      "alias_of": null
+    },
+    {
+      "name": "keanu-thanks",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/keanu-thanks/60c554761b795e28.gif",
+      "alias_of": null
+    },
+    {
+      "name": "kermit",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/kermit/c170ac855d963e99.png",
+      "alias_of": null
+    },
+    {
+      "name": "kermit_uhoh",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/kermit_uhoh/aa77d46471a341e8.png",
+      "alias_of": null
+    },
+    {
+      "name": "kevin-tilt",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/kevin-tilt/1048dbb60d78df76.gif",
+      "alias_of": null
+    },
+    {
+      "name": "kid-drop-off",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/kid-drop-off/50f425e953b615b8.png",
+      "alias_of": null
+    },
+    {
+      "name": "kids",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/kids/8454aeef633100ec.png",
+      "alias_of": null
+    },
+    {
+      "name": "kimkcrying",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/kimkcrying/013f2e1ad604a3b5.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "kirby_dance",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/kirby_dance/8cb8a9bb47fbc6ce.gif",
+      "alias_of": null
+    },
+    {
+      "name": "kirby_jam",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/kirby_jam/07ade854edc9024f.gif",
+      "alias_of": null
+    },
+    {
+      "name": "kirby_vibing",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/kirby_vibing/3336c2a17cfcf716.gif",
+      "alias_of": null
+    },
+    {
+      "name": "kitkat",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/kitkat/558611c84672d21e.png",
+      "alias_of": null
+    },
+    {
+      "name": "knight",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/knight/cc3673cd6625155c.gif",
+      "alias_of": null
+    },
+    {
+      "name": "knowledge-intake",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/knowledge-intake/36015237a26a3274.png",
+      "alias_of": null
+    },
+    {
+      "name": "kobe",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/kobe/4780cf681824618c.png",
+      "alias_of": null
+    },
+    {
+      "name": "kobeshhh",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/kobeshhh/b9772fa32ac56662.gif",
+      "alias_of": null
+    },
+    {
+      "name": "kokoro-lol",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/kokoro-lol/3efd840a68a9d067.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "kombucha_girl",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/kombucha_girl/61968e248d136f98.png",
+      "alias_of": null
+    },
+    {
+      "name": "kpc",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/kpc/3706de0b0a3aa00b.gif",
+      "alias_of": null
+    },
+    {
+      "name": "kristine",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/kristine/714b07303280c8e9.png",
+      "alias_of": null
+    },
+    {
+      "name": "kuaikuai",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/kuaikuai/c7b04943913d4a54.png",
+      "alias_of": null
+    },
+    {
+      "name": "kuaikuai-01",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/kuaikuai-01/72437dededf68c5b.png",
+      "alias_of": null
+    },
+    {
+      "name": "kuaikuai-02",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/kuaikuai-02/2b10d22463b6a24b.png",
+      "alias_of": null
+    },
+    {
+      "name": "kuaikuai-03",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/kuaikuai-03/8c2189cc93726a10.png",
+      "alias_of": null
+    },
+    {
+      "name": "lame",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/lame/5e99585324b4a176.gif",
+      "alias_of": null
+    },
+    {
+      "name": "lan-yang-yang-crying",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/lan-yang-yang-crying/8fceb02253424ace.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "lan-yang-yang-glancing",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/lan-yang-yang-glancing/d3cfaf4e94c9fd11.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "lan-yang-yang-open-mouth",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/lan-yang-yang-open-mouth/74bd837d427a2bfa.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "lan-yang-yang-pouting",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/lan-yang-yang-pouting/a8301a6ff6e22b8d.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "lan-yang-yang-rolling-eyes",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/lan-yang-yang-rolling-eyes/eca5f497e1e471a9.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "lan-yang-yang-rubbing-eyes",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/lan-yang-yang-rubbing-eyes/a69a3040d0077352.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "lan-yang-yang-unhappy",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/lan-yang-yang-unhappy/679d3c1a237dfb98.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "lan-yang-yang-zany",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/lan-yang-yang-zany/c431cc77f40d0f32.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "landon-deal-with-it",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/landon-deal-with-it/c8c3a314e1a17cc6.gif",
+      "alias_of": null
+    },
+    {
+      "name": "landon-zoom-close-1",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/landon-zoom-close-1/e4068ce50b0ac003.gif",
+      "alias_of": null
+    },
+    {
+      "name": "laoshi",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/laoshi/38f8addd27a1cd94.png",
+      "alias_of": null
+    },
+    {
+      "name": "lark_ai_nailed_it_zh_v2",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/lark_ai_nailed_it_zh_v2/e89b330d5d7f9ce2.png",
+      "alias_of": null
+    },
+    {
+      "name": "lark_angry",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/lark_angry/6a68cac3e1f7b90f.png",
+      "alias_of": null
+    },
+    {
+      "name": "lark_attention",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/lark_attention/73d728134ce93764.png",
+      "alias_of": null
+    },
+    {
+      "name": "lark_awesome",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/lark_awesome/d61e0b13d360d456.png",
+      "alias_of": null
+    },
+    {
+      "name": "lark_awesomen_v2",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/lark_awesomen_v2/b612cd667ad94535.png",
+      "alias_of": null
+    },
+    {
+      "name": "lark_bigkiss",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/lark_bigkiss/86f10972e629d453.png",
+      "alias_of": null
+    },
+    {
+      "name": "lark_blackface",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/lark_blackface/6692ab5d21e51873.png",
+      "alias_of": null
+    },
+    {
+      "name": "lark_checkmark",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/lark_checkmark/3e1fc86b3938a1b5.png",
+      "alias_of": null
+    },
+    {
+      "name": "lark_chuckle",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/lark_chuckle/37a8139e2becc219.png",
+      "alias_of": null
+    },
+    {
+      "name": "lark_clap",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/lark_clap/112ce7c676049bfd.png",
+      "alias_of": null
+    },
+    {
+      "name": "lark_clownface_v1",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/lark_clownface_v1/c0a06fbbd1846cf8.png",
+      "alias_of": null
+    },
+    {
+      "name": "lark_cry",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/lark_cry/e0b8ca9f1e9a0c3b.png",
+      "alias_of": null
+    },
+    {
+      "name": "lark_eating",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/lark_eating/76caa9de5442b475.png",
+      "alias_of": null
+    },
+    {
+      "name": "lark_embarrassed",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/lark_embarrassed/5273b460ec193286.png",
+      "alias_of": null
+    },
+    {
+      "name": "lark_facepalm",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/lark_facepalm/f5448d9d60f21c03.png",
+      "alias_of": null
+    },
+    {
+      "name": "lark_fullmoonface_v1",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/lark_fullmoonface_v1/cfa6157d17bc971f.png",
+      "alias_of": null
+    },
+    {
+      "name": "lark_gogogo_v4",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/lark_gogogo_v4/617e072822bfa527.png",
+      "alias_of": null
+    },
+    {
+      "name": "lark_grin",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/lark_grin/f9660fe6cf2a5dc0.png",
+      "alias_of": null
+    },
+    {
+      "name": "lark_joyful",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/lark_joyful/f9660fe6cf2a5dc0.png",
+      "alias_of": null
+    },
+    {
+      "name": "lark_kiss",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/lark_kiss/84fa62ae229e768b.png",
+      "alias_of": null
+    },
+    {
+      "name": "lark_laugh",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/lark_laugh/dce8abbd89b89d59.png",
+      "alias_of": null
+    },
+    {
+      "name": "lark_lgtm_v3",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/lark_lgtm_v3/b26da6e5f53b8e7d.png",
+      "alias_of": null
+    },
+    {
+      "name": "lark_lol",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/lark_lol/6ea0bc562709a3fe.png",
+      "alias_of": null
+    },
+    {
+      "name": "lark_love",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/lark_love/a7cf14eb3aae8a79.png",
+      "alias_of": null
+    },
+    {
+      "name": "lark_onesecond",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/lark_onesecond/93aba48f63b62e62.png",
+      "alias_of": null
+    },
+    {
+      "name": "lark_proud",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/lark_proud/85d1b2398a30db82.png",
+      "alias_of": null
+    },
+    {
+      "name": "lark_smile",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/lark_smile/fc107321802f94b5.png",
+      "alias_of": null
+    },
+    {
+      "name": "lark_smooch",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/lark_smooch/e64c0a1ad56c021a.png",
+      "alias_of": null
+    },
+    {
+      "name": "lark_thumbsup_v2",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/lark_thumbsup_v2/37f0aca849d67d2b.png",
+      "alias_of": null
+    },
+    {
+      "name": "lark_typing",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/lark_typing/cbda1f90299fd65c.png",
+      "alias_of": null
+    },
+    {
+      "name": "lark_wail",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/lark_wail/7e9b6414b23f13c3.png",
+      "alias_of": null
+    },
+    {
+      "name": "lark_wow",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/lark_wow/2d665085547c5afe.png",
+      "alias_of": null
+    },
+    {
+      "name": "laser-eyes",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/laser-eyes/791288042cbc75ff.gif",
+      "alias_of": null
+    },
+    {
+      "name": "latiao",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/latiao/13853e2b8ab5bb6e.png",
+      "alias_of": null
+    },
+    {
+      "name": "laugh",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/laugh/adaceb3dfef79f2c.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "laugh-2",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/laugh-2/02a599a05fa31419.png",
+      "alias_of": null
+    },
+    {
+      "name": "laughing-slackbot",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/laughing-slackbot/f52a3401cf31d3a8.png",
+      "alias_of": null
+    },
+    {
+      "name": "lbw-smile",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/lbw-smile/d59791edef693764.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "leijun-shuang",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/leijun-shuang/d4a31f2d26f3d921.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "leo-flip",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/leo-flip/efef71fd02b871dd.gif",
+      "alias_of": null
+    },
+    {
+      "name": "leo-gun",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/leo-gun/866aba3421b09476.gif",
+      "alias_of": null
+    },
+    {
+      "name": "leo-jam",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/leo-jam/647ebb38f33d82dc.gif",
+      "alias_of": null
+    },
+    {
+      "name": "leprechaun",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/leprechaun/43159aa48e4e7307.gif",
+      "alias_of": null
+    },
+    {
+      "name": "let-me-think-think",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/let-me-think-think/f13ed692a7b68488.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "letmecc",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/letmecc/9fea5280e7a9a5de.png",
+      "alias_of": null
+    },
+    {
+      "name": "letsgo",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/letsgo/5aac3f67d412e003.png",
+      "alias_of": null
+    },
+    {
+      "name": "letter_c",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/letter_c/5c8feeb29f9f15f0.png",
+      "alias_of": null
+    },
+    {
+      "name": "letter_d",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/letter_d/5fd1da675c32237f.png",
+      "alias_of": null
+    },
+    {
+      "name": "lgtm",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/lgtm/d9f85305d50e6502.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "lightsaber",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/lightsaber/0bbc5e9593a9b2aa.png",
+      "alias_of": null
+    },
+    {
+      "name": "lilit",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/lilit/56003c58e57d8db1.png",
+      "alias_of": null
+    },
+    {
+      "name": "lily",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/lily/86b02821b1b89cfe.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "link-hop",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/link-hop/238f76a595323a4d.gif",
+      "alias_of": null
+    },
+    {
+      "name": "linkedin",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/linkedin/eb64bf59b64f827f.png",
+      "alias_of": null
+    },
+    {
+      "name": "liyunlong-genius",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/liyunlong-genius/3cc72ee8d6bfa072.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "loading",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/loading/30cb317a234aeee5.gif",
+      "alias_of": null
+    },
+    {
+      "name": "loading2",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/loading2/d0dad82a99ccb0a9.gif",
+      "alias_of": null
+    },
+    {
+      "name": "lol",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/lol/d75754bb0560fd5c.gif",
+      "alias_of": null
+    },
+    {
+      "name": "lolsob",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/lolsob/cd416c7654e351a1.png",
+      "alias_of": null
+    },
+    {
+      "name": "loopy-hanyan",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/loopy-hanyan/c5f7a5e09e6e8102.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "loopy-happy",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/loopy-happy/594448cecc16c961.png",
+      "alias_of": null
+    },
+    {
+      "name": "lossconnection",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/lossconnection/e66199e379e0d6c1.png",
+      "alias_of": null
+    },
+    {
+      "name": "love-work",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/love-work/e976f4faa3c3244f.png",
+      "alias_of": null
+    },
+    {
+      "name": "low-priority",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/low-priority/06638b484a3437df.png",
+      "alias_of": null
+    },
+    {
+      "name": "lunch",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/lunch/ce6299f9ee4edc4f.gif",
+      "alias_of": null
+    },
+    {
+      "name": "lunch-is-served",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/lunch-is-served/7bea1c0ec958c591.gif",
+      "alias_of": null
+    },
+    {
+      "name": "luz-play",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/luz-play/9e0d75f7b518cc49.gif",
+      "alias_of": null
+    },
+    {
+      "name": "lydia-burn",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/lydia-burn/28763dbb9d433bf1.gif",
+      "alias_of": null
+    },
+    {
+      "name": "lydia-cool",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/lydia-cool/12e443fb398c0672.gif",
+      "alias_of": null
+    },
+    {
+      "name": "lydia-gun",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/lydia-gun/3487e4b20f2c0805.gif",
+      "alias_of": null
+    },
+    {
+      "name": "mad",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/mad/22f2144f478543d8.png",
+      "alias_of": null
+    },
+    {
+      "name": "madbig",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/madbig/b80e2651b1aea71c.png",
+      "alias_of": null
+    },
+    {
+      "name": "maodie-haqi",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/maodie-haqi/1ea1035c5d5b9394.gif",
+      "alias_of": null
+    },
+    {
+      "name": "mario_luigi_dance",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/mario_luigi_dance/0e4d410ae0359153.gif",
+      "alias_of": null
+    },
+    {
+      "name": "mario-dance",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/mario-dance/e1d56cdf67d8c974.gif",
+      "alias_of": null
+    },
+    {
+      "name": "mars",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/mars/c7baa05259d65b9d.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "mary",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/mary/ce8738070cfb9903.png",
+      "alias_of": null
+    },
+    {
+      "name": "me",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/me/55a686cac3d38a24.png",
+      "alias_of": null
+    },
+    {
+      "name": "medium-priority",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/medium-priority/d418b71736db11bd.png",
+      "alias_of": null
+    },
+    {
+      "name": "mel-deal-with-it",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/mel-deal-with-it/7f0d3e0f1b03b312.gif",
+      "alias_of": null
+    },
+    {
+      "name": "mel-mega-bounce",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/mel-mega-bounce/4c355c4c28f835f4.gif",
+      "alias_of": null
+    },
+    {
+      "name": "mel-pet",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/mel-pet/8cfdfe4c11d4e877.gif",
+      "alias_of": null
+    },
+    {
+      "name": "mellie-deal-with-it",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/mellie-deal-with-it/90faa63daa0adf15.gif",
+      "alias_of": null
+    },
+    {
+      "name": "mellie-gun",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/mellie-gun/04e693f8b4e92067.gif",
+      "alias_of": null
+    },
+    {
+      "name": "mellie-jammies",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/mellie-jammies/50665fe239d63a50.gif",
+      "alias_of": null
+    },
+    {
+      "name": "mellie-pet",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/mellie-pet/17902e4e5d0c620e.gif",
+      "alias_of": null
+    },
+    {
+      "name": "melody-deal-with-it",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/melody-deal-with-it/12e55d9b7cf71d21.gif",
+      "alias_of": null
+    },
+    {
+      "name": "melody-pet",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/melody-pet/4f4b1ff4ebfb13ef.gif",
+      "alias_of": null
+    },
+    {
+      "name": "melting-smiley-face",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/melting-smiley-face/08433f0cc1ef93f4.png",
+      "alias_of": null
+    },
+    {
+      "name": "melting-smiley-face-with-tear",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/melting-smiley-face-with-tear/e6e7ae4323c38a07.png",
+      "alias_of": null
+    },
+    {
+      "name": "meow_code",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/meow_code/8a14ccba69af60eb.gif",
+      "alias_of": null
+    },
+    {
+      "name": "meow_coffee",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/meow_coffee/2321986eed42ae5e.png",
+      "alias_of": null
+    },
+    {
+      "name": "meow_heart",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/meow_heart/b43748da30698dee.png",
+      "alias_of": null
+    },
+    {
+      "name": "meow_heart_bongo",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/meow_heart_bongo/f3958981207545c9.gif",
+      "alias_of": null
+    },
+    {
+      "name": "meow_knife",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/meow_knife/61aed050a74a1e48.png",
+      "alias_of": null
+    },
+    {
+      "name": "meowhello",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/meowhello/0220dd013cfad493.png",
+      "alias_of": null
+    },
+    {
+      "name": "meredith-gun",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/meredith-gun/af4ee310921c33ca.gif",
+      "alias_of": null
+    },
+    {
+      "name": "meredith-jammies",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/meredith-jammies/24f69a1bc1f58321.gif",
+      "alias_of": null
+    },
+    {
+      "name": "meteor",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/meteor/c8d7840a3f0e5d62.gif",
+      "alias_of": null
+    },
+    {
+      "name": "metoo",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/metoo/eed64c5d2983de3c.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "mic-drop",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/mic-drop/976906543e31d7d7.gif",
+      "alias_of": null
+    },
+    {
+      "name": "michigan",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/michigan/5711007fcd938d46.png",
+      "alias_of": null
+    },
+    {
+      "name": "microsoft",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/microsoft/afeb2104a0d1099d.png",
+      "alias_of": null
+    },
+    {
+      "name": "mild-panic-intensifies",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/mild-panic-intensifies/693ff2bee4ab1e8c.gif",
+      "alias_of": null
+    },
+    {
+      "name": "mili-pet",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/mili-pet/dfd121a25ec74bdf.gif",
+      "alias_of": null
+    },
+    {
+      "name": "milotic",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/milotic/6d138fa6c030fbb8.gif",
+      "alias_of": null
+    },
+    {
+      "name": "mingbai",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/mingbai/8661792538d3709f.png",
+      "alias_of": null
+    },
+    {
+      "name": "moe-angry",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/moe-angry/38746412d84fb2fa.png",
+      "alias_of": null
+    },
+    {
+      "name": "moe-cool",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/moe-cool/55b206ffb3e9da1d.png",
+      "alias_of": null
+    },
+    {
+      "name": "moe-dance",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/moe-dance/f0a7d087b1ec04d9.gif",
+      "alias_of": null
+    },
+    {
+      "name": "moe-good-dog",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/moe-good-dog/c8afd13c912fafb5.gif",
+      "alias_of": null
+    },
+    {
+      "name": "moe-hype",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/moe-hype/4b3a645cfb6b4a97.gif",
+      "alias_of": null
+    },
+    {
+      "name": "moe-laugh",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/moe-laugh/4f8deb163280035a.png",
+      "alias_of": null
+    },
+    {
+      "name": "moe-sad",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/moe-sad/b9d9ee8caf99a632.png",
+      "alias_of": null
+    },
+    {
+      "name": "moe-sleepy",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/moe-sleepy/0b900f7f648d7886.png",
+      "alias_of": null
+    },
+    {
+      "name": "moe-smile",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/moe-smile/802173892c852fec.png",
+      "alias_of": null
+    },
+    {
+      "name": "moe-surprised",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/moe-surprised/2e7dba1cc9bead3f.png",
+      "alias_of": null
+    },
+    {
+      "name": "moe-wink",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/moe-wink/881b17b353ca5b1a.png",
+      "alias_of": null
+    },
+    {
+      "name": "moego",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/moego/2683c1f03b1ff745.png",
+      "alias_of": null
+    },
+    {
+      "name": "moego-coach",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/moego-coach/ab44b5548332b6b6.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "moego-flag",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/moego-flag/0279942242300c97.png",
+      "alias_of": null
+    },
+    {
+      "name": "moego-learning",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/moego-learning/0300dcedefcc2c44.png",
+      "alias_of": null
+    },
+    {
+      "name": "moego-santa",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/moego-santa/919f58a3f2576904.png",
+      "alias_of": null
+    },
+    {
+      "name": "moegoparty",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/moegoparty/adb3a0ef6cc28816.gif",
+      "alias_of": null
+    },
+    {
+      "name": "moegospin",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/moegospin/8733fcd2af14f722.gif",
+      "alias_of": null
+    },
+    {
+      "name": "monkey_pray",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/monkey_pray/a73a751cbf7fe628.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "moving-van",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/moving-van/ba814b20ab797874.gif",
+      "alias_of": null
+    },
+    {
+      "name": "mufan-yyds",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/mufan-yyds/042e8b0b6b1a9b91.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "multi-dring",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/multi-dring/99ec6ce5a84d5289.gif",
+      "alias_of": null
+    },
+    {
+      "name": "my-man",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/my-man/408ef6c9fca47338.png",
+      "alias_of": null
+    },
+    {
+      "name": "nanbeng",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/nanbeng/14d433c747379e9e.png",
+      "alias_of": null
+    },
+    {
+      "name": "nanbeng2",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/nanbeng2/7118851231faa765.png",
+      "alias_of": null
+    },
+    {
+      "name": "naotou_dan",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/naotou_dan/de2b5a5eea628530.gif",
+      "alias_of": null
+    },
+    {
+      "name": "naotou1",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/naotou1/51ccc3cd3fe3ef2b.gif",
+      "alias_of": null
+    },
+    {
+      "name": "nathan",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/nathan/2ecdb6daf7774d54.png",
+      "alias_of": null
+    },
+    {
+      "name": "naur",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/naur/ad81941a28a6855c.png",
+      "alias_of": null
+    },
+    {
+      "name": "nb",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/nb/102fc82a634db05b.png",
+      "alias_of": null
+    },
+    {
+      "name": "neko_sigh",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/neko_sigh/10526ab3dea32523.png",
+      "alias_of": null
+    },
+    {
+      "name": "new_avatar",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/new_avatar/3d5aacfd4cd11be7.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "nice",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/nice/15074e0bd5c36661.png",
+      "alias_of": null
+    },
+    {
+      "name": "nice2",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/nice2/f3be4a111f8a9114.gif",
+      "alias_of": null
+    },
+    {
+      "name": "nicenice",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/nicenice/8ecc76ea86bd55c6.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "nick-shake",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/nick-shake/db062e8bce3764e0.gif",
+      "alias_of": null
+    },
+    {
+      "name": "nico-handsome",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/nico-handsome/7e10080e076a9a9b.png",
+      "alias_of": null
+    },
+    {
+      "name": "night",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/night/20f55f09eb44ec92.png",
+      "alias_of": null
+    },
+    {
+      "name": "nina-shock",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/nina-shock/350264658121c533.gif",
+      "alias_of": null
+    },
+    {
+      "name": "niua",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/niua/8ce20cf1a0bdb088.png",
+      "alias_of": null
+    },
+    {
+      "name": "no_time_left",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/no_time_left/74716f10d27700b9.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "no-healthy-upstream",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/no-healthy-upstream/534883affbc5d1b7.png",
+      "alias_of": null
+    },
+    {
+      "name": "no-problem",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/no-problem/e8aab096922ffacc.png",
+      "alias_of": null
+    },
+    {
+      "name": "no-worries",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/no-worries/6397842c6cdf2b5f.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "nokia_terminate_tx",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/nokia_terminate_tx/4159aa4760e34a98.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "nokia-arranged",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/nokia-arranged/36b058a7226be643.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "non-nom",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/non-nom/82fe35669ad80858.gif",
+      "alias_of": null
+    },
+    {
+      "name": "nonsense",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/nonsense/c2fac861dd45e246.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "nope",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/nope/bbb4eb4df330a2cf.gif",
+      "alias_of": null
+    },
+    {
+      "name": "not-go",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/not-go/bfa256dceda1b879.png",
+      "alias_of": null
+    },
+    {
+      "name": "noted",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/noted/769339290ba86525.gif",
+      "alias_of": null
+    },
+    {
+      "name": "np-noproblem",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/np-noproblem/750f5e1d83e45537.gif",
+      "alias_of": null
+    },
+    {
+      "name": "nyan-cat",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/nyan-cat/411aba007ddffdfb.gif",
+      "alias_of": null
+    },
+    {
+      "name": "nyan-cat-tail",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/nyan-cat-tail/e87567f93fd09e70.gif",
+      "alias_of": null
+    },
+    {
+      "name": "nyan-cat-tail2",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/nyan-cat-tail2/2557b5c8a7b8a76a.gif",
+      "alias_of": null
+    },
+    {
+      "name": "nyancat",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/nyancat/286575f36cc15996.gif",
+      "alias_of": null
+    },
+    {
+      "name": "oh-yes",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/oh-yes/ab1b84b7a952baed.png",
+      "alias_of": null
+    },
+    {
+      "name": "okayspidey",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/okayspidey/2eef422dbd95acd2.png",
+      "alias_of": null
+    },
+    {
+      "name": "okok",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/okok/cb553e7f110bcf25.gif",
+      "alias_of": null
+    },
+    {
+      "name": "old_man",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/old_man/77e774f3b660ae79.gif",
+      "alias_of": null
+    },
+    {
+      "name": "oncall-only",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/oncall-only/034f1e0a4049ef5d.png",
+      "alias_of": null
+    },
+    {
+      "name": "one-sec-cooking",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/one-sec-cooking/8454aeef633100ec.png",
+      "alias_of": null
+    },
+    {
+      "name": "oneline3error",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/oneline3error/ecebc2e419cb73c1.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "oof",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/oof/4689f0ab9e5d26cf.png",
+      "alias_of": null
+    },
+    {
+      "name": "ooo",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/ooo/50f425e953b615b8.png",
+      "alias_of": null
+    },
+    {
+      "name": "oopsy-daisy",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/oopsy-daisy/0d879bcd993e5b89.gif",
+      "alias_of": null
+    },
+    {
+      "name": "orange-cat",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/orange-cat/328bd716d3324e46.png",
+      "alias_of": null
+    },
+    {
+      "name": "out_of_office",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/out_of_office/df5619f8d04cccb9.gif",
+      "alias_of": null
+    },
+    {
+      "name": "pac-man",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/pac-man/abc11d7eb6e083f4.gif",
+      "alias_of": null
+    },
+    {
+      "name": "pacman",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/pacman/a2b652ab0c103934.gif",
+      "alias_of": null
+    },
+    {
+      "name": "pajama_sam",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/pajama_sam/2020e0a26b5e2748.png",
+      "alias_of": null
+    },
+    {
+      "name": "partythumb",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/partythumb/7c94a66a3cb9ae8b.gif",
+      "alias_of": null
+    },
+    {
+      "name": "patrickboo",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/patrickboo/1c619a9ac39026a4.png",
+      "alias_of": null
+    },
+    {
+      "name": "pay-more",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/pay-more/cd29bdb63e3381b2.png",
+      "alias_of": null
+    },
+    {
+      "name": "pc-flip-fast",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/pc-flip-fast/a5158ffc807fb5f2.gif",
+      "alias_of": null
+    },
+    {
+      "name": "pc-shake",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/pc-shake/a88e1d16f75461b7.gif",
+      "alias_of": null
+    },
+    {
+      "name": "pelican-huh",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/pelican-huh/3ca24bbb3d1afbc9.png",
+      "alias_of": null
+    },
+    {
+      "name": "pepe_box",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/pepe_box/ddbf01f7a8315db4.png",
+      "alias_of": null
+    },
+    {
+      "name": "pepe_girl",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/pepe_girl/984bdcf75666b047.png",
+      "alias_of": null
+    },
+    {
+      "name": "pepe_jedi",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/pepe_jedi/b6b60de7ec14b311.png",
+      "alias_of": null
+    },
+    {
+      "name": "pepeclaus",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/pepeclaus/374218ce05150eea.gif",
+      "alias_of": null
+    },
+    {
+      "name": "periodt",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/periodt/ffe2ec6cf17602b7.png",
+      "alias_of": null
+    },
+    {
+      "name": "perry",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/perry/4678b51fddeb29b6.gif",
+      "alias_of": null
+    },
+    {
+      "name": "pet-exec",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/pet-exec/ea33edd3245c3486.png",
+      "alias_of": null
+    },
+    {
+      "name": "peter",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/peter/ed85e91a973c5767.png",
+      "alias_of": null
+    },
+    {
+      "name": "peter-jam",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/peter-jam/6c19d5ef4d450ae7.gif",
+      "alias_of": null
+    },
+    {
+      "name": "peter-pet",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/peter-pet/8006b16bbefb2d26.gif",
+      "alias_of": null
+    },
+    {
+      "name": "pfftkobe",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/pfftkobe/2e3b8abc61dcf090.png",
+      "alias_of": null
+    },
+    {
+      "name": "piegg",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/piegg/379391f19642d050.gif",
+      "alias_of": null
+    },
+    {
+      "name": "piegg-scroll",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/piegg-scroll/993722e2e69635d6.gif",
+      "alias_of": null
+    },
+    {
+      "name": "piegg-zoom-close",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/piegg-zoom-close/396c7cd83c6225b3.gif",
+      "alias_of": null
+    },
+    {
+      "name": "pikachu",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/pikachu/fd926939aae6fa37.gif",
+      "alias_of": null
+    },
+    {
+      "name": "pikachu-excited",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/pikachu-excited/ddb8a7cac75d66ea.gif",
+      "alias_of": null
+    },
+    {
+      "name": "pinched-fingers",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/pinched-fingers/14d957a61e382547.gif",
+      "alias_of": null
+    },
+    {
+      "name": "pingu-celebrate",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/pingu-celebrate/2a35b970fad532ed.gif",
+      "alias_of": null
+    },
+    {
+      "name": "pingu-listen-to-music",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/pingu-listen-to-music/7c990c1bbf58562d.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "plus_1",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/plus_1/1f40fe132d5302bb.png",
+      "alias_of": null
+    },
+    {
+      "name": "plus1",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/plus1/09044396b374297a.png",
+      "alias_of": null
+    },
+    {
+      "name": "pogchamp",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/pogchamp/9f634b01592b550e.gif",
+      "alias_of": null
+    },
+    {
+      "name": "poke_pika",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/poke_pika/1bfdf2da300aa859.png",
+      "alias_of": null
+    },
+    {
+      "name": "poke_pika_angry",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/poke_pika_angry/d7ce69741a3d2f53.png",
+      "alias_of": null
+    },
+    {
+      "name": "poke_pika_wink",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/poke_pika_wink/43574186b7f789b8.png",
+      "alias_of": null
+    },
+    {
+      "name": "pokeball",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/pokeball/be9c41272114168f.png",
+      "alias_of": null
+    },
+    {
+      "name": "pokeball-roll",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/pokeball-roll/bcee249c25e5c570.gif",
+      "alias_of": null
+    },
+    {
+      "name": "pokemon-tease",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/pokemon-tease/7684c788d4ac4f88.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "ponyo",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/ponyo/8e0122d746625411.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "ponyo2",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/ponyo2/28a855fb3d0943bb.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "ponyo3",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/ponyo3/bc709ee2ecb1f7bb.png",
+      "alias_of": null
+    },
+    {
+      "name": "poo-bear",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/poo-bear/f6c55e1c25ebcd97.png",
+      "alias_of": null
+    },
+    {
+      "name": "pool",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/pool/9b796c818e56d4d7.gif",
+      "alias_of": null
+    },
+    {
+      "name": "pool2",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/pool2/41d98139e8c6a9e6.gif",
+      "alias_of": null
+    },
+    {
+      "name": "poolme",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/poolme/a3e2770620853619.png",
+      "alias_of": null
+    },
+    {
+      "name": "pop_cat",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/pop_cat/72af86785e4cbd42.gif",
+      "alias_of": null
+    },
+    {
+      "name": "popcorn_mj",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/popcorn_mj/fd33fe07215942d5.gif",
+      "alias_of": null
+    },
+    {
+      "name": "pot_of_gold",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/pot_of_gold/47e6b22f1d9ade1c.png",
+      "alias_of": null
+    },
+    {
+      "name": "product",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/product/79564b74b91e62c9.png",
+      "alias_of": null
+    },
+    {
+      "name": "product-update",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/product-update/89ee3d2f600be4ef.png",
+      "alias_of": null
+    },
+    {
+      "name": "pto",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/pto/b3d593284e761905.png",
+      "alias_of": null
+    },
+    {
+      "name": "pumped",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/pumped/86bffbc3fdd52f9b.png",
+      "alias_of": null
+    },
+    {
+      "name": "python",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/python/cd63c9a58b00fdd0.png",
+      "alias_of": null
+    },
+    {
+      "name": "qingyang-jam",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/qingyang-jam/b8d5511a2a7e7be8.gif",
+      "alias_of": null
+    },
+    {
+      "name": "qingyang-jammies",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/qingyang-jammies/c37d0ec99e8fbb4c.gif",
+      "alias_of": null
+    },
+    {
+      "name": "queen",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/queen/4d27d0943c383c5b.png",
+      "alias_of": null
+    },
+    {
+      "name": "question2",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/question2/f9a7231c5963dcf1.gif",
+      "alias_of": null
+    },
+    {
+      "name": "quick_parrot",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/quick_parrot/e49082017ea805fb.gif",
+      "alias_of": null
+    },
+    {
+      "name": "quickly",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/quickly/c5445beab24e89cd.gif",
+      "alias_of": null
+    },
+    {
+      "name": "qv_computer",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/qv_computer/ce4c6df254574924.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "qv_computer_no_background",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/qv_computer_no_background/04fe6e6a6dad9a19.png",
+      "alias_of": null
+    },
+    {
+      "name": "qv_computer_off_duty_status",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/qv_computer_off_duty_status/3dd4bacb65001b27.png",
+      "alias_of": null
+    },
+    {
+      "name": "qv_computer_off_duty_status_v2",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/qv_computer_off_duty_status_v2/70c1165e965617e6.png",
+      "alias_of": null
+    },
+    {
+      "name": "raffy",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/raffy/67c048bd208a9c02.png",
+      "alias_of": null
+    },
+    {
+      "name": "rainbow_blobpray",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/rainbow_blobpray/1324f15e5a452309.gif",
+      "alias_of": null
+    },
+    {
+      "name": "rainbow-cat-dance",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/rainbow-cat-dance/cea4c4f4a6e41192.gif",
+      "alias_of": null
+    },
+    {
+      "name": "react_parrot",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/react_parrot/4b0ab214d094c660.gif",
+      "alias_of": null
+    },
+    {
+      "name": "rebekah",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/rebekah/8517c47900fa0b7d.png",
+      "alias_of": null
+    },
+    {
+      "name": "red-dog",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/red-dog/6e37e9526d48bc99.png",
+      "alias_of": null
+    },
+    {
+      "name": "redface",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/redface/75fd5a76af989e53.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "release",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/release/a8e9ec5d97c6d753.png",
+      "alias_of": null
+    },
+    {
+      "name": "relieved-slackbot",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/relieved-slackbot/f52a3401cf31d3a8.png",
+      "alias_of": null
+    },
+    {
+      "name": "renqi",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/renqi/ac354fd783c1b942.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "resume-screening",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/resume-screening/39075eeef2f553dd.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "revops-ticket",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/revops-ticket/443262f3a25895b1.png",
+      "alias_of": null
+    },
+    {
+      "name": "rex-is-smarter-than-you",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/rex-is-smarter-than-you/f2ea71f71a4492cf.png",
+      "alias_of": null
+    },
+    {
+      "name": "ria",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/ria/e23cb35e2b749c6c.png",
+      "alias_of": null
+    },
+    {
+      "name": "rich-slow-parrot",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/rich-slow-parrot/7014a875317d5e3c.gif",
+      "alias_of": null
+    },
+    {
+      "name": "rickroll",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/rickroll/3e8fc690cb676b08.gif",
+      "alias_of": null
+    },
+    {
+      "name": "ritchie-dance",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/ritchie-dance/317c4cff8911017b.gif",
+      "alias_of": null
+    },
+    {
+      "name": "robin",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/robin/37f9790b1b484371.png",
+      "alias_of": null
+    },
+    {
+      "name": "rocco-bounce",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/rocco-bounce/69d02cd2b4c2286b.gif",
+      "alias_of": null
+    },
+    {
+      "name": "rocco-play2",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/rocco-play2/6f56365f43fde830.gif",
+      "alias_of": null
+    },
+    {
+      "name": "rocket_dog",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/rocket_dog/a3ee80a9bc08978a.png",
+      "alias_of": null
+    },
+    {
+      "name": "rocket-launch",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/rocket-launch/ec5f0582cfbeda63.png",
+      "alias_of": null
+    },
+    {
+      "name": "rocoo-play1",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/rocoo-play1/cfc08e19f55db46e.gif",
+      "alias_of": null
+    },
+    {
+      "name": "rolling-on-the-floor-laughing",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/rolling-on-the-floor-laughing/f2f18ca8fef3a600.gif",
+      "alias_of": null
+    },
+    {
+      "name": "ross",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/ross/6fcda7781fde6dfa.png",
+      "alias_of": null
+    },
+    {
+      "name": "ruby",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/ruby/061588652c1aa832.gif",
+      "alias_of": null
+    },
+    {
+      "name": "run",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/run/9f97159c062a24a2.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "run-forrest-run",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/run-forrest-run/7f65da837fc20c69.gif",
+      "alias_of": null
+    },
+    {
+      "name": "rust",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/rust/216dd125dd65c642.png",
+      "alias_of": null
+    },
+    {
+      "name": "rust_ferris",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/rust_ferris/52adf4191e3e6782.png",
+      "alias_of": null
+    },
+    {
+      "name": "sad_cloud",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/sad_cloud/a8af1eb91b335704.gif",
+      "alias_of": null
+    },
+    {
+      "name": "sadblob",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/sadblob/465c801323c54faf.gif",
+      "alias_of": null
+    },
+    {
+      "name": "sadcat",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/sadcat/310e6cedc69a757e.png",
+      "alias_of": null
+    },
+    {
+      "name": "sadfrog",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/sadfrog/74ac6f157cc3870d.png",
+      "alias_of": null
+    },
+    {
+      "name": "sai",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/sai/76f5d7985c17742b.png",
+      "alias_of": null
+    },
+    {
+      "name": "salesforce",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/salesforce/51a5c05145ec83aa.png",
+      "alias_of": null
+    },
+    {
+      "name": "sam_p",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/sam_p/9054065392daf420.png",
+      "alias_of": null
+    },
+    {
+      "name": "sam_s",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/sam_s/198ceca6570da786.png",
+      "alias_of": null
+    },
+    {
+      "name": "sam-deal-with-it",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/sam-deal-with-it/70106f41f512a577.gif",
+      "alias_of": null
+    },
+    {
+      "name": "sam-jam",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/sam-jam/5fdd85799d7367f2.gif",
+      "alias_of": null
+    },
+    {
+      "name": "sam-party-blob",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/sam-party-blob/705c6cfa31d075f6.gif",
+      "alias_of": null
+    },
+    {
+      "name": "sam-pet",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/sam-pet/73bcd27c48182776.gif",
+      "alias_of": null
+    },
+    {
+      "name": "sam-scroll",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/sam-scroll/9b3625a648a1f311.gif",
+      "alias_of": null
+    },
+    {
+      "name": "sam-slide",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/sam-slide/309e73e24ca06e04.gif",
+      "alias_of": null
+    },
+    {
+      "name": "same",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/same/8c51202acbbfc1c4.png",
+      "alias_of": null
+    },
+    {
+      "name": "sandbag",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/sandbag/27c996c5dedcafaf.png",
+      "alias_of": null
+    },
+    {
+      "name": "sanic",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/sanic/f9d42b5a5b98e514.png",
+      "alias_of": null
+    },
+    {
+      "name": "sanic-gotta-run",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/sanic-gotta-run/5b1de757b7224601.gif",
+      "alias_of": null
+    },
+    {
+      "name": "santa-slay",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/santa-slay/33be0646b95653ba.gif",
+      "alias_of": null
+    },
+    {
+      "name": "sb",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/sb/6be23335e642bbff.png",
+      "alias_of": null
+    },
+    {
+      "name": "scared",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/scared/7f9f44afaab36512.png",
+      "alias_of": null
+    },
+    {
+      "name": "scary_squidward",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/scary_squidward/214fdb820548af9d.png",
+      "alias_of": null
+    },
+    {
+      "name": "screamcat",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/screamcat/e2f541304e12d32e.png",
+      "alias_of": null
+    },
+    {
+      "name": "screaming_cowboy",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/screaming_cowboy/3705f4cf57d50808.png",
+      "alias_of": null
+    },
+    {
+      "name": "screenshot-2025-08-07-at-84046-pm",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/screenshot-2025-08-07-at-84046-pm/a8766c911093ca64.png",
+      "alias_of": null
+    },
+    {
+      "name": "sean",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/sean/6e70606397d783d5.png",
+      "alias_of": null
+    },
+    {
+      "name": "search",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/search/e9637e677fb4c485.png",
+      "alias_of": null
+    },
+    {
+      "name": "self-care",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/self-care/b3d593284e761905.png",
+      "alias_of": null
+    },
+    {
+      "name": "shake-tyltyl",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/shake-tyltyl/04c8b95c4a246de5.gif",
+      "alias_of": null
+    },
+    {
+      "name": "shaking-fist-dark-mode",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/shaking-fist-dark-mode/b9af1cd07deb3bf0.gif",
+      "alias_of": null
+    },
+    {
+      "name": "shark-arm",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/shark-arm/39b0df5ee6ad86c3.png",
+      "alias_of": null
+    },
+    {
+      "name": "shei-dong-a",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/shei-dong-a/3089f6ac06027111.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "sherlock_bug",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/sherlock_bug/5f5507353ad328bd.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "sherlock_check",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/sherlock_check/8dc1a57464ec3c11.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "sherlock_clue",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/sherlock_clue/bbb09f6f4791064b.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "sherlock_doubt",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/sherlock_doubt/6695ac6557f9946c.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "sherlock_roger",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/sherlock_roger/e569fa1dd3ff33cd.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "sherlock_solved",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/sherlock_solved/230fc690d9626bb2.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "sherlock-pet",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/sherlock-pet/157965d5bdc3a46f.gif",
+      "alias_of": null
+    },
+    {
+      "name": "shhpepeq",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/shhpepeq/fb1ce113f24679fe.png",
+      "alias_of": null
+    },
+    {
+      "name": "shi-zi",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/shi-zi/93711edef3335ae1.png",
+      "alias_of": null
+    },
+    {
+      "name": "shizi",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/shizi/a1ef59dd582dc23f.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "shock",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/shock/d5f35e349b9d1296.png",
+      "alias_of": null
+    },
+    {
+      "name": "shoudao",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/shoudao/67bba47a34ddb444.png",
+      "alias_of": null
+    },
+    {
+      "name": "shuaidao",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/shuaidao/34ceb44b1ff5b657.gif",
+      "alias_of": null
+    },
+    {
+      "name": "sick",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/sick/c0c7621c4d3f7117.png",
+      "alias_of": null
+    },
+    {
+      "name": "signal",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/signal/216683ce26fe9192.png",
+      "alias_of": null
+    },
+    {
+      "name": "siuuu",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/siuuu/2cedab6692e4ce5f.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "sk",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/sk/9abdc99801615cde.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "small",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/small/63c461250d1b3544.png",
+      "alias_of": null
+    },
+    {
+      "name": "small-xi-jie",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/small-xi-jie/278bb6b0c3c8ccd5.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "smallfiredragon",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/smallfiredragon/570177e042bc8be5.gif",
+      "alias_of": null
+    },
+    {
+      "name": "smallfiredragon1",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/smallfiredragon1/b94726f3dd7fc8e2.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "smart",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/smart/f8d2b9799fe20231.gif",
+      "alias_of": null
+    },
+    {
+      "name": "smiling-with-hearts-slackbot",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/smiling-with-hearts-slackbot/f52a3401cf31d3a8.png",
+      "alias_of": null
+    },
+    {
+      "name": "smoke",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/smoke/7df9025a486cd57c.png",
+      "alias_of": null
+    },
+    {
+      "name": "snailgaryq",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/snailgaryq/10a932554d44f965.gif",
+      "alias_of": null
+    },
+    {
+      "name": "snailgif",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/snailgif/b2ab1ec199f06397.gif",
+      "alias_of": null
+    },
+    {
+      "name": "snorlax",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/snorlax/6166a4f148ee1267.png",
+      "alias_of": null
+    },
+    {
+      "name": "so-cool",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/so-cool/917da13fd0798142.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "so-weak",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/so-weak/973cd47eddadaf76.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "soda",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/soda/858efcb2265640ed.png",
+      "alias_of": null
+    },
+    {
+      "name": "soundsgood",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/soundsgood/1ad68913d7701b24.png",
+      "alias_of": null
+    },
+    {
+      "name": "spaceinvader",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/spaceinvader/94db2a26dcc226c9.png",
+      "alias_of": null
+    },
+    {
+      "name": "sparkle-mid",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/sparkle-mid/41223acf47e2a7e5.png",
+      "alias_of": null
+    },
+    {
+      "name": "spiderman-pointing",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/spiderman-pointing/6f553dcc86a7d770.png",
+      "alias_of": null
+    },
+    {
+      "name": "spinning-smile",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/spinning-smile/007d16c1a3c6e630.gif",
+      "alias_of": null
+    },
+    {
+      "name": "spongebob-fire",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/spongebob-fire/0a8ad62fdf486c8d.gif",
+      "alias_of": null
+    },
+    {
+      "name": "spongebobcryq",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/spongebobcryq/70f8ef108c107d5b.png",
+      "alias_of": null
+    },
+    {
+      "name": "spongebobwtf",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/spongebobwtf/7d413422df731287.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "spooky-ghost",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/spooky-ghost/dc71b48222991b39.gif",
+      "alias_of": null
+    },
+    {
+      "name": "squirtle_cool",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/squirtle_cool/e58397284339d4be.gif",
+      "alias_of": null
+    },
+    {
+      "name": "squirtle_eyeroll",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/squirtle_eyeroll/704d1bd6e3a29732.gif",
+      "alias_of": null
+    },
+    {
+      "name": "squirtle_so_cool",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/squirtle_so_cool/f26e124171125767.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "squirtle-cool-2",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/squirtle-cool-2/21762c79055a5a94.gif",
+      "alias_of": null
+    },
+    {
+      "name": "squirtlewonderfull",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/squirtlewonderfull/4487ad034561428a.png",
+      "alias_of": null
+    },
+    {
+      "name": "star-struck-slackbot",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/star-struck-slackbot/f52a3401cf31d3a8.png",
+      "alias_of": null
+    },
+    {
+      "name": "star3",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/star3/a16f25372787990d.gif",
+      "alias_of": null
+    },
+    {
+      "name": "steve",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/steve/7c49382c157c433a.png",
+      "alias_of": null
+    },
+    {
+      "name": "stonks-intensify",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/stonks-intensify/c8ca780ceb970597.gif",
+      "alias_of": null
+    },
+    {
+      "name": "strong-doge",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/strong-doge/baa82119737afa6e.png",
+      "alias_of": null
+    },
+    {
+      "name": "sub-left",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/sub-left/56f0e04d69fa5599.png",
+      "alias_of": null
+    },
+    {
+      "name": "sub-middle",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/sub-middle/41a56b796f7449a0.png",
+      "alias_of": null
+    },
+    {
+      "name": "sub-right",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/sub-right/ac58fad8fe5221fd.png",
+      "alias_of": null
+    },
+    {
+      "name": "superzoo",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/superzoo/0e6d472ee8ab1acc.png",
+      "alias_of": null
+    },
+    {
+      "name": "surprised-pikachu",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/surprised-pikachu/27331fe4e1f2f8e1.png",
+      "alias_of": null
+    },
+    {
+      "name": "take_my_money",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/take_my_money/ab3856c37ee7d111.png",
+      "alias_of": null
+    },
+    {
+      "name": "take-my-money",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/take-my-money/ae680bb0892cea22.png",
+      "alias_of": null
+    },
+    {
+      "name": "team-deedee",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/team-deedee/694eb2b1941b7c87.png",
+      "alias_of": null
+    },
+    {
+      "name": "thank_you_corgi",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/thank_you_corgi/ee2400161492c56c.png",
+      "alias_of": null
+    },
+    {
+      "name": "thank_you_pika",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/thank_you_pika/bf01f9e9d626a223.png",
+      "alias_of": null
+    },
+    {
+      "name": "thank-you",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/thank-you/ff9870553fc46c2b.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "thank-you-bounce",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/thank-you-bounce/85299e684af4d911.gif",
+      "alias_of": null
+    },
+    {
+      "name": "thank-you-cat",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/thank-you-cat/ff9bf72a7d9d29fb.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "thanks",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/thanks/83d174653b3abaa9.gif",
+      "alias_of": null
+    },
+    {
+      "name": "thankyou",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/thankyou/d067aae9e3061b82.png",
+      "alias_of": null
+    },
+    {
+      "name": "the_more_you_know",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/the_more_you_know/93ba550d71f059cd.gif",
+      "alias_of": null
+    },
+    {
+      "name": "think",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/think/a4a93564d458e985.png",
+      "alias_of": null
+    },
+    {
+      "name": "think-about-it",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/think-about-it/7a94bb6763b0ca7d.png",
+      "alias_of": null
+    },
+    {
+      "name": "thinking_cat_face",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/thinking_cat_face/02bd9250f2730762.png",
+      "alias_of": null
+    },
+    {
+      "name": "thinksmart",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/thinksmart/0c4a445b42c194c8.png",
+      "alias_of": null
+    },
+    {
+      "name": "thinkspin",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/thinkspin/ba47d4fbf3f03676.gif",
+      "alias_of": null
+    },
+    {
+      "name": "this_fine_parrot",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/this_fine_parrot/41e19d9b56ecaf3c.gif",
+      "alias_of": null
+    },
+    {
+      "name": "this-1",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/this-1/ce062be5c80f1581.png",
+      "alias_of": null
+    },
+    {
+      "name": "this-is-fine-fire",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/this-is-fine-fire/18ab6b3d8a4b38fa.gif",
+      "alias_of": null
+    },
+    {
+      "name": "thumbs_up",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/thumbs_up/81797ff2a072ac3e.gif",
+      "alias_of": null
+    },
+    {
+      "name": "thumbs_up_parrot",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/thumbs_up_parrot/9681f180e5d066d5.gif",
+      "alias_of": null
+    },
+    {
+      "name": "thumbs-bob",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/thumbs-bob/5bbf264d1c695d61.gif",
+      "alias_of": null
+    },
+    {
+      "name": "thumbs-up",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/thumbs-up/7f0e92e35cf9321d.gif",
+      "alias_of": null
+    },
+    {
+      "name": "thumbsup-cowboy",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/thumbsup-cowboy/82006d6ad06ac333.png",
+      "alias_of": null
+    },
+    {
+      "name": "thumbsupkobe",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/thumbsupkobe/b6e9bb1a0a879b0c.gif",
+      "alias_of": null
+    },
+    {
+      "name": "thx-for-inventing-js",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/thx-for-inventing-js/b58c94369f810999.png",
+      "alias_of": null
+    },
+    {
+      "name": "time-is-up",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/time-is-up/039bb0549aad2dcb.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "time-zone-fyi",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/time-zone-fyi/b3d593284e761905.png",
+      "alias_of": null
+    },
+    {
+      "name": "tired",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/tired/aad4d4e9e815f654.png",
+      "alias_of": null
+    },
+    {
+      "name": "toad-scream",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/toad-scream/92f41524e5f9c928.gif",
+      "alias_of": null
+    },
+    {
+      "name": "todaydrainedme",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/todaydrainedme/93813986cb8b2add.png",
+      "alias_of": null
+    },
+    {
+      "name": "token",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/token/35f440659d0db5ed.gif",
+      "alias_of": null
+    },
+    {
+      "name": "tom-nod-head",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/tom-nod-head/8f7d5c4f2bb6e6a1.gif",
+      "alias_of": null
+    },
+    {
+      "name": "tom-puzzled",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/tom-puzzled/8f1f53759e4f3961.png",
+      "alias_of": null
+    },
+    {
+      "name": "tom-shake-head",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/tom-shake-head/3a7733f274b5ebeb.gif",
+      "alias_of": null
+    },
+    {
+      "name": "tou-xiang",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/tou-xiang/026175eb29eea8b4.png",
+      "alias_of": null
+    },
+    {
+      "name": "tuffy-awkward",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/tuffy-awkward/8f60f7fce5eddf0c.png",
+      "alias_of": null
+    },
+    {
+      "name": "tumbleweed",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/tumbleweed/2f4ea0d44de4e7d6.gif",
+      "alias_of": null
+    },
+    {
+      "name": "tuzki-music",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/tuzki-music/6018a5c552b74f93.gif",
+      "alias_of": null
+    },
+    {
+      "name": "ty",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/ty/9528a16786f30739.gif",
+      "alias_of": null
+    },
+    {
+      "name": "ty_heart",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/ty_heart/fa5ef591ac4b0342.png",
+      "alias_of": null
+    },
+    {
+      "name": "tyler-shake",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/tyler-shake/d39d30d268178d55.gif",
+      "alias_of": null
+    },
+    {
+      "name": "tylerflip",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/tylerflip/675b603ec9946b1d.gif",
+      "alias_of": null
+    },
+    {
+      "name": "tylerspin-1",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/tylerspin-1/15eaf7d40e50dee6.gif",
+      "alias_of": null
+    },
+    {
+      "name": "tylerzoom",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/tylerzoom/9f3e449adc9519fe.gif",
+      "alias_of": null
+    },
+    {
+      "name": "tylerzoom-in-1",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/tylerzoom-in-1/09e6ee62542e7171.gif",
+      "alias_of": null
+    },
+    {
+      "name": "tylerzoom-out-1",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/tylerzoom-out-1/138b3deb74806af6.gif",
+      "alias_of": null
+    },
+    {
+      "name": "tylzizi-shake-colors",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/tylzizi-shake-colors/88dcb5392eda792c.gif",
+      "alias_of": null
+    },
+    {
+      "name": "tylzizi-zoom-out",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/tylzizi-zoom-out/df97648eba80d3fb.gif",
+      "alias_of": null
+    },
+    {
+      "name": "typingcat",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/typingcat/fbb06434a6e40367.gif",
+      "alias_of": null
+    },
+    {
+      "name": "u-got-it",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/u-got-it/d449d48ba77b3cad.gif",
+      "alias_of": null
+    },
+    {
+      "name": "u-r-clown",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/u-r-clown/d90e284d1cab63d9.png",
+      "alias_of": null
+    },
+    {
+      "name": "unhappy",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/unhappy/77c6e5c5b031c1c2.png",
+      "alias_of": null
+    },
+    {
+      "name": "upvote",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/upvote/215c2080ba61e229.png",
+      "alias_of": null
+    },
+    {
+      "name": "usagi",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/usagi/83c0b744841ed0f2.png",
+      "alias_of": null
+    },
+    {
+      "name": "vacation",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/vacation/ec13009006c65b9f.gif",
+      "alias_of": null
+    },
+    {
+      "name": "vacuum",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/vacuum/44eabb37bf166467.gif",
+      "alias_of": null
+    },
+    {
+      "name": "valid",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/valid/ddb00d60e6bd7051.png",
+      "alias_of": null
+    },
+    {
+      "name": "very-awesome",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/very-awesome/ffddf86e18f515c3.gif",
+      "alias_of": null
+    },
+    {
+      "name": "vicky-jam",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/vicky-jam/398314569b1ab326.gif",
+      "alias_of": null
+    },
+    {
+      "name": "virtual-meeting",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/virtual-meeting/8454aeef633100ec.png",
+      "alias_of": null
+    },
+    {
+      "name": "visioin-zoom",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/visioin-zoom/fd3008dc8d29ff4b.gif",
+      "alias_of": null
+    },
+    {
+      "name": "vision-gun",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/vision-gun/7e9ddb3fc1a18860.gif",
+      "alias_of": null
+    },
+    {
+      "name": "vision-heart",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/img_20230705_143635/82b507361bc19f8b.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "vision-party",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/vision-party/a1ae1db797ee9e9a.gif",
+      "alias_of": null
+    },
+    {
+      "name": "vision-play-basketball",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/vision-play-basketball/7977113c15ecf66e.gif",
+      "alias_of": null
+    },
+    {
+      "name": "vision-scroll",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/vision-scroll/fc5952ef80533b7f.gif",
+      "alias_of": null
+    },
+    {
+      "name": "vision-shake",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/vision-shake/ca582c20ab2bcc22.gif",
+      "alias_of": null
+    },
+    {
+      "name": "vision-smile",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/vision-smile/830e69cf34ca2684.png",
+      "alias_of": null
+    },
+    {
+      "name": "vision-white",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/vision-white/037200432ab06c91.png",
+      "alias_of": null
+    },
+    {
+      "name": "vision-you-see-see-you",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/vision-you-see-see-you/f672cd03feb3eeab.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "vision-zoom",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/vision-zoom/e9dd743b8366735a.gif",
+      "alias_of": null
+    },
+    {
+      "name": "vue-avatar",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/vue-avatar/1dd48faf3e3d6c42.png",
+      "alias_of": null
+    },
+    {
+      "name": "wa_de_fa",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/wa_de_fa/913e1ec69f5f500e.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "walking-the-dog",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/walking-the-dog/8454aeef633100ec.png",
+      "alias_of": null
+    },
+    {
+      "name": "wallace_look_back",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/wallace_look_back/43a69679ade4441d.gif",
+      "alias_of": null
+    },
+    {
+      "name": "wallace-happy",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/wallace-happy/d63e76af76c490d5.png",
+      "alias_of": null
+    },
+    {
+      "name": "wallace-yeah",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/wallace-yeah/a79e9545cc12d45a.png",
+      "alias_of": null
+    },
+    {
+      "name": "want-to-cry",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/want-to-cry/9de4b52a6620e463.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "wave-moe",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/wave-moe/1d7e88415707bf15.gif",
+      "alias_of": null
+    },
+    {
+      "name": "waveboi",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/waveboi/acdd077a1ef15cb8.png",
+      "alias_of": null
+    },
+    {
+      "name": "waving-from-afar-left",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/waving-from-afar-left/8454aeef633100ec.png",
+      "alias_of": null
+    },
+    {
+      "name": "waving-from-afar-right",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/waving-from-afar-right/8454aeef633100ec.png",
+      "alias_of": null
+    },
+    {
+      "name": "wazzup",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/wazzup/3e40f84d41ce9f55.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "wechat-awkward",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/wechat-awkward/451cfeb20ac1f959.png",
+      "alias_of": null
+    },
+    {
+      "name": "wee",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/wee/b26fd949d86ed55a.gif",
+      "alias_of": null
+    },
+    {
+      "name": "weini",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/weini/a79b94695ee26d80.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "welp-jim",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/welp-jim/37b3132e7410e872.png",
+      "alias_of": null
+    },
+    {
+      "name": "wenhao",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/wenhao/59767a7f0c991ced.png",
+      "alias_of": null
+    },
+    {
+      "name": "what",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/what/0920dda11557ef2d.png",
+      "alias_of": null
+    },
+    {
+      "name": "what-",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/what-/b2e8b46792d47924.png",
+      "alias_of": null
+    },
+    {
+      "name": "what-happened",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/what-happened/a115635da6bf28e9.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "winches_smile",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/winches_smile/fff9c2a541025dde.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "winches-jam",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/winches-jam/86c49d3c2e579c7d.gif",
+      "alias_of": null
+    },
+    {
+      "name": "wine",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/wine/b5b9aad3177e74eb.gif",
+      "alias_of": null
+    },
+    {
+      "name": "wingnotwork",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/wingnotwork/dcf7492408530641.png",
+      "alias_of": null
+    },
+    {
+      "name": "wink-slackbot",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/wink-slackbot/f52a3401cf31d3a8.png",
+      "alias_of": null
+    },
+    {
+      "name": "withered",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/withered/02f3b54cf7d0df16.png",
+      "alias_of": null
+    },
+    {
+      "name": "wizpepeq",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/wizpepeq/cfbbe47db474c297.png",
+      "alias_of": null
+    },
+    {
+      "name": "woma",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/woma/70b820a7ddf4c763.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "wonder-twins",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/wonder-twins/af0ec488f10d0252.png",
+      "alias_of": null
+    },
+    {
+      "name": "woof",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/woof/22390a7d651d72da.png",
+      "alias_of": null
+    },
+    {
+      "name": "work-for-moego",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/work-for-moego/3ed193741b6589bf.png",
+      "alias_of": null
+    },
+    {
+      "name": "working-from-coffee-shop",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/working-from-coffee-shop/b3d593284e761905.png",
+      "alias_of": null
+    },
+    {
+      "name": "working-from-home",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/working-from-home/b3d593284e761905.png",
+      "alias_of": null
+    },
+    {
+      "name": "working-in-office",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/working-in-office/b3d593284e761905.png",
+      "alias_of": null
+    },
+    {
+      "name": "workinprogress",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/workinprogress/0776eb72a172e764.png",
+      "alias_of": null
+    },
+    {
+      "name": "wu",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/wu/136bbd0bcac06db3.png",
+      "alias_of": null
+    },
+    {
+      "name": "wu-gu",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/wu-gu/a35b71a9c73b9bfc.png",
+      "alias_of": null
+    },
+    {
+      "name": "xiaohecailujianjianjiao",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/xiaohecailujianjianjiao/b3e2d7bc90fcdca5.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "xiaoyang-flip-fast",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/xiaoyang-flip-fast/d7459985eecc9fdf.gif",
+      "alias_of": null
+    },
+    {
+      "name": "xiaoyuzhou",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/xiaoyuzhou/bfb26f197212589e.png",
+      "alias_of": null
+    },
+    {
+      "name": "xiaoyuzhou2",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/xiaoyuzhou2/891ac88eb550c64b.png",
+      "alias_of": null
+    },
+    {
+      "name": "xieyan",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/xieyan/76043a3841ae74c8.png",
+      "alias_of": null
+    },
+    {
+      "name": "xiuer",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/xiuer/9d8b011a1a427c96.png",
+      "alias_of": null
+    },
+    {
+      "name": "xixi",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/xixi/8ee38f0b65824121.png",
+      "alias_of": null
+    },
+    {
+      "name": "xixi1",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/xixi1/a826ddd748c47efe.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "yaaas",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/yaaas/5fb0e661b16e9d81.gif",
+      "alias_of": null
+    },
+    {
+      "name": "yangxiao-vibing-cat",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/yangxiao-vibing-cat/a2a9b0971c13d4d7.gif",
+      "alias_of": null
+    },
+    {
+      "name": "yay",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/yay/693da0acb9491475.gif",
+      "alias_of": null
+    },
+    {
+      "name": "yay2",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/yay2/f982976cebbfe9db.gif",
+      "alias_of": null
+    },
+    {
+      "name": "yay3",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/yay3/d12ab247d894c62c.png",
+      "alias_of": null
+    },
+    {
+      "name": "yellowdog",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/yellowdog/948f0c7efda801f1.png",
+      "alias_of": null
+    },
+    {
+      "name": "yes",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/yes/ee68d0a046e08b0b.png",
+      "alias_of": null
+    },
+    {
+      "name": "yes_this_me",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/yes_this_me/1ed8c58d296e2edf.png",
+      "alias_of": null
+    },
+    {
+      "name": "yes-dui",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/yes-dui/966f81928ac5e0df.gif",
+      "alias_of": null
+    },
+    {
+      "name": "yes-yes",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/yes-yes/cfb3aaf45354627b.png",
+      "alias_of": null
+    },
+    {
+      "name": "yes2",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/yes2/2fd3547ff41da3b1.png",
+      "alias_of": null
+    },
+    {
+      "name": "yikes",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/yikes/fcf8fa03361deb0d.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "yj-blink",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/yj-blink/76448ec7e28c1f38.gif",
+      "alias_of": null
+    },
+    {
+      "name": "yoo-deal-with-it",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/yoo-deal-with-it/be877e8183d583c7.gif",
+      "alias_of": null
+    },
+    {
+      "name": "yoshi_egg",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/yoshi_egg/198748561ec3e8a1.png",
+      "alias_of": null
+    },
+    {
+      "name": "yoshi_run",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/yoshi_run/5cc061e9c2741c78.gif",
+      "alias_of": null
+    },
+    {
+      "name": "you",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/you/9623dbfe8e8377eb.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "you_are_awesome",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/you_are_awesome/56ea4fb442853adf.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "you-are-my-god",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/you-are-my-god/51e9323064f5ee78.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "you-betcha",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/you-betcha/917983f79a36fb73.png",
+      "alias_of": null
+    },
+    {
+      "name": "you-see",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/you-see/e782056cb69a5b64.png",
+      "alias_of": null
+    },
+    {
+      "name": "youarethis",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/youarethis/2740a64607b73159.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "youbushibunengyong",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/youbushibunengyong/194644f8ec3bdae5.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "youbushibunengyong-s",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/youbushibunengyong-s/e1493bd1978dd2e3.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "youneigui",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/youneigui/e2eac551fdf9a978.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "youre_fired",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/youre_fired/328ee7d386db820b.gif",
+      "alias_of": null
+    },
+    {
+      "name": "ys-slide-up",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/ys-slide-up/1c17885094cb9e73.gif",
+      "alias_of": null
+    },
+    {
+      "name": "yueyue-show-medal",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/yueyue-show-medal/12ce514a8743c8e8.gif",
+      "alias_of": null
+    },
+    {
+      "name": "yz",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/yz/dcab8763a4e58129.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "zany_cat_face",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/zany_cat_face/79e652977cad080d.png",
+      "alias_of": null
+    },
+    {
+      "name": "zhangd-dong",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/zhangd-dong/17d267ffa0faf3de.png",
+      "alias_of": null
+    },
+    {
+      "name": "zhiyi-slide-up",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/zhiyi-slide-up/d5b94f2046634bcb.gif",
+      "alias_of": null
+    },
+    {
+      "name": "zong-zi",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/zong-zi/fdfd3b3bae3490fd.png",
+      "alias_of": null
+    },
+    {
+      "name": "zun-zhe-wife",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/zun-zhe-wife/5312de4a8beb1064.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "一把梭",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/%25E4%25B8%2580%25E6%258A%258A%25E6%25A2%25AD/7c2315739567acdc.png",
+      "alias_of": null
+    },
+    {
+      "name": "下次一定",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/%25E4%25B8%258B%25E6%25AC%25A1%25E4%25B8%2580%25E5%25AE%259A/cb40ed5511cf1cdb.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "下班",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/%25E4%25B8%258B%25E7%258F%25AD/610c62b2b22b441b.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "不玩了",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/%25E4%25B8%258D%25E7%258E%25A9%25E4%25BA%2586/e87379fefe194df3.png",
+      "alias_of": null
+    },
+    {
+      "name": "别感冒",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/%25E5%2588%25AB%25E6%2584%259F%25E5%2586%2592/0f8ff8256d1fe113.png",
+      "alias_of": null
+    },
+    {
+      "name": "叽里咕噜",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/%25E5%258F%25BD%25E9%2587%258C%25E5%2592%2595%25E5%2599%259C/81594c1930392731.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "品如",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/%25E5%2593%2581%25E5%25A6%2582/4ee8d182f07ccd00.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "在做了",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/%25E5%259C%25A8%25E5%2581%259A%25E4%25BA%2586/3bd7293df68605d3.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "如履薄冰",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/%25E5%25A6%2582%25E5%25B1%25A5%25E8%2596%2584%25E5%2586%25B0/d6899e699f975ff3.png",
+      "alias_of": null
+    },
+    {
+      "name": "快乐",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/%25E5%25BF%25AB%25E4%25B9%2590/0535ee7119f0b900.png",
+      "alias_of": null
+    },
+    {
+      "name": "恶俗",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/%25E6%2581%25B6%25E4%25BF%2597/bf9583db1dbac405.png",
+      "alias_of": null
+    },
+    {
+      "name": "我是大脸猫",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/%25E6%2588%2591%25E6%2598%25AF%25E5%25A4%25A7%25E8%2584%25B8%25E7%258C%25AB/66dcbdaffbb5b12b.png",
+      "alias_of": null
+    },
+    {
+      "name": "我的眼睛",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/%25E6%2588%2591%25E7%259A%2584%25E7%259C%25BC%25E7%259D%259B/c1c8c3682658d6ab.gif",
+      "alias_of": null
+    },
+    {
+      "name": "截屏2022-04-22-上午111737",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/%25E6%2588%25AA%25E5%25B1%258F2022-04-22-%25E4%25B8%258A%25E5%258D%2588111737/e5649d86805392c1.png",
+      "alias_of": null
+    },
+    {
+      "name": "无",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/%25E6%2597%25A0/5ec472a76d9cd229.png",
+      "alias_of": null
+    },
+    {
+      "name": "是故意的",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/%25E6%2598%25AF%25E6%2595%2585%25E6%2584%258F%25E7%259A%2584/19f163075d2c419f.png",
+      "alias_of": null
+    },
+    {
+      "name": "泰裤辣",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/%25E6%25B3%25B0%25E8%25A3%25A4%25E8%25BE%25A3/129018cfabd9d8e3.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "玉玊则不达",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/%25E7%258E%2589%25E7%258E%258A%25E5%2588%2599%25E4%25B8%258D%25E8%25BE%25BE/b2328315a0b0877e.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "给大佬倒橙汁",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/%25E7%25BB%2599%25E5%25A4%25A7%25E4%25BD%25AC%25E5%2580%2592%25E6%25A9%2599%25E6%25B1%2581/2aa8a5a55582bef9.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "背手",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/%25E8%2583%258C%25E6%2589%258B/e3cd415245be0395.png",
+      "alias_of": null
+    },
+    {
+      "name": "苦脸",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/%25E8%258B%25A6%25E8%2584%25B8/fc8634543f63dec4.png",
+      "alias_of": null
+    },
+    {
+      "name": "谢谢参与",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/%25E8%25B0%25A2%25E8%25B0%25A2%25E5%258F%2582%25E4%25B8%258E/6f638cfdbee0571e.jpg",
+      "alias_of": null
+    },
+    {
+      "name": "靓仔wa",
+      "url": "https://emoji.slack-edge.com/T011CF3CMJN/%25E9%259D%2593%25E4%25BB%2594wa/a59a8ad0d216385a.png",
+      "alias_of": null
+    }
+  ]
+}
