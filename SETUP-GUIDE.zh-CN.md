@@ -13,7 +13,7 @@
 - 在目标 Workspace 创建专用 Project 和 Agent，绑定需要使用的 Runtime。
 - 将 [AGENT-PROMPT.md](AGENT-PROMPT.md) 同步为 Agent instructions。
 - 配置 Agent 的 `RELAY_OWNER_SLACK_USER_ID`、`RELAY_SKILL_ROOT`。频道和发送者的白名单/黑名单由 Relay 统一校验，Agent 不再读取单频道 `RELAY_ALLOWED_CHANNEL_ID`。
-- Slack 操作使用被授权的 USER token；每次 CLI 调用显式覆盖 SLACK_BOT_TOKEN 与 SLACK_TOKEN，防止 shell/Skill 配置选到 Bot。
+- Multica Agent 的 Slack 回复使用被授权的 owner USER token；Relay 的 `SLACK_REACTION_TOKEN` 单独使用接收该事件的同一个 Slack App 的 Bot token，避免入口 reaction 与后续 Agent 身份混用。
 - 回读 Agent 的 Runtime、权限和并发。初期并发2即可；Mac 休眠/断网会影响执行。
 - 读取本地 Skills 和 Workspace 指派 Skills 的实际加载结果。数据库 Skill 数量不能单独说明任务可用能力。
 - Relay 使用 MULTICA_PROJECT_ID/MULTICA_AGENT_ID 调用普通 Issue API；不再需要 Autopilot。
@@ -44,9 +44,9 @@ footer 表示消费消息时读取的 **Agent 配置快照**，不是运行实�
 
 ## 3. Slack App
 
-使用专用 App 或明确获准复用的 App 接收需要的 `message` 与 `app_mention` 事件。公开频道按需订阅 `message.channels`，私有频道订阅 `message.groups`；同时启用 `app_mentions:read` scope 和 `app_mention` 事件订阅，并将接收 App 加入指定私有频道。`SLACK_TARGET_USER_IDS` 必须包含允许触发的 Slack 用户 ID；如果希望直接 @Bot 触发，也要填入该 App 对应的 Bot user ID。接收事件的 App 身份与外发身份分开配置：`SLACK_REACTION_TOKEN` 和 Agent 回复使用获准的 owner USER token。验收时核对 `reaction.users` 和回复消息的 `user` 是否等于 owner ID。
+使用专用 App 或明确获准复用的 App 接收需要的 `message` 与 `app_mention` 事件。公开频道按需订阅 `message.channels`，私有频道订阅 `message.groups`；同时启用 `app_mentions:read` scope 和 `app_mention` 事件订阅，并将接收 App 加入指定私有频道。`SLACK_TARGET_USER_IDS` 必须包含允许触发的 Slack 用户 ID；如果希望直接 @Bot 触发，也要填入该 App 对应的 Bot user ID。`SLACK_REACTION_TOKEN` 使用这个接收 App 的 Bot token，入口在验签和白名单通过后尽早添加 `SLACK_REACTION_NAME`（默认 `eyes`）；Multica Agent 回复仍使用获准的 owner USER token。验收时分别核对 reaction 的 `user` 与 Agent 回复的 `user` 身份。
 
-同一条真人消息可能同时触发 `message` 和 `app_mention`。Relay 会按 Team、频道和 Slack `ts` 使用同一个去重键；真人 `app_mention` 可以入队，带 `bot_id`、`subtype` 或 `app_id` 的自动消息会在验签后忽略，避免 Bot 回复再次触发自己。
+同一条真人消息可能同时触发 `message` 和 `app_mention`。Relay 会按 Team、频道和 Slack `ts` 使用同一个去重键；真人 `app_mention` 可以入队，带 `bot_id`、`subtype` 或 `app_id` 的自动消息会在验签后忽略，避免 Bot 回复再次触发自己。入口 reaction 先于 QStash 入队，使用 750ms 独立预算；KV 会先写入 90 天 attempted 标记，竞争 delivery 在活动窗口内等待，reaction 成功、失败或结果不明后都不主动重试。reaction 超时或失败时继续派发，不能以 reaction 失败作为 Slack 重试依据；消费函数不再补加 reaction，避免覆盖后续状态。
 
 配置 Request URL 为 `https://<当前部署>/api/slack/events`，对应 Signing Secret 填入部署环境。新增 scopes 后重新安装。只修改已授权用于 Relay 的 App。
 

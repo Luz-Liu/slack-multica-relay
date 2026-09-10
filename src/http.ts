@@ -6,7 +6,11 @@ import {
   isSupportedMessage,
   type SlackMessageEvent,
 } from "./mentions.js";
-import { addSlackReaction, reactionErrorDetails } from "./reaction.js";
+import {
+  ensureSlackReaction,
+  REACTION_ATTEMPT_BUDGET_MS,
+  reactionErrorDetails,
+} from "./reaction.js";
 import {
   routeSlackThreadEvent,
   digest,
@@ -15,6 +19,7 @@ import {
   type SlackThreadEvent,
 } from "./thread-router.js";
 import { UpstashThreadStore } from "./thread-store.js";
+import { threadScopeId } from "./multica-api.js";
 
 export function json(value: unknown, status = 200): Response {
   return Response.json(value, { status });
@@ -52,6 +57,52 @@ function admitted(event: SlackThreadEvent, config: RelayConfig): boolean {
       config.targetUserIds,
       config.targetSubteamIds,
     )
+  );
+}
+function reactionStateKey(
+  event: SlackThreadEvent,
+  config: RelayConfig,
+): string {
+  const scope = digest(
+    config.multicaWorkspaceId +
+      ":" +
+      config.multicaProjectId +
+      ":" +
+      threadScopeId(config),
+  );
+  return `relay:${scope}:reaction:${digest(messageKey(event))}`;
+}
+function reactionFetch(
+  fetchImpl: typeof fetch,
+  deadline: AbortSignal,
+): typeof fetch {
+  return (input, init = {}) =>
+    fetchImpl(input, {
+      ...init,
+      signal: init.signal
+        ? AbortSignal.any([init.signal, deadline])
+        : deadline,
+    });
+}
+async function acknowledgeSlackMessage(
+  event: SlackThreadEvent,
+  config: RelayConfig,
+  fetchImpl: typeof fetch,
+): Promise<"reacted" | "skipped"> {
+  const deadline = AbortSignal.timeout(REACTION_ATTEMPT_BUDGET_MS);
+  const boundedFetch = reactionFetch(fetchImpl, deadline);
+  return ensureSlackReaction(
+    reactionStateKey(event, config),
+    config.slackReactionToken,
+    event.channelId,
+    event.messageTs,
+    config.slackReactionName,
+    new UpstashThreadStore(
+      config.kvRestApiUrl,
+      config.kvRestApiToken,
+      boundedFetch,
+    ),
+    boundedFetch,
   );
 }
 function parsedEvent(value: unknown): SlackThreadEvent {
@@ -176,6 +227,15 @@ export async function acceptSlack(
   if (!admitted(payload, config))
     return json({ action: "ignored", reason: "not_allowed" });
   try {
+    await acknowledgeSlackMessage(payload, config, fetchImpl);
+  } catch (error) {
+    console.warn("relay_reaction", {
+      messageKey: messageKey(payload),
+      reason: "reaction_failed",
+      ...reactionErrorDetails(error),
+    });
+  }
+  try {
     const response = await fetchImpl(
       config.queueUrl + "/v2/publish/" + config.consumerUrl,
       {
@@ -194,7 +254,7 @@ export async function acceptSlack(
           "Upstash-Flow-Control-Value": "parallelism=1",
         },
         body: JSON.stringify(payload),
-        signal: AbortSignal.timeout(2000),
+        signal: AbortSignal.timeout(1800),
       },
     );
     if (!response.ok) throw new Error("queue_publish_failed");
@@ -277,21 +337,6 @@ export async function consumeQueue(
       },
       boundedFetch,
     );
-    try {
-      await addSlackReaction(
-        config.slackReactionToken,
-        event.channelId,
-        event.messageTs,
-        config.slackReactionName,
-        boundedFetch,
-      );
-    } catch (error) {
-      console.warn("relay_reaction", {
-        messageKey: messageKey(event),
-        reason: "reaction_failed",
-        ...reactionErrorDetails(error),
-      });
-    }
     console.info("relay_dispatch", {
       ...result,
       messageKey: messageKey(event),

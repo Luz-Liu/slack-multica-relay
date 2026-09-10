@@ -117,9 +117,11 @@ describe("Vercel request adapter", () => {
     };
     req.body = JSON.parse(raw) as unknown;
     const res = response();
-    const fetcher = vi
-      .fn<typeof fetch>()
-      .mockResolvedValue(Response.json({ messageId: "msg" }));
+    const fetcher = vi.fn<typeof fetch>(async (input) =>
+      String(input) === env.KV_REST_API_URL
+        ? Response.json({ result: null })
+        : Response.json({ messageId: "msg" }),
+    );
 
     await serve(req, res, (request) => acceptSlack(request, env, fetcher));
 
@@ -127,7 +129,9 @@ describe("Vercel request adapter", () => {
     expect(res.send).toHaveBeenCalledWith(
       JSON.stringify({ action: "accepted", queueMessageId: "msg" }),
     );
-    expect(fetcher).toHaveBeenCalledTimes(1);
+    expect(
+      fetcher.mock.calls.filter(([input]) => String(input).includes("/v2/publish/")),
+    ).toHaveLength(1);
   });
 
   it("fails closed when only a parsed object remains", async () => {

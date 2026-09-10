@@ -25,13 +25,9 @@ const env = {
   QSTASH_NEXT_SIGNING_KEY: "test",
   RELAY_CONSUMER_URL: "https://relay.test/api/queue/consume",
 };
-function request(event: unknown, teamId = "T1"): Request {
-  const body = JSON.stringify({
-      type: "event_callback",
-      team_id: teamId,
-      event,
-    }),
-    ts = String(Math.floor(Date.now() / 1000));
+function signedRequest(bodyValue: unknown): Request {
+  const body = JSON.stringify(bodyValue);
+  const ts = String(Math.floor(Date.now() / 1000));
   return new Request("https://relay.test/api/slack/events", {
     method: "POST",
     headers: {
@@ -44,6 +40,69 @@ function request(event: unknown, teamId = "T1"): Request {
     },
     body,
   });
+}
+function request(event: unknown, teamId = "T1"): Request {
+  return signedRequest({ type: "event_callback", team_id: teamId, event });
+}
+function queueCalls(fetcher: ReturnType<typeof vi.fn<typeof fetch>>) {
+  return fetcher.mock.calls.filter(([input]) =>
+    String(input).includes("/v2/publish/"),
+  );
+}
+function admissionFixture(options: {
+  reaction?: "ok" | "fail" | "timeout";
+  queueFailures?: number;
+} = {}) {
+  const values = new Map<string, string>();
+  const calls: string[] = [];
+  let queueFailures = options.queueFailures ?? 0;
+  const fetcher = vi.fn<typeof fetch>(async (input, init = {}) => {
+    const url = String(input);
+    if (url === env.KV_REST_API_URL) {
+      calls.push("kv");
+      const parts = JSON.parse(String(init.body)) as string[];
+      const command = parts[0];
+      if (command === "SET" && parts[3] === "NX") {
+        if (values.has(parts[1]!)) return Response.json({ result: null });
+        values.set(parts[1]!, parts[2]!);
+        return Response.json({ result: "OK" });
+      }
+      if (command === "SET") {
+        values.set(parts[1]!, parts[2]!);
+        return Response.json({ result: "OK" });
+      }
+      if (command === "EVAL") {
+        if (values.get(parts[3]!) === parts[4]) values.delete(parts[3]!);
+        return Response.json({ result: 1 });
+      }
+      if (command === "GET") return Response.json({ result: values.get(parts[1]!) ?? null });
+      throw new Error("unexpected_kv_command");
+    }
+    if (url === "https://slack.com/api/reactions.add") {
+      calls.push("reaction");
+      if (options.reaction === "fail")
+        return Response.json({ ok: false, error: "ratelimited" });
+      if (options.reaction === "timeout") {
+        return await new Promise<Response>((resolve, reject) => {
+          const signal = init.signal;
+          const abort = () => reject(signal?.reason ?? new DOMException("timeout", "TimeoutError"));
+          if (signal?.aborted) abort();
+          else signal?.addEventListener("abort", abort, { once: true });
+        });
+      }
+      return Response.json({ ok: true });
+    }
+    if (url.includes("/v2/publish/")) {
+      calls.push("queue");
+      if (queueFailures > 0) {
+        queueFailures--;
+        throw new Error("queue unavailable");
+      }
+      return Response.json({ messageId: "msg" });
+    }
+    throw new Error("unexpected_endpoint");
+  });
+  return { fetcher, calls, values };
 }
 const event = {
   type: "message",
@@ -59,17 +118,15 @@ const appMentionEvent = {
 afterEach(() => vi.restoreAllMocks());
 describe("durable admission", () => {
   it("only publishes to queue before acknowledging", async () => {
-    const fetcher = vi
-      .fn<typeof fetch>()
-      .mockResolvedValue(Response.json({ messageId: "msg" }));
+    const { fetcher } = admissionFixture();
     const response = await acceptSlack(request(event), env, fetcher);
     expect(response.status).toBe(200);
     expect(await response.json()).toEqual({
       action: "accepted",
       queueMessageId: "msg",
     });
-    expect(fetcher).toHaveBeenCalledTimes(1);
-    expect(String(fetcher.mock.calls[0]![0])).toContain(
+    expect(queueCalls(fetcher)).toHaveLength(1);
+    expect(String(queueCalls(fetcher)[0]![0])).toContain(
       "/v2/publish/https://relay.test/api/queue/consume",
     );
   });
@@ -85,12 +142,35 @@ describe("durable admission", () => {
     expect(fetcher).not.toHaveBeenCalled();
   });
   it("accepts a human app_mention event", async () => {
-    const fetcher = vi
-      .fn<typeof fetch>()
-      .mockResolvedValue(Response.json({ messageId: "app-mention-msg" }));
+    const { fetcher } = admissionFixture();
     const response = await acceptSlack(request(appMentionEvent), env, fetcher);
     expect(response.status).toBe(200);
-    expect(fetcher).toHaveBeenCalledTimes(1);
+    expect(queueCalls(fetcher)).toHaveLength(1);
+  });
+  it("adds eyes during admission and skips message/app_mention replays", async () => {
+    const fixture = admissionFixture();
+    const first = await acceptSlack(request(event), env, fixture.fetcher);
+    expect(first.status).toBe(200);
+    expect(fixture.calls.indexOf("reaction")).toBeLessThan(
+      fixture.calls.indexOf("queue"),
+    );
+    expect(fixture.calls.filter((call) => call === "reaction")).toHaveLength(1);
+
+    await acceptSlack(request(appMentionEvent), env, fixture.fetcher);
+    await acceptSlack(request(event), env, fixture.fetcher);
+    expect(fixture.calls.filter((call) => call === "reaction")).toHaveLength(1);
+    expect(queueCalls(fixture.fetcher)).toHaveLength(3);
+  });
+  it("does not react to a Slack URL verification challenge", async () => {
+    const fixture = admissionFixture();
+    const response = await acceptSlack(
+      signedRequest({ type: "url_verification", challenge: "challenge" }),
+      env,
+      fixture.fetcher,
+    );
+    expect(response.status).toBe(200);
+    expect(await response.json()).toEqual({ challenge: "challenge" });
+    expect(fixture.calls).toEqual([]);
   });
   it("ignores an app_mention to an unknown target", async () => {
     const fetcher = vi.fn<typeof fetch>();
@@ -119,15 +199,13 @@ describe("durable admission", () => {
     expect(fetcher).not.toHaveBeenCalled();
   });
   it("uses the same queue deduplication key for message and app_mention", async () => {
-    const fetcher = vi
-      .fn<typeof fetch>()
-      .mockResolvedValueOnce(Response.json({ messageId: "message-msg" }))
-      .mockResolvedValueOnce(Response.json({ messageId: "app-mention-msg" }));
+    const { fetcher } = admissionFixture();
     await acceptSlack(request(event), env, fetcher);
     await acceptSlack(request(appMentionEvent), env, fetcher);
-    expect(fetcher).toHaveBeenCalledTimes(2);
-    const firstHeaders = new Headers(fetcher.mock.calls[0]![1]?.headers);
-    const secondHeaders = new Headers(fetcher.mock.calls[1]![1]?.headers);
+    expect(queueCalls(fetcher)).toHaveLength(2);
+    const queueRequests = queueCalls(fetcher);
+    const firstHeaders = new Headers(queueRequests[0]![1]?.headers);
+    const secondHeaders = new Headers(queueRequests[1]![1]?.headers);
     expect(firstHeaders.get("Upstash-Deduplication-Id")).toBe(
       secondHeaders.get("Upstash-Deduplication-Id"),
     );
@@ -148,27 +226,54 @@ describe("durable admission", () => {
     });
     expect(fetcher).not.toHaveBeenCalled();
   });
+  it("continues queue dispatch when the early reaction fails", async () => {
+    vi.spyOn(console, "warn").mockImplementation(() => {});
+    const fixture = admissionFixture({ reaction: "fail" });
+    const response = await acceptSlack(request(event), env, fixture.fetcher);
+    expect(response.status).toBe(200);
+    expect(fixture.calls.filter((call) => call === "reaction")).toHaveLength(1);
+    expect(queueCalls(fixture.fetcher)).toHaveLength(1);
+
+    await acceptSlack(request(event), env, fixture.fetcher);
+    expect(fixture.calls.filter((call) => call === "reaction")).toHaveLength(1);
+  });
+  it("continues queue dispatch when the early reaction times out", async () => {
+    vi.spyOn(console, "warn").mockImplementation(() => {});
+    const fixture = admissionFixture({ reaction: "timeout" });
+    const started = Date.now();
+    const response = await acceptSlack(request(event), env, fixture.fetcher);
+    expect(response.status).toBe(200);
+    expect(Date.now() - started).toBeLessThan(3000);
+    expect(fixture.calls.filter((call) => call === "reaction")).toHaveLength(1);
+    expect(queueCalls(fixture.fetcher)).toHaveLength(1);
+  });
+  it("returns a retryable response when queue dispatch fails without re-reacting", async () => {
+    vi.spyOn(console, "warn").mockImplementation(() => {});
+    const fixture = admissionFixture({ queueFailures: 1 });
+    const first = await acceptSlack(request(event), env, fixture.fetcher);
+    expect(first.status).toBe(503);
+    const second = await acceptSlack(request(event), env, fixture.fetcher);
+    expect(second.status).toBe(200);
+    expect(fixture.calls.filter((call) => call === "reaction")).toHaveLength(1);
+    expect(queueCalls(fixture.fetcher)).toHaveLength(2);
+  });
   it("rejects another Slack team", async () => {
     const f = vi.fn<typeof fetch>();
     await acceptSlack(request(event, "T2"), env, f);
     expect(f).not.toHaveBeenCalled();
   });
   it("accepts all as the channel allowlist", async () => {
-    const f = vi
-      .fn<typeof fetch>()
-      .mockResolvedValue(Response.json({ messageId: "msg" }));
+    const { fetcher: f } = admissionFixture();
     const response = await acceptSlack(
       request({ ...event, channel: "C2" }),
       { ...env, SLACK_ALLOWED_CHANNEL_IDS: "all" },
       f,
     );
     expect(response.status).toBe(200);
-    expect(f).toHaveBeenCalledTimes(1);
+    expect(queueCalls(f)).toHaveLength(1);
   });
   it("defaults the channel allowlist to all when omitted", async () => {
-    const f = vi
-      .fn<typeof fetch>()
-      .mockResolvedValue(Response.json({ messageId: "msg" }));
+    const { fetcher: f } = admissionFixture();
     const { SLACK_ALLOWED_CHANNEL_IDS: _ignored, ...withoutChannelAllowlist } = env;
     const response = await acceptSlack(
       request({ ...event, channel: "C2" }),
@@ -176,7 +281,7 @@ describe("durable admission", () => {
       f,
     );
     expect(response.status).toBe(200);
-    expect(f).toHaveBeenCalledTimes(1);
+    expect(queueCalls(f)).toHaveLength(1);
   });
   it("blocks a channel even when the allowlist is all", async () => {
     const f = vi.fn<typeof fetch>();
@@ -258,6 +363,7 @@ describe("durable admission", () => {
   it("fetches configuration in the consumer and delivers a separate trusted reply context", async () => {
     const kv = new Map<string, string>();
     const agentUrls: string[] = [];
+    let reactionPosts = 0;
     let description = "";
     const fetcher: typeof fetch = async (input, init) => {
       const url = String(input);
@@ -281,7 +387,10 @@ describe("durable admission", () => {
         description = body.description;
         return Response.json({ id: "issue", title: body.title });
       }
-      if (url === "https://slack.com/api/reactions.add") return Response.json({ ok: true });
+      if (url === "https://slack.com/api/reactions.add") {
+        reactionPosts++;
+        return Response.json({ ok: true });
+      }
       throw new Error("unexpected endpoint");
     };
     const response = await consumeQueue(new Request(env.RELAY_CONSUMER_URL, {
@@ -298,13 +407,14 @@ describe("durable admission", () => {
     expect(delivered.replyContext).toMatchObject({ type: "slack_reply_context", source: "agent_config", status: "available", model: "gpt-6-astra", serviceTier: "default" });
     expect(delivered.eventPayload).not.toHaveProperty("replyContext");
     expect(description).not.toContain("spoofed");
+    expect(reactionPosts).toBe(0);
   });
 });
 
 describe("Team configuration admission", () => {
   it("accepts a Team without the legacy agent variable", async () => {
     const { MULTICA_AGENT_ID: _legacy, ...base } = env;
-    const f = vi.fn<typeof fetch>().mockResolvedValue(Response.json({ messageId: "m" }));
+    const { fetcher: f } = admissionFixture();
     expect((await acceptSlack(request(event), { ...base, MULTICA_ASSIGNEE_TYPE: "squad", MULTICA_ASSIGNEE_ID: "team" }, f)).status).toBe(200);
   });
   it.each([

@@ -58,7 +58,7 @@ export function loadRelayConfig(
     multicaThreadScopeId: scope,
     multicaLegacyAgentId: legacy,
     slackReactionToken: required(env, "SLACK_REACTION_TOKEN"),
-    slackReactionName: required(env, "SLACK_REACTION_NAME").replace(
+    slackReactionName: (env.SLACK_REACTION_NAME?.trim() || "eyes").replace(
       /^:+|:+$/gu,
       "",
     ),
