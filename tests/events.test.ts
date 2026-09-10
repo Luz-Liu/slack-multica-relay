@@ -52,6 +52,10 @@ const event = {
   ts: "100.000001",
   text: "<@U1> test",
 };
+const appMentionEvent = {
+  ...event,
+  type: "app_mention",
+};
 afterEach(() => vi.restoreAllMocks());
 describe("durable admission", () => {
   it("only publishes to queue before acknowledging", async () => {
@@ -78,6 +82,70 @@ describe("durable admission", () => {
   ])("no queue side effects for %j", async (change) => {
     const fetcher = vi.fn<typeof fetch>();
     await acceptSlack(request({ ...event, ...change }), env, fetcher);
+    expect(fetcher).not.toHaveBeenCalled();
+  });
+  it("accepts a human app_mention event", async () => {
+    const fetcher = vi
+      .fn<typeof fetch>()
+      .mockResolvedValue(Response.json({ messageId: "app-mention-msg" }));
+    const response = await acceptSlack(request(appMentionEvent), env, fetcher);
+    expect(response.status).toBe(200);
+    expect(fetcher).toHaveBeenCalledTimes(1);
+  });
+  it("ignores an app_mention to an unknown target", async () => {
+    const fetcher = vi.fn<typeof fetch>();
+    const response = await acceptSlack(
+      request({ ...appMentionEvent, text: "<@U999> test" }),
+      env,
+      fetcher,
+    );
+    expect(await response.json()).toEqual({
+      action: "ignored",
+      reason: "not_addressed",
+    });
+    expect(fetcher).not.toHaveBeenCalled();
+  });
+  it.each([
+    { bot_id: "B1" },
+    { app_id: "A1" },
+  ])("ignores an automatic app_mention event %j", async (change) => {
+    const fetcher = vi.fn<typeof fetch>();
+    const response = await acceptSlack(
+      request({ ...appMentionEvent, ...change }),
+      env,
+      fetcher,
+    );
+    expect(await response.json()).toEqual({ action: "ignored" });
+    expect(fetcher).not.toHaveBeenCalled();
+  });
+  it("uses the same queue deduplication key for message and app_mention", async () => {
+    const fetcher = vi
+      .fn<typeof fetch>()
+      .mockResolvedValueOnce(Response.json({ messageId: "message-msg" }))
+      .mockResolvedValueOnce(Response.json({ messageId: "app-mention-msg" }));
+    await acceptSlack(request(event), env, fetcher);
+    await acceptSlack(request(appMentionEvent), env, fetcher);
+    expect(fetcher).toHaveBeenCalledTimes(2);
+    const firstHeaders = new Headers(fetcher.mock.calls[0]![1]?.headers);
+    const secondHeaders = new Headers(fetcher.mock.calls[1]![1]?.headers);
+    expect(firstHeaders.get("Upstash-Deduplication-Id")).toBe(
+      secondHeaders.get("Upstash-Deduplication-Id"),
+    );
+  });
+  it.each([
+    ["channel", { channel: "C2" }, { SLACK_ALLOWED_CHANNEL_IDS: "C1" }],
+    ["sender", { user: "U3" }, { SLACK_ALLOWED_SENDER_IDS: "U2" }],
+  ])("applies %s policy to app_mention events", async (_policy, change, policy) => {
+    const fetcher = vi.fn<typeof fetch>();
+    const response = await acceptSlack(
+      request({ ...appMentionEvent, ...change }),
+      { ...env, ...policy },
+      fetcher,
+    );
+    expect(await response.json()).toEqual({
+      action: "ignored",
+      reason: "not_allowed",
+    });
     expect(fetcher).not.toHaveBeenCalled();
   });
   it("rejects another Slack team", async () => {

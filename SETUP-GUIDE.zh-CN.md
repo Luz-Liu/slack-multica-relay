@@ -44,7 +44,9 @@ footer 表示消费消息时读取的 **Agent 配置快照**，不是运行实�
 
 ## 3. Slack App
 
-使用专用 App 或明确获准复用的 App 接收需要的 message 事件。私有频道订阅 `message.groups`，并将接收 App 加入指定频道。接收事件的 App 身份与外发身份分开配置：`SLACK_REACTION_TOKEN` 和 Agent 回复使用获准的 owner USER token。验收时核对 `reaction.users` 和回复消息的 `user` 是否等于 owner ID。
+使用专用 App 或明确获准复用的 App 接收需要的 `message` 与 `app_mention` 事件。公开频道按需订阅 `message.channels`，私有频道订阅 `message.groups`；同时启用 `app_mentions:read` scope 和 `app_mention` 事件订阅，并将接收 App 加入指定私有频道。`SLACK_TARGET_USER_IDS` 必须包含允许触发的 Slack 用户 ID；如果希望直接 @Bot 触发，也要填入该 App 对应的 Bot user ID。接收事件的 App 身份与外发身份分开配置：`SLACK_REACTION_TOKEN` 和 Agent 回复使用获准的 owner USER token。验收时核对 `reaction.users` 和回复消息的 `user` 是否等于 owner ID。
+
+同一条真人消息可能同时触发 `message` 和 `app_mention`。Relay 会按 Team、频道和 Slack `ts` 使用同一个去重键；真人 `app_mention` 可以入队，带 `bot_id`、`subtype` 或 `app_id` 的自动消息会在验签后忽略，避免 Bot 回复再次触发自己。
 
 配置 Request URL 为 `https://<当前部署>/api/slack/events`，对应 Signing Secret 填入部署环境。新增 scopes 后重新安装。只修改已授权用于 Relay 的 App。
 
