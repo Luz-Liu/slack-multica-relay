@@ -20,6 +20,8 @@ QStash持久化接收后才能ACK Slack；后台消费失败由队列重试，�
 
 Relay 的频道和发送者准入同时支持白名单与黑名单。白名单可使用 `all`，黑名单优先；入站和队列消费使用同一套策略。目标用户/User Group 配置仍用于判断是否触发任务。
 
+通过签名和准入校验的 Slack 消息在入队前尽力添加 `SLACK_REACTION_NAME`（默认 `eyes`）。Relay 先在 KV 写入 90 天 attempted 标记，再调用 Slack reactions API；竞争 delivery 在首次 750ms 窗口内等待。reaction 成功、失败或结果不明都不会清除标记，因此重放不会补加迟到 reaction；reaction 失败只降级记录并继续入队。消费函数不再添加 reaction，避免覆盖后续 typing/done 状态。
+
 评论HTTP201表示已保存，可能不触发Agent。Relay返回comment_persisted，不能当作任务执行证明。最终结果以Multica任务和Slack原thread双重回读为准。
 
 ## 本地Codex
