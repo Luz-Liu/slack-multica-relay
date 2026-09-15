@@ -3,6 +3,7 @@ import { loadRelayConfig, type RelayConfig } from "./config.js";
 import { verifySlackSignature } from "./signature.js";
 import {
   findTargetMention,
+  findUserMention,
   isSupportedMessage,
   type SlackMessageEvent,
 } from "./mentions.js";
@@ -45,18 +46,27 @@ async function readBody(request: Request): Promise<string> {
 function record(value: unknown): value is Record<string, unknown> {
   return !!value && typeof value === "object" && !Array.isArray(value);
 }
+function configuredTargetMention(
+  text: string,
+  config: RelayConfig,
+) {
+  return (
+    findTargetMention(text, config.targetUserIds, config.targetSubteamIds) ??
+    findUserMention(text, config.botUserIds)
+  );
+}
 function admitted(event: SlackThreadEvent, config: RelayConfig): boolean {
+  const botMention = findUserMention(event.text, config.botUserIds);
   return (
     event.teamId === config.teamId &&
     (config.allowAllChannels || config.allowedChannelIds.has(event.channelId)) &&
     !config.blockedChannelIds.has(event.channelId) &&
     (config.allowAllSenders || config.allowedSenderIds.has(event.senderUserId)) &&
     !config.blockedSenderIds.has(event.senderUserId) &&
-    !!findTargetMention(
-      event.text,
-      config.targetUserIds,
-      config.targetSubteamIds,
-    )
+    !!configuredTargetMention(event.text, config) &&
+    (!botMention ||
+      config.botAllowAllSenders ||
+      config.botAllowedSenderIds.has(event.senderUserId))
   );
 }
 function reactionStateKey(
@@ -203,11 +213,7 @@ export async function acceptSlack(
   )
     return json({ action: "ignored" });
   const event = body.event;
-  const mention = findTargetMention(
-    event.text as string,
-    config.targetUserIds,
-    config.targetSubteamIds,
-  );
+  const mention = configuredTargetMention(event.text as string, config);
   if (!mention) return json({ action: "ignored", reason: "not_addressed" });
   let payload: SlackThreadEvent;
   try {

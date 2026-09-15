@@ -8,14 +8,23 @@ export interface MentionMatch {
 const USER_MENTION = /<@([A-Z0-9]+)(?:\|[^>]+)?>/gu;
 const SUBTEAM_MENTION = /<!subteam\^([A-Z0-9]+)(?:\|[^>]+)?>/gu;
 
+export function findUserMention(
+  text: string,
+  targetUserIds: ReadonlySet<string>,
+): MentionMatch | undefined {
+  for (const match of text.matchAll(USER_MENTION)) {
+    if (targetUserIds.has(match[1]!)) return { type: 'user', id: match[1]! };
+  }
+  return undefined;
+}
+
 export function findTargetMention(
   text: string,
   targetUserIds: ReadonlySet<string>,
   targetSubteamIds: ReadonlySet<string>,
 ): MentionMatch | undefined {
-  for (const match of text.matchAll(USER_MENTION)) {
-    if (targetUserIds.has(match[1]!)) return { type: 'user', id: match[1]! };
-  }
+  const userMention = findUserMention(text, targetUserIds);
+  if (userMention) return userMention;
   for (const match of text.matchAll(SUBTEAM_MENTION)) {
     if (targetSubteamIds.has(match[1]!)) return { type: 'subteam', id: match[1]! };
   }

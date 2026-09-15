@@ -4,6 +4,9 @@ export interface RelayConfig extends ApiConfig {
   teamId: string;
   targetUserIds: Set<string>;
   targetSubteamIds: Set<string>;
+  botUserIds: Set<string>;
+  botAllowedSenderIds: Set<string>;
+  botAllowAllSenders: boolean;
   allowedChannelIds: Set<string>;
   allowAllChannels: boolean;
   blockedChannelIds: Set<string>;
@@ -29,7 +32,11 @@ export function loadRelayConfig(
   const blockedSenderIds = ids(env.SLACK_BLOCKED_SENDER_IDS);
   const targetUserIds = ids(env.SLACK_TARGET_USER_IDS);
   const targetSubteamIds = ids(env.SLACK_TARGET_SUBTEAM_IDS);
-  if (!targetUserIds.size && !targetSubteamIds.size)
+  const botUserIds = ids(env.SLACK_BOT_USER_IDS);
+  const botAllowedSenders = optionalPolicyIds(
+    env.SLACK_BOT_ALLOWED_SENDER_IDS,
+  );
+  if (!targetUserIds.size && !targetSubteamIds.size && !botUserIds.size)
     throw new Error("missing_mention_target");
   const type = env.MULTICA_ASSIGNEE_TYPE?.trim() || "agent";
   if (type !== "agent" && type !== "squad") throw new Error("invalid_assignee_type");
@@ -49,6 +56,9 @@ export function loadRelayConfig(
     blockedSenderIds,
     targetUserIds,
     targetSubteamIds,
+    botUserIds,
+    botAllowedSenderIds: botAllowedSenders.ids,
+    botAllowAllSenders: botAllowedSenders.all,
     multicaApiBaseUrl: https(required(env, "MULTICA_API_BASE_URL")),
     multicaApiToken: required(env, "MULTICA_API_TOKEN"),
     multicaWorkspaceId: required(env, "MULTICA_WORKSPACE_ID"),
@@ -91,6 +101,13 @@ function policyIds(value: string): { ids: Set<string>; all: boolean } {
   const parsed = ids(normalized);
   if (!parsed.size) throw new Error("invalid_allowlist");
   return { ids: parsed, all: false };
+}
+function optionalPolicyIds(value: string | undefined): {
+  ids: Set<string>;
+  all: boolean;
+} {
+  if (!value?.trim()) return { ids: new Set(), all: false };
+  return policyIds(value);
 }
 function https(value: string): string {
   const url = new URL(value);

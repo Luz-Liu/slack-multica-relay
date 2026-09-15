@@ -44,13 +44,13 @@ footer 表示消费消息时读取的 **Agent 配置快照**，不是运行实�
 
 ## 3. Slack App
 
-使用专用 App 或明确获准复用的 App 接收需要的 `message` 与 `app_mention` 事件。公开频道按需订阅 `message.channels`，私有频道订阅 `message.groups`；同时启用 `app_mentions:read` scope 和 `app_mention` 事件订阅，并将接收 App 加入指定私有频道。`SLACK_TARGET_USER_IDS` 必须包含允许触发的 Slack 用户 ID；如果希望直接 @Bot 触发，也要填入该 App 对应的 Bot user ID。`SLACK_REACTION_TOKEN` 使用这个接收 App 的 Bot token，入口在验签和白名单通过后尽早添加 `SLACK_REACTION_NAME`（默认 `eyes`）；Multica Agent 回复仍使用获准的 owner USER token。验收时分别核对 reaction 的 `user` 与 Agent 回复的 `user` 身份。
+使用专用 App 或明确获准复用的 App 接收需要的 `message` 与 `app_mention` 事件。公开频道按需订阅 `message.channels`，私有频道订阅 `message.groups`；同时启用 `app_mentions:read` scope 和 `app_mention` 事件订阅，并将接收 App 加入指定私有频道。真人目标填入 `SLACK_TARGET_USER_IDS`；如果希望直接 @Bot 触发，使用单独的 `SLACK_BOT_USER_IDS` 配置该 App 的 Bot user ID，并在 `SLACK_BOT_ALLOWED_SENDER_IDS` 中列出允许触发该 Bot 的真人发送者。配置了 Bot ID 但未配置 Bot sender 白名单时，所有 Bot mention 默认拒绝；真人目标 mention 仍按原有频道/发送者策略处理。当前部署可使用 `SLACK_BOT_USER_IDS=U0B9SML36HG`、`SLACK_BOT_ALLOWED_SENDER_IDS=U06RHAA209Y`。`SLACK_REACTION_TOKEN` 使用这个接收 App 的 Bot token，入口在验签和白名单通过后尽早添加 `SLACK_REACTION_NAME`（默认 `eyes`）；Multica Agent 回复同样使用获准的 Bot token；验收时核对 reaction 与 Agent 回复的 `user` 均为同一个 Bot。
 
 同一条真人消息可能同时触发 `message` 和 `app_mention`。Relay 会按 Team、频道和 Slack `ts` 使用同一个去重键；真人 `app_mention` 可以入队，带 `bot_id`、`subtype` 或 `app_id` 的自动消息会在验签后忽略，避免 Bot 回复再次触发自己。入口 reaction 先于 QStash 入队，使用 750ms 独立预算；KV 会先写入 90 天 attempted 标记，竞争 delivery 在活动窗口内等待，reaction 成功、失败或结果不明后都不主动重试。reaction 超时或失败时继续派发，不能以 reaction 失败作为 Slack 重试依据；消费函数不再补加 reaction，避免覆盖后续状态。
 
 配置 Request URL 为 `https://<当前部署>/api/slack/events`，对应 Signing Secret 填入部署环境。新增 scopes 后重新安装。只修改已授权用于 Relay 的 App。
 
-`SLACK_TEAM_ID`、`SLACK_TARGET_USER_IDS` 和 `SLACK_TARGET_SUBTEAM_IDS` 至少一个必填；`SLACK_ALLOWED_CHANNEL_IDS` 保留为白名单配置，默认使用 `all`，也可填写逗号分隔的频道 ID。`SLACK_BLOCKED_CHANNEL_IDS`、`SLACK_ALLOWED_SENDER_IDS` 和 `SLACK_BLOCKED_SENDER_IDS` 可选，黑名单优先于白名单。后续问答仍需再次 mention。
+`SLACK_TEAM_ID` 必填；`SLACK_TARGET_USER_IDS`、`SLACK_TARGET_SUBTEAM_IDS` 和 `SLACK_BOT_USER_IDS` 至少配置一个；`SLACK_ALLOWED_CHANNEL_IDS` 保留为白名单配置，默认使用 `all`，也可填写逗号分隔的频道 ID。`SLACK_BLOCKED_CHANNEL_IDS`、`SLACK_ALLOWED_SENDER_IDS` 和 `SLACK_BLOCKED_SENDER_IDS` 可选，黑名单优先于白名单。配置 `SLACK_BOT_USER_IDS` 后，`SLACK_BOT_ALLOWED_SENDER_IDS` 为空会拒绝所有 Bot mention，也可填写 `all` 或逗号分隔的发送者 ID。入站和消费函数都会从正文重新检查 Bot mention；队列 payload 无需新增字段。后续问答仍需再次 mention。
 
 ## 4. Vercel
 

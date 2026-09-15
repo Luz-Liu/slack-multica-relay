@@ -25,6 +25,11 @@ const env = {
   QSTASH_NEXT_SIGNING_KEY: "test",
   RELAY_CONSUMER_URL: "https://relay.test/api/queue/consume",
 };
+const botPolicyEnv = {
+  ...env,
+  SLACK_BOT_USER_IDS: "UBOT",
+  SLACK_BOT_ALLOWED_SENDER_IDS: "U2",
+};
 function signedRequest(bodyValue: unknown): Request {
   const body = JSON.stringify(bodyValue);
   const ts = String(Math.floor(Date.now() / 1000));
@@ -146,6 +151,93 @@ describe("durable admission", () => {
     const response = await acceptSlack(request(appMentionEvent), env, fetcher);
     expect(response.status).toBe(200);
     expect(queueCalls(fetcher)).toHaveLength(1);
+  });
+  it("accepts an allowed sender mentioning a configured Bot", async () => {
+    const { fetcher } = admissionFixture();
+    const response = await acceptSlack(
+      request({ ...event, text: "<@UBOT> please handle this" }),
+      botPolicyEnv,
+      fetcher,
+    );
+    expect(response.status).toBe(200);
+    expect(queueCalls(fetcher)).toHaveLength(1);
+  });
+  it("can use a configured Bot as the only mention target", async () => {
+    const { SLACK_TARGET_USER_IDS: _ignored, ...botOnlyEnv } = botPolicyEnv;
+    const { fetcher } = admissionFixture();
+    const response = await acceptSlack(
+      request({ ...event, text: "<@UBOT> please handle this" }),
+      botOnlyEnv,
+      fetcher,
+    );
+    expect(response.status).toBe(200);
+    expect(queueCalls(fetcher)).toHaveLength(1);
+  });
+  it.each(["message", "app_mention"])(
+    "rejects a disallowed sender mentioning a configured Bot for %s",
+    async (type) => {
+      const fetcher = vi.fn<typeof fetch>();
+      const response = await acceptSlack(
+        request({
+          ...event,
+          type,
+          user: "U3",
+          text: "<@UBOT> please handle this",
+        }),
+        botPolicyEnv,
+        fetcher,
+      );
+      expect(await response.json()).toEqual({
+        action: "ignored",
+        reason: "not_allowed",
+      });
+      expect(fetcher).not.toHaveBeenCalled();
+    },
+  );
+  it("keeps owner mentions on the existing sender policy", async () => {
+    const { fetcher } = admissionFixture();
+    const response = await acceptSlack(
+      request({ ...event, user: "U3" }),
+      botPolicyEnv,
+      fetcher,
+    );
+    expect(response.status).toBe(200);
+    expect(queueCalls(fetcher)).toHaveLength(1);
+  });
+  it.each([
+    ["message", "<@UBOT> then <@U1>"],
+    ["app_mention", "<@UBOT> then <@U1>"],
+    ["message", "<@U1> then <@UBOT>"],
+    ["app_mention", "<@U1> then <@UBOT>"],
+  ])(
+    "rejects a disallowed sender when a Bot and owner are both mentioned (%s, %s)",
+    async (type, text) => {
+      const fetcher = vi.fn<typeof fetch>();
+      const response = await acceptSlack(
+        request({ ...event, type, user: "U3", text }),
+        botPolicyEnv,
+        fetcher,
+      );
+      expect(await response.json()).toEqual({
+        action: "ignored",
+        reason: "not_allowed",
+      });
+      expect(fetcher).not.toHaveBeenCalled();
+    },
+  );
+  it("fails closed for Bot mentions when the Bot sender allowlist is absent", async () => {
+    const { SLACK_BOT_ALLOWED_SENDER_IDS: _ignored, ...closedEnv } = botPolicyEnv;
+    const fetcher = vi.fn<typeof fetch>();
+    const response = await acceptSlack(
+      request({ ...event, text: "<@UBOT> please handle this" }),
+      closedEnv,
+      fetcher,
+    );
+    expect(await response.json()).toEqual({
+      action: "ignored",
+      reason: "not_allowed",
+    });
+    expect(fetcher).not.toHaveBeenCalled();
   });
   it("adds eyes during admission and skips message/app_mention replays", async () => {
     const fixture = admissionFixture();
@@ -351,6 +443,31 @@ describe("durable admission", () => {
         body: JSON.stringify(queued),
       }),
       env,
+      f,
+    );
+    expect(await response.json()).toEqual({
+      action: "ignored",
+      reason: "policy_changed",
+    });
+    expect(f).not.toHaveBeenCalled();
+  });
+  it("rechecks Bot sender policy from queued text after configuration changes", async () => {
+    const f = vi.fn<typeof fetch>();
+    const queued = {
+      teamId: "T1",
+      channelId: "C1",
+      senderUserId: "U3",
+      messageTs: "1.000001",
+      threadTs: "1.000001",
+      text: "<@UBOT> test",
+      mention: { type: "user", id: "UBOT" },
+    };
+    const response = await consumeQueue(
+      new Request(botPolicyEnv.RELAY_CONSUMER_URL, {
+        method: "POST",
+        body: JSON.stringify(queued),
+      }),
+      botPolicyEnv,
       f,
     );
     expect(await response.json()).toEqual({
