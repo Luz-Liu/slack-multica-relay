@@ -1,6 +1,11 @@
 import { createHmac } from "node:crypto";
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { acceptSlack, consumeQueue } from "../src/http.js";
+import {
+  acceptSlack,
+  ADMISSION_BUDGET_MS,
+  consumeQueue,
+  QUEUE_PUBLISH_BUDGET_MS,
+} from "../src/http.js";
 vi.mock("@upstash/qstash", () => ({
   Receiver: class {
     verify = vi.fn().mockResolvedValue(true);
@@ -57,6 +62,7 @@ function queueCalls(fetcher: ReturnType<typeof vi.fn<typeof fetch>>) {
 function admissionFixture(options: {
   reaction?: "ok" | "fail" | "timeout";
   queueFailures?: number;
+  author?: "human" | "bot" | "fail" | "timeout" | "malformed" | "mismatch";
 } = {}) {
   const values = new Map<string, string>();
   const calls: string[] = [];
@@ -82,6 +88,28 @@ function admissionFixture(options: {
       }
       if (command === "GET") return Response.json({ result: values.get(parts[1]!) ?? null });
       throw new Error("unexpected_kv_command");
+    }
+    if (url.startsWith("https://slack.com/api/users.info")) {
+      calls.push("author");
+      const userId = new URL(url).searchParams.get("user");
+      if (options.author === "fail")
+        return Response.json({ ok: false, error: "ratelimited" });
+      if (options.author === "timeout") {
+        return await new Promise<Response>((resolve, reject) => {
+          const signal = init.signal;
+          const abort = () => reject(signal?.reason ?? new DOMException("timeout", "TimeoutError"));
+          if (signal?.aborted) abort();
+          else signal?.addEventListener("abort", abort, { once: true });
+        });
+      }
+      if (options.author === "malformed")
+        return Response.json({ ok: true, user: { id: userId } });
+      if (options.author === "mismatch")
+        return Response.json({ ok: true, user: { id: "UOTHER", is_bot: false } });
+      return Response.json({
+        ok: true,
+        user: { id: userId, is_bot: options.author === "bot" },
+      });
     }
     if (url === "https://slack.com/api/reactions.add") {
       calls.push("reaction");
@@ -139,7 +167,6 @@ describe("durable admission", () => {
     { channel: "C2" },
     { user: undefined },
     { text: "ordinary", thread_ts: "1.000001" },
-    { bot_id: "B1" },
     { subtype: "message_changed" },
   ])("no queue side effects for %j", async (change) => {
     const fetcher = vi.fn<typeof fetch>();
@@ -280,15 +307,93 @@ describe("durable admission", () => {
   it.each([
     { bot_id: "B1" },
     { app_id: "A1" },
-  ])("ignores an automatic app_mention event %j", async (change) => {
-    const fetcher = vi.fn<typeof fetch>();
+    { subtype: "bot_message" },
+  ])("accepts a human-author event with source metadata %j", async (change) => {
+    const { fetcher } = admissionFixture();
     const response = await acceptSlack(
       request({ ...appMentionEvent, ...change }),
       env,
       fetcher,
     );
-    expect(await response.json()).toEqual({ action: "ignored" });
-    expect(fetcher).not.toHaveBeenCalled();
+    expect(response.status).toBe(200);
+    expect(queueCalls(fetcher)).toHaveLength(1);
+  });
+  it.each([
+    {},
+    { bot_id: "B1" },
+    { app_id: "A1" },
+    { subtype: "bot_message" },
+  ])("ignores a bot-author event with source metadata %j", async (change) => {
+    const { fetcher } = admissionFixture({ author: "bot" });
+    const response = await acceptSlack(
+      request({ ...appMentionEvent, user: "UBOT", ...change }),
+      env,
+      fetcher,
+    );
+    expect(await response.json()).toEqual({
+      action: "ignored",
+      reason: "bot_author",
+    });
+    expect(queueCalls(fetcher)).toHaveLength(0);
+    expect(fetcher.mock.calls.filter(([input]) => String(input).includes("/reactions.add"))).toHaveLength(0);
+  });
+  it.each([
+    "fail",
+    "timeout",
+    "malformed",
+    "mismatch",
+  ] as const)("returns retryable 503 when author lookup is %s", async (author) => {
+    const { fetcher } = admissionFixture({ author });
+    const response = await acceptSlack(request(event), env, fetcher);
+    expect(response.status).toBe(503);
+    expect(await response.json()).toEqual({
+      error: "author_unavailable",
+      retryable: true,
+    });
+    expect(queueCalls(fetcher)).toHaveLength(0);
+    expect(fetcher.mock.calls.filter(([input]) => String(input).includes("/reactions.add"))).toHaveLength(0);
+  });
+  it("accepts the win-agent human author for both event types", async () => {
+    for (const type of ["message", "app_mention"]) {
+      const { fetcher } = admissionFixture();
+      const response = await acceptSlack(request({
+        ...event, type, user: "U06GM8PAFEX",
+        bot_id: "B0AUG03UU06", app_id: "A0ATZ0MSD25",
+      }), env, fetcher);
+      expect(response.status).toBe(200);
+      expect(queueCalls(fetcher)).toHaveLength(1);
+      const queued = JSON.parse(String(queueCalls(fetcher)[0]![1]?.body));
+      expect(queued.senderUserId).toBe("U06GM8PAFEX");
+    }
+  });
+  it("bounds queue publishing by the budget left after author and reaction calls", async () => {
+    const { fetcher: baseFetcher } = admissionFixture();
+    let now = Date.now();
+    vi.spyOn(Date, "now").mockImplementation(() => now);
+    const timeout = vi.spyOn(AbortSignal, "timeout");
+    const fetcher = vi.fn<typeof fetch>(async (input, init) => {
+      const response = await baseFetcher(input, init);
+      if (String(input).includes("/users.info?")) now += 600;
+      if (String(input).includes("/reactions.add")) now += 650;
+      return response;
+    });
+    const response = await acceptSlack(request(event), env, fetcher);
+    expect(response.status).toBe(200);
+    expect(queueCalls(fetcher)).toHaveLength(1);
+    expect(timeout).toHaveBeenLastCalledWith(1500);
+  });
+  it("does not publish when the admission budget is exhausted", async () => {
+    const { fetcher: baseFetcher } = admissionFixture();
+    let now = Date.now();
+    vi.spyOn(Date, "now").mockImplementation(() => now);
+    const fetcher = vi.fn<typeof fetch>(async (input, init) => {
+      const response = await baseFetcher(input, init);
+      if (String(input).includes("/reactions.add")) now += 2750;
+      return response;
+    });
+    const response = await acceptSlack(request(event), env, fetcher);
+    expect(response.status).toBe(503);
+    expect(queueCalls(fetcher)).toHaveLength(0);
   });
   it("uses the same queue deduplication key for message and app_mention", async () => {
     const { fetcher } = admissionFixture();
@@ -337,6 +442,31 @@ describe("durable admission", () => {
     expect(response.status).toBe(200);
     expect(Date.now() - started).toBeLessThan(3000);
     expect(fixture.calls.filter((call) => call === "reaction")).toHaveLength(1);
+    expect(queueCalls(fixture.fetcher)).toHaveLength(1);
+  });
+  it("limits queue publishing to the remaining admission budget", async () => {
+    const fixture = admissionFixture();
+    const requestValue = request(event);
+    const realNow = Date.now();
+    const nowValues = [realNow, realNow, realNow + 2600];
+    let nowIndex = 0;
+    vi.spyOn(Date, "now").mockImplementation(() =>
+      nowValues[Math.min(nowIndex++, nowValues.length - 1)]!,
+    );
+    const timeoutValues: number[] = [];
+    const timeout = AbortSignal.timeout.bind(AbortSignal);
+    vi.spyOn(AbortSignal, "timeout").mockImplementation((milliseconds) => {
+      timeoutValues.push(milliseconds);
+      return timeout(milliseconds);
+    });
+
+    const response = await acceptSlack(requestValue, env, fixture.fetcher);
+
+    expect(response.status).toBe(200);
+    expect(timeoutValues.at(-1)).toBe(
+      Math.min(QUEUE_PUBLISH_BUDGET_MS, ADMISSION_BUDGET_MS - 2600),
+    );
+    expect(timeoutValues.at(-1)).toBeLessThan(QUEUE_PUBLISH_BUDGET_MS);
     expect(queueCalls(fixture.fetcher)).toHaveLength(1);
   });
   it("returns a retryable response when queue dispatch fails without re-reacting", async () => {

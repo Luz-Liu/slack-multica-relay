@@ -6,12 +6,12 @@
 
 `Slack → 签名与准入校验 → KV 幂等加 👀 → QStash 持久化 → HTTP 200 → 消费函数 → Multica Issue → Agent/Runtime → Slack 回复`
 
-- 支持 Slack `message` 与 `app_mention` 事件，只处理当前消息明确 mention 目标用户、User Group 或配置的 Bot 的事件。Team 必填；频道和发送者支持白名单（可设为 `all`）及黑名单，黑名单优先。Bot/app 自动消息、编辑/删除、普通讨论不触发。
+- 支持 Slack `message` 与 `app_mention` 事件，只处理当前消息明确 mention 目标用户、User Group 或配置的 Bot 的事件。Team 必填；频道和发送者支持白名单（可设为 `all`）及黑名单，黑名单优先。作者过滤通过 `users.info(event.user)` 查询，仅将 `user.is_bot=true` 判为 Bot 并忽略；真人作者即使带有 `bot_id`、`app_id` 或 `bot_message` 标记也继续处理。编辑/删除、普通讨论不触发。作者查询失败或响应无法确认身份时返回可重试 503，不添加 reaction、不入队。
 - Bot 目标单独由 `SLACK_BOT_USER_IDS` 配置；消息包含 Bot mention 时，发送者还必须命中 `SLACK_BOT_ALLOWED_SENDER_IDS`，未配置该白名单时默认拒绝所有 Bot mention。只 mention 真人目标的消息继续使用原有发送者策略；入站和消费都会按正文检查 Bot mention，因此不依赖事件类型或新增队列字段。
 - 同一条真人消息可能同时收到 `message` 和 `app_mention`；两种事件按 Team、频道和 Slack `ts` 归一化，使用同一个去重键，不会创建重复任务。
 - 通过准入校验的消息会在入队前尽力添加 `SLACK_REACTION_NAME`（默认 `eyes`）。reaction 先写入 90 天的 KV attempted 标记，再调用 Slack；并发重复 delivery 最多等待 750ms，完成、失败或结果不明后都不会再次尝试，失败可能因此没有 eyes，但不阻塞 QStash 派发。
 - 消费函数不再添加 reaction，避免任务执行较晚时把 `typingcat` 或 `done` 等后续状态覆盖为 `eyes`。
-- 入站只等待有界的 reaction 尝试和 QStash 接收；队列负责后台投递及3次重试，耗尽后在其失败队列查看/重放。
+- 入站等待有界的作者查询、reaction 尝试和 QStash 接收；队列负责后台投递及3次重试，耗尽后在其失败队列查看/重放。
 - 每个 Slack thread 通过普通 Issue API 创建独立任务卡，不经过 Autopilot 同标题60秒去重。
 - thread scope 包含 Workspace、Project、稳定的路由标识；默认不同 Agent/Team 不采用彼此的映射。
 - 同 thread 后续消息追加评论。QStash 按 thread 限并发，Redis 锁与消息状态处理重投。
@@ -45,7 +45,7 @@ pnpm lint
 | 消费 duplicate          | 已处理的消息                                                           |
 | 消费503                 | 保留队列重试/DLQ责任，原因包括 timeout、thread*lock_busy、ambiguous*\* |
 
-`GET /api/health` 仅证明函数可响应。消费有45秒整体预算，部署函数上限60秒；入站发布请求超时2秒。平台冷启动、网络延迟与配额仍须实测。
+`GET /api/health` 仅证明函数可响应。消费有45秒整体预算，部署函数上限60秒；作者查询最多 700ms，reaction 最多 750ms，队列发布最多 1800ms 且受入站剩余 2750ms 整体预算限制。平台冷启动、网络延迟与配额仍须实测。
 
 ## 迁移到 Multica Team
 

@@ -8,6 +8,10 @@ import {
   type SlackMessageEvent,
 } from "./mentions.js";
 import {
+  lookupSlackAuthor,
+  SlackAuthorLookupError,
+} from "./slack-author.js";
+import {
   ensureSlackReaction,
   REACTION_ATTEMPT_BUDGET_MS,
   reactionErrorDetails,
@@ -21,6 +25,9 @@ import {
 } from "./thread-router.js";
 import { UpstashThreadStore } from "./thread-store.js";
 import { threadScopeId } from "./multica-api.js";
+
+export const ADMISSION_BUDGET_MS = 2750;
+export const QUEUE_PUBLISH_BUDGET_MS = 1800;
 
 export function json(value: unknown, status = 200): Response {
   return Response.json(value, { status });
@@ -233,6 +240,24 @@ export async function acceptSlack(
   if (!admitted(payload, config))
     return json({ action: "ignored", reason: "not_allowed" });
   try {
+    const author = await lookupSlackAuthor(
+      payload.senderUserId,
+      config.slackReactionToken,
+      fetchImpl,
+    );
+    if (author.isBot)
+      return json({ action: "ignored", reason: "bot_author" });
+  } catch (error) {
+    console.warn("relay_author", {
+      messageKey: messageKey(payload),
+      reason: error instanceof SlackAuthorLookupError
+        ? error.code
+        : "request_failed",
+      durationMs: Date.now() - start,
+    });
+    return json({ error: "author_unavailable", retryable: true }, 503);
+  }
+  try {
     await acknowledgeSlackMessage(payload, config, fetchImpl);
   } catch (error) {
     console.warn("relay_reaction", {
@@ -240,6 +265,15 @@ export async function acceptSlack(
       reason: "reaction_failed",
       ...reactionErrorDetails(error),
     });
+  }
+  const remainingBudgetMs = ADMISSION_BUDGET_MS - (Date.now() - start);
+  if (remainingBudgetMs <= 0) {
+    console.warn("relay_admission", {
+      messageKey: messageKey(payload),
+      reason: "admission_timeout",
+      durationMs: Date.now() - start,
+    });
+    return json({ error: "queue_unavailable", retryable: true }, 503);
   }
   try {
     const response = await fetchImpl(
@@ -260,7 +294,9 @@ export async function acceptSlack(
           "Upstash-Flow-Control-Value": "parallelism=1",
         },
         body: JSON.stringify(payload),
-        signal: AbortSignal.timeout(1800),
+        signal: AbortSignal.timeout(
+          Math.min(QUEUE_PUBLISH_BUDGET_MS, remainingBudgetMs),
+        ),
       },
     );
     if (!response.ok) throw new Error("queue_publish_failed");

@@ -28,13 +28,18 @@ describe('isSupportedMessage', () => {
   });
 
   it.each([
+    { subtype: 'message_changed' },
+    { subtype: 'message_deleted' },
+  ])('rejects a mutated event %j', (change) => {
+    expect(isSupportedMessage({ ...base, type: 'app_mention', ...change })).toBe(false);
+  });
+
+  it.each([
     { bot_id: 'B123' },
     { app_id: 'A123' },
     { subtype: 'bot_message' },
-    { subtype: 'message_changed' },
-    { subtype: 'message_deleted' },
-  ])('rejects an automatic or mutated event %j', (change) => {
-    expect(isSupportedMessage({ ...base, type: 'app_mention', ...change })).toBe(false);
+  ])('accepts source metadata for author lookup %j', (change) => {
+    expect(isSupportedMessage({ ...base, type: 'app_mention', ...change })).toBe(true);
   });
 
   it('rejects unsupported event types', () => {
