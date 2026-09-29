@@ -20,6 +20,34 @@ export class DutyService {
     const s: DutyState = {enabled:action === 'on', endsAt: endsAt ?? new Date().toISOString(), revision:randomUUID()};
     await this.store.set(this.stateKey,JSON.stringify(s),32*86400); return s;
   }
+  /** Shared by Slack and the admin API; receipts make retries safe across sessions. */
+  async manage(action: 'on' | 'off', endsAt: string | undefined, requestId: string): Promise<DutyState | null> {
+    const lock=this.stateKey+':control-lock', owner=randomUUID();
+    if(!await this.store.setIfAbsent(lock,owner,60)) throw new Error('duty_control_busy');
+    try {
+      const key=this.stateKey+':control:'+requestId;
+      const fingerprint=JSON.stringify({action,endsAt:endsAt??null});
+      const receipt=await this.store.get(key);
+      if(receipt) {
+        if(JSON.parse(receipt).fingerprint!==fingerprint) throw new Error('request_id_conflict');
+        return this.state();
+      }
+      const state=await this.control(action,endsAt);
+      try {await this.schedule(action==='on');}
+      catch(error) {if(action==='on') await this.control('off');throw error;}
+      await this.store.set(key,JSON.stringify({fingerprint}),32*86400);
+      return state;
+    } finally {await this.store.releaseIfOwner(lock,owner);}
+  }
+  async managementStatus(): Promise<unknown> {
+    const state=await this.state();
+    const r=await this.fetchImpl(this.relay.queueUrl+'/v2/schedules/cs-duty-'+this.setup.projectId,{
+      headers:{authorization:`Bearer ${this.relay.queueToken}`},signal:AbortSignal.timeout(8000)});
+    if(!r.ok && r.status!==404) throw new Error('duty_schedule_unavailable');
+    const schedule=r.ok?await r.json():null;
+    return {enabled:dutyActive(state),endsAt:state?.endsAt??null,revision:state?.revision??null,
+      schedule:{exists:!!schedule,paused:schedule?.isPaused??false}};
+  }
   async schedule(enabled: boolean): Promise<void> {
     const id='cs-duty-'+this.setup.projectId;
     const destination=new URL('/api/duty/patrol',this.relay.consumerUrl).href;

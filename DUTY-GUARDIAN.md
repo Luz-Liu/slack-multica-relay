@@ -19,3 +19,9 @@ Patrol backfills top-level channel messages from 15 minutes before the first run
 `/api/duty/actions` supports check, priority-upgrade, reply and patrol. Replies use the relay Bot and exact bound thread; the server inserts the configured on-call mention. Urgent alert and final conclusion have separate receipts. Ambiguous sends remain pending rather than risking duplicates. An operator must reconcile pending receipts against Slack. Jira has no atomic compare-and-set across assignee/priority fields: checks narrow but cannot eliminate the external edit race between read and write.
 
 First rollout is off. Unit/integration tests use mocked services; no real CS priority or Slack business-message writes are necessary for deployment verification. Live Slack event subscription, bot channel membership, runtime availability and an authorized end-to-end smoke case must be checked before declaring operational acceptance.
+
+## Direct operator control
+
+`POST /api/duty/admin` accepts `{action:"status"}`, `{action:"on",endsAt:"<ISO timestamp with timezone>",requestId:"<unique id>"}` or `{action:"off",requestId:"<unique id>"}`. Authenticate with `Authorization: Bearer <DUTY_ADMIN_TOKEN>`. This separate secret must not be added to the agent environment. Responses are non-cacheable and include live enabled/expiry/revision and schedule existence/paused state. This is configuration state, not proof of end-to-end processing health.
+
+The CLI `python3 scripts/duty-admin.py status|on|off` reads a private `~/.config/cs-duty-admin/config.json` containing `url` and `token`. Enable requires `--until 2026-10-08T09:00+08:00`. Each mutation prints a request ID; an uncertain retry must reuse it via `--request-id`. Query status before retrying. The API shares the Slack control lock, deadline checks, scheduling and fail-closed rollback. It does not post Slack messages or start a case itself.

@@ -15,6 +15,9 @@
     },
     "api/duty/actions.ts": {
       "maxDuration": 60
+    },
+    "api/duty/admin.ts": {
+      "maxDuration": 60
     }
   }
 }

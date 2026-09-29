@@ -51,10 +51,7 @@ export async function consumeDuty(request: Request,env: NodeJS.ProcessEnv=proces
    const key=s.stateKey+':command:'+e.messageTs;
    // Prevent Slack/QStash replay from re-enabling a previously disabled session.
    if(await s.store.get(key)) return reply({action:'duplicate'});
-   const state=await s.control(command.action,command.action==='on'?command.endsAt:undefined);
-   if(command.action!=='status') {
-    try {await s.schedule(command.action==='on');} catch(error) {if(command.action==='on') await s.control('off');throw error;}
-   }
+   const state=command.action==='status'?await s.state():await s.manage(command.action,command.action==='on'?command.endsAt:undefined,'slack:'+e.channelId+':'+e.messageTs);
    await s.store.set(key,'applied',32*86400);
    await s.slack('chat.postMessage',{channel:e.channelId,thread_ts:e.threadTs,text:`CS 值守：${dutyActive(state)?'开启':'关闭'}${state?.enabled?`；截止 ${state.endsAt}`:''}。仅处理当前分配给配置 QA 名单的未结束 CS 单。`});
    return reply({action:'controlled'});
@@ -90,4 +87,26 @@ export async function patrolDuty(request: Request,env: NodeJS.ProcessEnv=process
   if(!dutyActive(await s.state())) {await s.schedule(false);return reply({action:'disabled'});}
   return reply(await s.patrol());
  } catch(e) {return reply({error:safeError(e)},503);}
+}
+
+/** Operator-only control plane. Its credential is never supplied to the duty agent. */
+export async function dutyAdmin(request: Request,env: NodeJS.ProcessEnv=process.env,fetchImpl: typeof fetch=fetch): Promise<Response> {
+ const respond=(value:unknown,status=200)=>{const r=reply(value,status);r.headers.set('cache-control','no-store');return r;};
+ if(request.method!=='POST') return respond({error:'method_not_allowed'},405);
+ const token=env.DUTY_ADMIN_TOKEN,provided=request.headers.get('authorization')??'';
+ if(!token || token.length<32 || provided.length!==token.length+7 || !timingSafeEqual(Buffer.from(provided),Buffer.from('Bearer '+token))) return respond({error:'unauthorized'},401);
+ let body: any;
+ try {const raw=await request.text();if(raw.length>2048)return respond({error:'too_large'},413);body=JSON.parse(raw);} catch {return respond({error:'invalid_body'},400);}
+ if(!body || !['on','off','status'].includes(body.action)) return respond({error:'invalid_action'},400);
+ if(body.action!=='status' && (typeof body.requestId!=='string' || !/^[a-zA-Z0-9_-]{16,100}$/.test(body.requestId))) return respond({error:'request_id_required'},400);
+ if(body.action==='on' && (typeof body.endsAt!=='string' || !/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(?::\d{2})?(?:Z|[+-]\d{2}:\d{2})$/.test(body.endsAt))) return respond({error:'invalid_deadline'},400);
+ try {
+  const s=service(env,loadRelayConfig(env),fetchImpl);if(!s) return respond({error:'duty_not_configured'},409);
+  if(body.action!=='status') await s.manage(body.action,body.action==='on'?body.endsAt:undefined,body.requestId);
+  return respond({ok:true,...await s.managementStatus() as object});
+ } catch(e) {
+  const reason=e instanceof Error?e.message:'';
+  if(['invalid_deadline','request_id_conflict','duty_control_busy'].includes(reason)) return respond({error:reason},409);
+  return respond({error:'control_or_status_failed',hint:'Query status before retrying; reuse the same requestId for a retry.'},503);
+ }
 }
