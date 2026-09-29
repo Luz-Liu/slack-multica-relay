@@ -41,7 +41,9 @@ export class DutyService {
     if (t.key !== key || !eligibleTicket(t,this.setup)) throw new Error('qa_scope_changed'); return t;
   }
   async slack(method: string, body: object): Promise<any> {
-    const r = await this.fetchImpl('https://slack.com/api/'+method,{method:'POST',headers:{authorization:`Bearer ${this.relay.slackReactionToken}`,'content-type':'application/json'},body:JSON.stringify(body),signal:AbortSignal.timeout(8000)});
+    const read=method.startsWith('conversations.') || method==='auth.test';
+    const query=new URLSearchParams(Object.entries(body).map(([k,v])=>[k,String(v)]));
+    const r = await this.fetchImpl('https://slack.com/api/'+method+(read?'?'+query:''),{method:read?'GET':'POST',headers:{authorization:`Bearer ${this.relay.slackReactionToken}`,'content-type':'application/json'},...(!read?{body:JSON.stringify(body)}:{}),signal:AbortSignal.timeout(8000)});
     const v = await r.json(); if (!r.ok || !v.ok) throw new Error('duty_slack_failed'); return v;
   }
   proof(context: Context): string {
@@ -68,7 +70,7 @@ export class DutyService {
     if (event.teamId!==this.relay.teamId || !this.setup.channelIds.includes(event.channelId) || this.relay.blockedChannelIds.has(event.channelId) || this.relay.blockedSenderIds.has(event.senderUserId)) return [];
     let text = event.text;
     if (event.threadTs !== event.messageTs) {
-      const thread = await this.slack('conversations.replies',{channel:event.channelId,ts:event.threadTs,limit:1});
+      const thread = await this.slack('conversations.history',{channel:event.channelId,oldest:event.threadTs,latest:event.threadTs,inclusive:true,limit:1});
       text += '\n'+(thread.messages?.[0]?.text??'');
     }
     const results: string[] = [];
@@ -95,6 +97,17 @@ export class DutyService {
       } finally {await this.store.releaseIfOwner(lock,owner);}
     }
     return results;
+  }
+  async readiness(): Promise<unknown> {
+    const auth=await this.slack('auth.test',{});
+    const channels=[];
+    for(const id of this.setup.channelIds) {
+      const info=await this.slack('conversations.info',{channel:id});
+      channels.push({id,member:info.channel?.is_member===true,archived:info.channel?.is_archived===true});
+    }
+    const user=await this.jira('/rest/api/3/myself');
+    const priorities=await this.jira('/rest/api/3/priority');
+    return {enabled:dutyActive(await this.state()),botIdentityMatches:this.relay.botUserIds.has(auth.user_id),channels,jiraAuthenticated:user.active===true,prioritiesConfigured:this.setup.priorityIds.every(id=>priorities.some((p: {id:string})=>p.id===id))};
   }
   async patrol(): Promise<unknown> {
     if (!dutyActive(await this.state())) return {status:'disabled'};

@@ -74,7 +74,8 @@ export async function dutyActions(request: Request,env: NodeJS.ProcessEnv=proces
  try {
   const s=service(env,loadRelayConfig(env),fetchImpl); if(!s) return reply({error:'duty_off'},409);
   const raw=await request.text(); if(raw.length>24000) return reply({error:'too_large'},413);
-  const body=JSON.parse(raw); if(body.action==='patrol') return reply(await s.patrol());
+  const body=JSON.parse(raw); if(body.action==='readiness') return reply(await s.readiness());
+  if(body.action==='patrol') return reply(await s.patrol());
   if(typeof body.proof!=='string' || typeof body.action!=='string') return reply({error:'invalid_body'},400);
   return reply(await s.action(body.proof,body.action,body));
  } catch(e) {return reply({error:safeError(e)},409);}
