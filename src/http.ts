@@ -1,3 +1,4 @@
+import { admitDuty } from "./duty-http.js";
 import { Receiver } from "@upstash/qstash";
 import { loadRelayConfig, type RelayConfig } from "./config.js";
 import { verifySlackSignature } from "./signature.js";
@@ -219,6 +220,12 @@ export async function acceptSlack(
     !isSupportedMessage(body.event as SlackMessageEvent)
   )
     return json({ action: "ignored" });
+  try {
+    const duty = await admitDuty(body, config, env, fetchImpl);
+    if (duty) return duty;
+  } catch {
+    return json({ error: "duty_admission_failed", retryable: true }, 503);
+  }
   const event = body.event;
   const mention = configuredTargetMention(event.text as string, config);
   if (!mention) return json({ action: "ignored", reason: "not_addressed" });
