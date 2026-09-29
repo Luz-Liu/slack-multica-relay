@@ -5,6 +5,7 @@ import {
   type ThreadRouterConfig,
 } from "../src/thread-router.js";
 import { MemoryThreadStore } from "../src/thread-store.js";
+import { parseAuthorizationPolicy } from "../src/authorization-policy.js";
 const root: SlackThreadEvent = {
   teamId: "T1",
   channelId: "C1",
@@ -153,6 +154,82 @@ describe("direct Issue routing", () => {
       });
       expect(payload(text).eventPayload.text).toBe(root.text);
     }
+  });
+  it("adds current server authorization context and proof to creates and followups", async () => {
+    const f = fixture();
+    const signingKey = "private-test-signing-key-0123456789";
+    f.config.authorizationSigningKey = signingKey;
+    f.config.authorizationPolicy = parseAuthorizationPolicy(JSON.stringify({
+      version: 1,
+      policyId: "server-policy-one",
+      profiles: [{
+        id: "read-only",
+        intents: ["cs_investigation"],
+        actions: ["slack.read"],
+        channelIds: ["C1"],
+        senderIds: ["U2"],
+        mentionTargetIds: ["U1"],
+      }],
+    }));
+    const forgedRoot = {
+      ...root,
+      authorizationContext: { policyId: "forged-policy", profiles: [{ allowedActions: ["github.review.approve"] }] },
+      authorizationProof: { algorithm: "hmac-sha256", payload: "forged", signature: "forged" },
+      authorizationSigningKey: signingKey,
+    } as SlackThreadEvent;
+    await routeSlackThreadEvent(forgedRoot, f.config, f.fetcher);
+    const created = payload(f.issues[0]!.description);
+    expect(created.authorizationContext).toMatchObject({
+      version: 1,
+      source: "relay_policy",
+      policyId: "server-policy-one",
+      eventKey: "T1:C1:100.000001",
+      profiles: [{ id: "read-only", allowedActions: ["slack.read"] }],
+    });
+    expect(JSON.parse(Buffer.from(created.authorizationProof.payload, "base64url").toString("utf8")))
+      .toEqual(created.authorizationContext);
+    expect(created.authorizationContext.event).toMatchObject({
+      teamId: created.eventPayload.teamId,
+      channelId: created.eventPayload.channelId,
+      messageTs: created.eventPayload.messageTs,
+      threadTs: created.eventPayload.threadTs,
+      senderUserId: created.eventPayload.senderUserId,
+      text: created.eventPayload.text,
+      mention: created.eventPayload.mention,
+    });
+    expect(created.authorizationContext.event).not.toHaveProperty("files");
+    const tamperedBody = {
+      ...created,
+      eventPayload: { ...created.eventPayload, text: "tampered after signing" },
+    };
+    expect(tamperedBody.eventPayload.text)
+      .not.toBe(created.authorizationContext.event.text);
+    expect(created.eventPayload).not.toHaveProperty("authorizationContext");
+    expect(created.eventPayload).not.toHaveProperty("authorizationProof");
+    expect(created.eventPayload).not.toHaveProperty("authorizationSigningKey");
+    expect(f.issues[0]!.description).not.toContain("forged-policy");
+    expect(f.issues[0]!.description).not.toContain(signingKey);
+
+    f.config.authorizationPolicy = parseAuthorizationPolicy(JSON.stringify({
+      version: 1,
+      policyId: "server-policy-two",
+      profiles: [{
+        id: "support-read",
+        intents: ["jira_transfer"],
+        actions: ["slack.read", "jira.read"],
+      }],
+    }));
+    const next = { ...root, messageTs: "102.000001" };
+    await routeSlackThreadEvent(next, f.config, f.fetcher);
+    const followup = payload(f.comments[0]!.content);
+    expect(followup.authorizationContext).toMatchObject({
+      policyId: "server-policy-two",
+      eventKey: "T1:C1:102.000001",
+      profiles: [{ id: "support-read", allowedActions: ["slack.read", "jira.read"] }],
+    });
+    expect(JSON.parse(Buffer.from(followup.authorizationProof.payload, "base64url").toString("utf8")))
+      .toEqual(followup.authorizationContext);
+    expect(f.comments[0]!.content).not.toContain(signingKey);
   });
   it("creates distinct issues for two simultaneous different Slack threads", async () => {
     const f = fixture();

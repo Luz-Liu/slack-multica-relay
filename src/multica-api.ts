@@ -1,3 +1,5 @@
+import type { AuthorizationPolicy } from "./authorization-policy.js";
+
 export interface MulticaIssue {
   id: string;
   title: string;
@@ -21,6 +23,7 @@ export interface ApiConfig {
   multicaAssigneeId?: string;
   multicaThreadScopeId?: string;
   multicaLegacyAgentId?: string;
+  authorizationPolicy?: AuthorizationPolicy;
 }
 export function assignee(config: ApiConfig): { type: "agent" | "squad"; id: string } {
   const type = config.multicaAssigneeType ?? "agent";

@@ -58,3 +58,10 @@ pnpm lint
 Team 指令只注入 Leader。子任务仍需主动结果交接和回复去重；`in_review` 保留人工验收，不能仅依赖 run completed 自动回复 Slack。Token、签名密钥保留 Secret；上述类型和 ID 使用可查看的 Config。
 
 Team 模式不将旧 Agent 的配置快照当作实际执行模型：relay 的 `slack_reply_context` 标记为 unavailable、agentId 为 null；最终回复 Skill 应从实际运行记录获取模型与统计。
+
+
+## 权限职责
+
+Slack 验签、频道/发送者黑白名单和 Bot mention 准入在 Relay 集中执行。准入后的消息仍需由 Leader 判断是否请求处理、属于哪种意图；只在当前签名 profile 内确定动作，普通查询不获得修复权限。默认负责人、交接对象与恢复资格放服务器策略配置，不硬编码到 Team、Agent 或业务 Skill。
+
+消费端为每次新消息生成事件绑定的 authorizationContext 和 HMAC authorizationProof；同 thread 续问使用当前策略。执行者通过 relay-authorization Skill 验证来源和委派动作子集。配置、签名和发布顺序见搭建手册第 7 节。

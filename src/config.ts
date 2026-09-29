@@ -1,4 +1,5 @@
 import type { ApiConfig } from "./multica-api.js";
+import { parseAuthorizationPolicy } from "./authorization-policy.js";
 export interface RelayConfig extends ApiConfig {
   signingSecret: string;
   teamId: string;
@@ -22,10 +23,22 @@ export interface RelayConfig extends ApiConfig {
   queueCurrentSigningKey: string;
   queueNextSigningKey: string;
   consumerUrl: string;
+  authorizationSigningKey?: string;
 }
 export function loadRelayConfig(
   env: NodeJS.ProcessEnv = process.env,
 ): RelayConfig {
+  const rawAuthorizationPolicy = env.RELAY_AUTHORIZATION_POLICY;
+  const authorizationPolicy = parseAuthorizationPolicy(rawAuthorizationPolicy);
+  const policyConfigured = !!rawAuthorizationPolicy?.trim();
+  const authorizationSigningKey = env.RELAY_AUTHORIZATION_SIGNING_KEY;
+  if (
+    policyConfigured &&
+    (!authorizationSigningKey ||
+      authorizationSigningKey.length < 32 ||
+      authorizationSigningKey.trim() !== authorizationSigningKey)
+  )
+    throw new Error("invalid_authorization_policy");
   const allowedChannels = policyIds(env.SLACK_ALLOWED_CHANNEL_IDS || "all");
   const blockedChannelIds = ids(env.SLACK_BLOCKED_CHANNEL_IDS);
   const allowedSenders = policyIds(env.SLACK_ALLOWED_SENDER_IDS || "all");
@@ -79,6 +92,10 @@ export function loadRelayConfig(
     queueCurrentSigningKey: required(env, "QSTASH_CURRENT_SIGNING_KEY"),
     queueNextSigningKey: required(env, "QSTASH_NEXT_SIGNING_KEY"),
     consumerUrl: https(required(env, "RELAY_CONSUMER_URL")),
+    authorizationPolicy,
+    ...(policyConfigured && authorizationSigningKey
+      ? { authorizationSigningKey }
+      : {}),
   };
 }
 function required(env: NodeJS.ProcessEnv, key: string): string {
