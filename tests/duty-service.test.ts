@@ -36,5 +36,40 @@ describe('duty live guard',()=>{
   expect(slack).toHaveBeenCalledTimes(2);
   expect(slack.mock.calls[0]![1]).toMatchObject({channel:'C1',thread_ts:'1.1',text:'Urgent\n<@U1> 请接手确认。'});
  });
+ it('allows a requested follow-up after the automatic conclusion and deduplicates its retries',async()=>{
+  const slack=vi.spyOn(s,'slack').mockResolvedValue({ts:'2.1'});
+  await s.action(proof,'reply',{text:'Original'});
+  const body={text:'Updated conclusion',requestId:'comment-123',notify:true};
+  expect(await s.action(proof,'reply',body)).toEqual({status:'sent',ts:'2.1'});
+  expect(await s.action(proof,'reply',body)).toEqual({status:'sent',ts:'2.1',replayed:true});
+  await expect(s.action(proof,'reply',{...body,text:'Changed'})).rejects.toThrow('reply_request_conflict');
+  await expect(s.action(proof,'reply',{...body,phase:'urgent'})).rejects.toThrow('reply_request_conflict');
+  expect(slack).toHaveBeenCalledTimes(2);
+  await s.action(proof,'reply',{...body,requestId:'comment-456'});
+  expect(slack).toHaveBeenCalledTimes(3);
+ });
+ it('retains uncertain requested sends and rejects changed payloads',async()=>{
+  const slack=vi.spyOn(s,'slack').mockRejectedValue(new Error('timeout'));
+  const body={text:'Update',requestId:'comment-123'};
+  await expect(s.action(proof,'reply',body)).rejects.toThrow('timeout');
+  expect(await s.action(proof,'reply',body)).toEqual({status:'pending'});
+  await expect(s.action(proof,'reply',{...body,notify:true})).rejects.toThrow('reply_request_conflict');
+  expect(slack).toHaveBeenCalledTimes(1);
+ });
+ it('does not accept a follow-up id as a substitute for active signed authority',async()=>{
+  const slack=vi.spyOn(s,'slack');
+  await expect(s.action(proof+'x','reply',{text:'Update',requestId:'comment-123'})).rejects.toThrow('invalid_duty_proof');
+  await s.control('off');
+  await expect(s.action(proof,'reply',{text:'Update',requestId:'comment-123'})).rejects.toThrow();
+  expect(slack).not.toHaveBeenCalled();
+ });
+ it('rejects malformed request ids and keeps missing Slack receipts uncertain',async()=>{
+  const slack=vi.spyOn(s,'slack').mockResolvedValue({});
+  await expect(s.action(proof,'reply',{text:'Update',requestId:''})).rejects.toThrow('invalid_reply_request_id');
+  const body={text:'Update',requestId:'comment-123'};
+  await expect(s.action(proof,'reply',body)).rejects.toThrow('invalid_slack_reply_receipt');
+  expect(await s.action(proof,'reply',body)).toEqual({status:'pending'});
+  expect(slack).toHaveBeenCalledTimes(1);
+ });
  it('disabled patrol is silent and makes no Jira requests',async()=>{await s.control('off');expect(await s.patrol()).toEqual({status:'disabled'});});
 });

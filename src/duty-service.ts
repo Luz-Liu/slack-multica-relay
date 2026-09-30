@@ -1,4 +1,4 @@
-import { createHmac, randomUUID, timingSafeEqual } from 'node:crypto';
+import { createHash, createHmac, randomUUID, timingSafeEqual } from 'node:crypto';
 import type { RelayConfig } from './config.js';
 import type { ThreadStore } from './thread-store.js';
 import { createIssue, createComment, findIssue, findComment, type ApiConfig } from './multica-api.js';
@@ -161,16 +161,31 @@ export class DutyService {
       if (typeof body.text!=='string' || !body.text.trim() || body.text.length>12000 || /<!|<@/.test(body.text)) throw new Error('invalid_reply');
       const phase=body.phase??'conclusion';
       if(phase!=='urgent' && phase!=='conclusion') throw new Error('invalid_reply');
-      const receipt = `${this.stateKey}:reply:${c.ticketId}:${c.eventId}:${phase}`, owner=randomUUID();
-      const previous = await this.store.get(receipt); if(previous) return {status:previous};
+      // A human-requested follow-up is a new delivery, not a retry of the intake event.
+      // requestId identifies the triggering comment; it grants no additional authority.
+      const requestId=body.requestId;
+      if(requestId!==undefined && (typeof requestId!=='string' || !/^[a-zA-Z0-9_-]{1,128}$/.test(requestId))) throw new Error('invalid_reply_request_id');
+      const receipt = requestId
+        ? `${this.stateKey}:reply-request:${c.channelId}:${c.threadTs}:${requestId}`
+        : `${this.stateKey}:reply:${c.ticketId}:${c.eventId}:${phase}`;
+      const fingerprint=createHash('sha256').update(JSON.stringify({text:body.text,notify:body.notify===true,phase})).digest('hex');
+      const replay=(raw:string) => {
+        if(!requestId) return {status:raw}; // Preserve existing automatic-event receipts.
+        const saved=JSON.parse(raw);
+        if(saved.fingerprint!==fingerprint) throw new Error('reply_request_conflict');
+        return saved.ts ? {status:'sent',ts:saved.ts,replayed:true} : {status:'pending'};
+      };
+      const owner=randomUUID();
+      const previous = await this.store.get(receipt); if(previous) return replay(previous);
       if(!await this.store.setIfAbsent(receipt+':lock',owner,60)) throw new Error('reply_busy');
       try {
-        const saved=await this.store.get(receipt); if(saved) return {status:saved};
+        const saved=await this.store.get(receipt); if(saved) return replay(saved);
         await this.check(proof);
         // Mark ambiguous sends before network I/O. Never automatically resend an uncertain write.
-        await this.store.set(receipt,'pending',32*86400);
+        await this.store.set(receipt,requestId?JSON.stringify({fingerprint,status:'pending'}):'pending',32*86400);
         const r=await this.slack('chat.postMessage',{channel:c.channelId,thread_ts:c.threadTs,text:body.text+(body.notify===true?`\n<@${this.setup.onCallSlackId}> 请接手确认。`:''),unfurl_links:false,unfurl_media:false});
-        await this.store.set(receipt,String(r.ts),32*86400);
+        if(typeof r.ts!=='string' || !/^\d+\.\d+$/.test(r.ts)) throw new Error('invalid_slack_reply_receipt');
+        await this.store.set(receipt,requestId?JSON.stringify({fingerprint,ts:r.ts}):String(r.ts),32*86400);
         return {status:'sent',ts:r.ts};
       } finally {await this.store.releaseIfOwner(receipt+':lock',owner);}
     }
