@@ -96,3 +96,11 @@ EdgeOne Cloud Functions 会把 `Request.body` 暴露为解析值，入口通过 
 发布顺序：保存当前配置快照 → 部署 relay 代码与策略/签名 Secret → 验证生产新建和续接 payload → 绑定核验 Skill 并注入同一 Secret → 更新 Team/Agent prompt 与 CS Skill。切换期间新旧 prompt 可能并存，应检查在途任务，不自动重放已完成消息。历史无签名 payload 不补造授权；若需要恢复，重新以当前入口发送明确请求，取得当前策略签名。回滚必须协调代码、策略和 prompt，不能只回滚一侧。
 
 签名保护上下文来源和完整性，不把模型工具执行变成系统级沙箱，也不提供已发出上下文的实时撤销。实际工具凭据范围、禁部署/禁生产业务操作边界仍适用。不要把本链路声明为不可绕过的写审批。
+
+## 假期值守接单
+
+在 `DUTY_SETUP` 配置 `channelIds`、`intakeBotIds` 和 `qaAssigneeNames`。值守只接纳指定频道内指定 Bug Report Bot 的根消息，提取固定 `Priority: … | Assignee: …` 行或独立 `Assignee: …` 行，按 QA 显示名称精确匹配。名称由配置提供，不写入 Agent 指令。
+
+准入反映提报时的经办人，服务不再依赖 Jira 查询，也不修改 Jira 优先级。Agent 自主读取 Jira 和其他证据；转项目或 Jira 暂时不可用不自动撤销已接纳任务。`check` 仍验证凭证、值守会话与截止时间、绑定频道；关闭或重新开启后旧会话凭证不可继续发送。
+
+格式无法识别时不猜测归属，记录 `duty_intake_warning`，管理接口的 `intakeWarning` 可查看最近一次异常。异常消息不会阻断同页其他正常消息。原有 `qaAccountIds`、`priorityIds`、`DUTY_JIRA_*` 配置不再参与接单或写入，可以在后续凭据清理时移除。

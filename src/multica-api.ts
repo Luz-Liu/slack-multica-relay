@@ -149,6 +149,7 @@ export async function findIssue(
   config: ApiConfig,
   marker: string,
   fetchImpl: typeof fetch = fetch,
+  legacyDutyKey?: string,
 ): Promise<MulticaIssue | undefined> {
   for (let offset = 0; offset < 10000; offset += 100) {
     const query = new URLSearchParams({
@@ -165,7 +166,12 @@ export async function findIssue(
       throw new Error("invalid_multica_response");
     const rows = body.issues.map(issue);
     const matches = rows.filter((x) =>
-      x.description?.startsWith(marker + "\n"),
+      x.description?.startsWith(marker + "\n") || (
+        legacyDutyKey !== undefined && /^CS-\d+$/.test(legacyDutyKey) &&
+        x.title === `[CS Duty] ${legacyDutyKey}` &&
+        /^<!-- cs-duty:\d+ -->\n/.test(x.description ?? '') &&
+        x.description?.includes(`\nCS duty case ${legacyDutyKey}\n`)
+      ),
     );
     if (matches.length > 1) throw new Error("ambiguous_issue_mapping");
     if (matches[0]) {

@@ -23,6 +23,7 @@ export async function admitDuty(body: Record<string,unknown>, relay: RelayConfig
  const intakeBot=typeof e.bot_id==='string' && s.setup.intakeBotIds?.includes(e.bot_id);
  const sender=intakeBot?String(e.bot_id):e.user;
  if(typeof sender!=='string' || relay.blockedSenderIds.has(sender) || (command && intakeBot)) return;
+ if(!command && (!intakeBot || (e.thread_ts && e.thread_ts!==e.ts))) return;
  if(!intakeBot) {
    if(e.bot_id || e.subtype==='bot_message') return;
    if((await lookupSlackAuthor(sender,relay.slackReactionToken,fetchImpl)).isBot) return;
@@ -53,7 +54,7 @@ export async function consumeDuty(request: Request,env: NodeJS.ProcessEnv=proces
    if(await s.store.get(key)) return reply({action:'duplicate'});
    const state=command.action==='status'?await s.state():await s.manage(command.action,command.action==='on'?command.endsAt:undefined,'slack:'+e.channelId+':'+e.messageTs);
    await s.store.set(key,'applied',32*86400);
-   await s.slack('chat.postMessage',{channel:e.channelId,thread_ts:e.threadTs,text:`CS 值守：${dutyActive(state)?'开启':'关闭'}${state?.enabled?`；截止 ${state.endsAt}`:''}。仅处理当前分配给配置 QA 名单的未结束 CS 单。`});
+   await s.slack('chat.postMessage',{channel:e.channelId,thread_ts:e.threadTs,text:`CS 值守：${dutyActive(state)?'开启':'关闭'}${state?.enabled?`；截止 ${state.endsAt}`:''}。按 Bug Report Bot 提报时的 Assignee 匹配配置 QA 名单接单。`});
    return reply({action:'controlled'});
   }
   if(!dutyActive(await s.state())) return reply({action:'disabled'});
@@ -61,7 +62,7 @@ export async function consumeDuty(request: Request,env: NodeJS.ProcessEnv=proces
  } catch(e) { return reply({error:safeError(e)},503); }
 }
 function safeError(e: unknown): string {
- const allowed=['duty_off','duty_session_changed','qa_scope_changed','invalid_duty_proof','invalid_deadline','priority_upgrade_only','invalid_reply','reply_busy','duty_case_busy','duty_jira_not_configured'];
+ const allowed=['duty_off','duty_session_changed','qa_scope_changed','invalid_duty_proof','invalid_deadline','priority_upgrade_only','invalid_reply','reply_busy','duty_case_busy','duty_assignee_names_not_configured','unsupported_duty_action'];
  return e instanceof Error && allowed.includes(e.message)?e.message:'duty_operation_failed';
 }
 export async function dutyActions(request: Request,env: NodeJS.ProcessEnv=process.env,fetchImpl: typeof fetch=fetch): Promise<Response> {
