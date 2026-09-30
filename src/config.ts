@@ -1,9 +1,13 @@
 import type { ApiConfig } from "./multica-api.js";
+import { parseAuthorizationPolicy } from "./authorization-policy.js";
 export interface RelayConfig extends ApiConfig {
   signingSecret: string;
   teamId: string;
   targetUserIds: Set<string>;
   targetSubteamIds: Set<string>;
+  botUserIds: Set<string>;
+  botAllowedSenderIds: Set<string>;
+  botAllowAllSenders: boolean;
   allowedChannelIds: Set<string>;
   allowAllChannels: boolean;
   blockedChannelIds: Set<string>;
@@ -19,17 +23,33 @@ export interface RelayConfig extends ApiConfig {
   queueCurrentSigningKey: string;
   queueNextSigningKey: string;
   consumerUrl: string;
+  authorizationSigningKey?: string;
 }
 export function loadRelayConfig(
   env: NodeJS.ProcessEnv = process.env,
 ): RelayConfig {
+  const rawAuthorizationPolicy = env.RELAY_AUTHORIZATION_POLICY;
+  const authorizationPolicy = parseAuthorizationPolicy(rawAuthorizationPolicy);
+  const policyConfigured = !!rawAuthorizationPolicy?.trim();
+  const authorizationSigningKey = env.RELAY_AUTHORIZATION_SIGNING_KEY;
+  if (
+    policyConfigured &&
+    (!authorizationSigningKey ||
+      authorizationSigningKey.length < 32 ||
+      authorizationSigningKey.trim() !== authorizationSigningKey)
+  )
+    throw new Error("invalid_authorization_policy");
   const allowedChannels = policyIds(env.SLACK_ALLOWED_CHANNEL_IDS || "all");
   const blockedChannelIds = ids(env.SLACK_BLOCKED_CHANNEL_IDS);
   const allowedSenders = policyIds(env.SLACK_ALLOWED_SENDER_IDS || "all");
   const blockedSenderIds = ids(env.SLACK_BLOCKED_SENDER_IDS);
   const targetUserIds = ids(env.SLACK_TARGET_USER_IDS);
   const targetSubteamIds = ids(env.SLACK_TARGET_SUBTEAM_IDS);
-  if (!targetUserIds.size && !targetSubteamIds.size)
+  const botUserIds = ids(env.SLACK_BOT_USER_IDS);
+  const botAllowedSenders = optionalPolicyIds(
+    env.SLACK_BOT_ALLOWED_SENDER_IDS,
+  );
+  if (!targetUserIds.size && !targetSubteamIds.size && !botUserIds.size)
     throw new Error("missing_mention_target");
   const type = env.MULTICA_ASSIGNEE_TYPE?.trim() || "agent";
   if (type !== "agent" && type !== "squad") throw new Error("invalid_assignee_type");
@@ -49,6 +69,9 @@ export function loadRelayConfig(
     blockedSenderIds,
     targetUserIds,
     targetSubteamIds,
+    botUserIds,
+    botAllowedSenderIds: botAllowedSenders.ids,
+    botAllowAllSenders: botAllowedSenders.all,
     multicaApiBaseUrl: https(required(env, "MULTICA_API_BASE_URL")),
     multicaApiToken: required(env, "MULTICA_API_TOKEN"),
     multicaWorkspaceId: required(env, "MULTICA_WORKSPACE_ID"),
@@ -58,7 +81,7 @@ export function loadRelayConfig(
     multicaThreadScopeId: scope,
     multicaLegacyAgentId: legacy,
     slackReactionToken: required(env, "SLACK_REACTION_TOKEN"),
-    slackReactionName: required(env, "SLACK_REACTION_NAME").replace(
+    slackReactionName: (env.SLACK_REACTION_NAME?.trim() || "eyes").replace(
       /^:+|:+$/gu,
       "",
     ),
@@ -69,6 +92,10 @@ export function loadRelayConfig(
     queueCurrentSigningKey: required(env, "QSTASH_CURRENT_SIGNING_KEY"),
     queueNextSigningKey: required(env, "QSTASH_NEXT_SIGNING_KEY"),
     consumerUrl: https(required(env, "RELAY_CONSUMER_URL")),
+    authorizationPolicy,
+    ...(policyConfigured && authorizationSigningKey
+      ? { authorizationSigningKey }
+      : {}),
   };
 }
 function required(env: NodeJS.ProcessEnv, key: string): string {
@@ -91,6 +118,13 @@ function policyIds(value: string): { ids: Set<string>; all: boolean } {
   const parsed = ids(normalized);
   if (!parsed.size) throw new Error("invalid_allowlist");
   return { ids: parsed, all: false };
+}
+function optionalPolicyIds(value: string | undefined): {
+  ids: Set<string>;
+  all: boolean;
+} {
+  if (!value?.trim()) return { ids: new Set(), all: false };
+  return policyIds(value);
 }
 function https(value: string): string {
   const url = new URL(value);

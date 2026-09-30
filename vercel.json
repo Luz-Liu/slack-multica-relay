@@ -6,6 +6,18 @@
     },
     "api/queue/consume.ts": {
       "maxDuration": 60
+    },
+    "api/duty/consume.ts": {
+      "maxDuration": 60
+    },
+    "api/duty/patrol.ts": {
+      "maxDuration": 60
+    },
+    "api/duty/actions.ts": {
+      "maxDuration": 60
+    },
+    "api/duty/admin.ts": {
+      "maxDuration": 60
     }
   }
 }

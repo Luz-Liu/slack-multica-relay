@@ -12,8 +12,8 @@
 
 - 在目标 Workspace 创建专用 Project 和 Agent，绑定需要使用的 Runtime。
 - 将 [AGENT-PROMPT.md](AGENT-PROMPT.md) 同步为 Agent instructions。
-- 配置 Agent 的 `RELAY_OWNER_SLACK_USER_ID`、`RELAY_SKILL_ROOT`。频道和发送者的白名单/黑名单由 Relay 统一校验，Agent 不再读取单频道 `RELAY_ALLOWED_CHANNEL_ID`。
-- Slack 操作使用被授权的 USER token；每次 CLI 调用显式覆盖 SLACK_BOT_TOKEN 与 SLACK_TOKEN，防止 shell/Skill 配置选到 Bot。
+- 频道、发送者和 Bot mention 准入名单仅配置在 Relay。动作策略通过 `RELAY_AUTHORIZATION_POLICY` 提供，Agent 不维护个人名单。
+- Leader 的 Slack 回复和 Relay reaction 使用同一个已授权 App 的 Bot 身份；禁止发送失败回退为 User。执行成员不直接发送 Slack。
 - 回读 Agent 的 Runtime、权限和并发。初期并发2即可；Mac 休眠/断网会影响执行。
 - 读取本地 Skills 和 Workspace 指派 Skills 的实际加载结果。数据库 Skill 数量不能单独说明任务可用能力。
 - Relay 使用 MULTICA_PROJECT_ID/MULTICA_AGENT_ID 调用普通 Issue API；不再需要 Autopilot。
@@ -44,11 +44,13 @@ footer 表示消费消息时读取的 **Agent 配置快照**，不是运行实�
 
 ## 3. Slack App
 
-使用专用 App 或明确获准复用的 App 接收需要的 message 事件。私有频道订阅 `message.groups`，并将接收 App 加入指定频道。接收事件的 App 身份与外发身份分开配置：`SLACK_REACTION_TOKEN` 和 Agent 回复使用获准的 owner USER token。验收时核对 `reaction.users` 和回复消息的 `user` 是否等于 owner ID。
+使用专用 App 或明确获准复用的 App 接收需要的 `message` 与 `app_mention` 事件。公开频道按需订阅 `message.channels`，私有频道订阅 `message.groups`；同时启用 `app_mentions:read` scope 和 `app_mention` 事件订阅，并将接收 App 加入指定私有频道。真人目标填入 `SLACK_TARGET_USER_IDS`；如果希望直接 @Bot 触发，使用单独的 `SLACK_BOT_USER_IDS` 配置该 App 的 Bot user ID，并在 `SLACK_BOT_ALLOWED_SENDER_IDS` 中列出允许触发该 Bot 的真人发送者。配置了 Bot ID 但未配置 Bot sender 白名单时，所有 Bot mention 默认拒绝；真人目标 mention 仍按原有频道/发送者策略处理。当前部署可使用 `SLACK_BOT_USER_IDS=<BOT_USER_ID>`、`SLACK_BOT_ALLOWED_SENDER_IDS=<ALLOWED_SENDER_ID>`。`SLACK_REACTION_TOKEN` 使用这个接收 App 的 Bot token，需同时具有 `users:read`（查询作者身份）和 `reactions:write` 权限。入口在验签、白名单和作者身份校验通过后尽早添加 `SLACK_REACTION_NAME`（默认 `eyes`）；Multica Agent 回复同样使用获准的 Bot token；验收时核对 reaction 与 Agent 回复的 `user` 均为同一个 Bot。
+
+同一条真人消息可能同时触发 `message` 和 `app_mention`。Relay 会按 Team、频道和 Slack `ts` 使用同一个去重键；作者过滤在验签、消息结构、mention 和既有权限检查后调用 `users.info(event.user)`，仅将 `user.is_bot=true` 判为 Bot 并忽略。真人 `app_mention` 以及带 `bot_id`、`app_id` 或 `subtype=bot_message` 的真人作者消息均可继续入队；编辑和删除事件仍忽略。身份响应必须包含与请求匹配的 user ID 和布尔值 `is_bot`；作者查询失败、超时、缺字段或 ID 不匹配时返回可重试 503，且不添加 reaction、不入队。查询使用 `SLACK_REACTION_TOKEN`，最多 700ms，不读取 event 外层 `authorizations[].is_bot`，也不根据来源 App 或 token 类型过滤。入口 reaction 先于 QStash 入队，使用 750ms 独立预算；KV 会先写入 90 天 attempted 标记，竞争 delivery 在活动窗口内等待，reaction 成功、失败或结果不明后都不主动重试。队列发布最多 1800ms，且受从入站开始计时的 2750ms 剩余整体预算限制，避免作者查询、reaction 和队列的独立预算累加超过 Slack 确认窗口。reaction 超时或失败时继续派发，不能以 reaction 失败作为 Slack 重试依据；消费函数不再补加 reaction，避免覆盖后续状态。
 
 配置 Request URL 为 `https://<当前部署>/api/slack/events`，对应 Signing Secret 填入部署环境。新增 scopes 后重新安装。只修改已授权用于 Relay 的 App。
 
-`SLACK_TEAM_ID`、`SLACK_TARGET_USER_IDS` 和 `SLACK_TARGET_SUBTEAM_IDS` 至少一个必填；`SLACK_ALLOWED_CHANNEL_IDS` 保留为白名单配置，默认使用 `all`，也可填写逗号分隔的频道 ID。`SLACK_BLOCKED_CHANNEL_IDS`、`SLACK_ALLOWED_SENDER_IDS` 和 `SLACK_BLOCKED_SENDER_IDS` 可选，黑名单优先于白名单。后续问答仍需再次 mention。
+`SLACK_TEAM_ID` 必填；`SLACK_TARGET_USER_IDS`、`SLACK_TARGET_SUBTEAM_IDS` 和 `SLACK_BOT_USER_IDS` 至少配置一个；`SLACK_ALLOWED_CHANNEL_IDS` 保留为白名单配置，默认使用 `all`，也可填写逗号分隔的频道 ID。`SLACK_BLOCKED_CHANNEL_IDS`、`SLACK_ALLOWED_SENDER_IDS` 和 `SLACK_BLOCKED_SENDER_IDS` 可选，黑名单优先于白名单。配置 `SLACK_BOT_USER_IDS` 后，`SLACK_BOT_ALLOWED_SENDER_IDS` 为空会拒绝所有 Bot mention，也可填写 `all` 或逗号分隔的发送者 ID。入站和消费函数都会从正文重新检查 Bot mention；队列 payload 无需新增字段。后续问答仍需再次 mention。
 
 ## 4. Vercel
 
@@ -79,3 +81,26 @@ footer 表示消费消息时读取的 **Agent 配置快照**，不是运行实�
 上线前至少回读：Slack Request URL 已验证、`RELAY_CONSUMER_URL` 指向同一部署、真实中文事件验签成功、owner 身份 reaction/回复正确、同 thread 追问复用 Issue、重复事件没有额外任务、临时 503 进入重试且 QStash DLQ 状态可见。Runtime 离线恢复必须单独实测，不能由普通队列重试或 HTTP 200 推断。
 
 EdgeOne Cloud Functions 会把 `Request.body` 暴露为解析值，入口通过 `arrayBuffer()` 保留签名字节；Vercel 入口优先读取原始 Node stream。两边都不能用 `JSON.stringify(parsedBody)` 重建验签原文。
+
+
+## 7. 意图与动作权限
+
+准入和动作权限分开维护：Relay 验真并准入事件，在消费时按服务器当前 `RELAY_AUTHORIZATION_POLICY` 计算匹配 profiles；Leader 验证签名后读取 thread、理解意图、收窄动作，再委派执行。Team 不复制个人名单或 GRM 业务规则，执行者核验来源与委派范围；业务判断继续由对应 Skill 负责。
+
+策略 JSON 的 version 为 1。每个 profile 指定 id、intents、actions，可按 channelIds、senderIds、mentionTargetIds 限定；条件取交集，未提供条件表示继承入口准入，显式空列表不匹配。assigneeAccountId、handoffSlackUserId、resumeSenderIds 是工作流配置，不应进入通用 prompt。requesterMappings 仅用于把已验真的 Slack 请求者映射到 Jira 身份。
+
+建议分开配置 conversation、general-read、jira-transfer、jira-assign、code-fix、pr-review 和 grm-cs。general_task 仅授予查询与回复，不能继承代码修改或 Jira 写入。CS 自动流程可有完整动作集合，但明确“只分析”“不修复”仍收窄本次委派。未配置策略时 profiles 为空，不赋予业务动作权限；格式错误拒绝消费，不输出配置正文。
+
+`authorizationContext` 与 `authorizationProof` 在任务描述和后续评论中均由消费者生成，不接受队列事件携带的同名字段。proof 使用 `RELAY_AUTHORIZATION_SIGNING_KEY` 对 base64url JSON payload 做 HMAC-SHA256。启用策略必须配置至少 32 字符密钥，并通过 Secret 注入 Leader、Executor、Reviewer 的环境；不得把值放 prompt、policy、任务正文或日志。为相关 Agent 绑定 `relay-authorization` Skill，运行其校验器，验证签名、eventKey、请求者和委派动作子集。resumeEligible 只是身份资格；只有 Leader 判断当前消息明确恢复同一待人工案件，才形成案件绑定的恢复授权。
+
+发布顺序：保存当前配置快照 → 部署 relay 代码与策略/签名 Secret → 验证生产新建和续接 payload → 绑定核验 Skill 并注入同一 Secret → 更新 Team/Agent prompt 与 CS Skill。切换期间新旧 prompt 可能并存，应检查在途任务，不自动重放已完成消息。历史无签名 payload 不补造授权；若需要恢复，重新以当前入口发送明确请求，取得当前策略签名。回滚必须协调代码、策略和 prompt，不能只回滚一侧。
+
+签名保护上下文来源和完整性，不把模型工具执行变成系统级沙箱，也不提供已发出上下文的实时撤销。实际工具凭据范围、禁部署/禁生产业务操作边界仍适用。不要把本链路声明为不可绕过的写审批。
+
+## 假期值守接单
+
+在 `DUTY_SETUP` 配置 `channelIds`、`intakeBotIds` 和 `qaAssigneeNames`。值守只接纳指定频道内指定 Bug Report Bot 的根消息，提取固定 `Priority: … | Assignee: …` 行或独立 `Assignee: …` 行，按 QA 显示名称精确匹配。名称由配置提供，不写入 Agent 指令。
+
+准入反映提报时的经办人，服务不再依赖 Jira 查询，也不修改 Jira 优先级。Agent 自主读取 Jira 和其他证据；转项目或 Jira 暂时不可用不自动撤销已接纳任务。`check` 仍验证凭证、值守会话与截止时间、绑定频道；关闭或重新开启后旧会话凭证不可继续发送。
+
+格式无法识别时不猜测归属，记录 `duty_intake_warning`，管理接口的 `intakeWarning` 可查看最近一次异常。异常消息不会阻断同页其他正常消息。原有 `qaAccountIds`、`priorityIds`、`DUTY_JIRA_*` 配置不再参与接单或写入，可以在后续凭据清理时移除。

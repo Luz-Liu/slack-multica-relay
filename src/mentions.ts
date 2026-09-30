@@ -8,14 +8,23 @@ export interface MentionMatch {
 const USER_MENTION = /<@([A-Z0-9]+)(?:\|[^>]+)?>/gu;
 const SUBTEAM_MENTION = /<!subteam\^([A-Z0-9]+)(?:\|[^>]+)?>/gu;
 
+export function findUserMention(
+  text: string,
+  targetUserIds: ReadonlySet<string>,
+): MentionMatch | undefined {
+  for (const match of text.matchAll(USER_MENTION)) {
+    if (targetUserIds.has(match[1]!)) return { type: 'user', id: match[1]! };
+  }
+  return undefined;
+}
+
 export function findTargetMention(
   text: string,
   targetUserIds: ReadonlySet<string>,
   targetSubteamIds: ReadonlySet<string>,
 ): MentionMatch | undefined {
-  for (const match of text.matchAll(USER_MENTION)) {
-    if (targetUserIds.has(match[1]!)) return { type: 'user', id: match[1]! };
-  }
+  const userMention = findUserMention(text, targetUserIds);
+  if (userMention) return userMention;
   for (const match of text.matchAll(SUBTEAM_MENTION)) {
     if (targetSubteamIds.has(match[1]!)) return { type: 'subteam', id: match[1]! };
   }
@@ -24,12 +33,11 @@ export function findTargetMention(
 
 export function isSupportedMessage(event: SlackMessageEvent): boolean {
   const subtype = typeof event.subtype === 'string' ? event.subtype : undefined;
-  return event.type === 'message'
+  return (event.type === 'message' || event.type === 'app_mention')
     && typeof event.channel === 'string'
     && typeof event.ts === 'string'
     && typeof event.text === 'string'
-    && !event.bot_id
-    && !['bot_message', 'message_changed', 'message_deleted'].includes(subtype ?? '');
+    && !['message_changed', 'message_deleted'].includes(subtype ?? '');
 }
 
 export interface SlackMessageEvent {

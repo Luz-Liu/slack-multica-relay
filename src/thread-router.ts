@@ -13,6 +13,10 @@ import {
 import type { MentionMatch } from "./mentions.js";
 import { type ThreadStore } from "./thread-store.js";
 import {
+  buildAuthorizationContext,
+  createAuthorizationProof,
+} from "./authorization-policy.js";
+import {
   formatTaskTitle,
   formatTaskDescription,
   readTaskMessage,
@@ -30,6 +34,7 @@ export interface SlackThreadEvent {
 }
 export interface ThreadRouterConfig extends ApiConfig {
   store: ThreadStore;
+  authorizationSigningKey?: string;
 }
 interface ThreadState {
   version: 2;
@@ -71,6 +76,31 @@ export async function routeSlackThreadEvent(
   const msgKey = `relay:${scope}:message:${digest(messageKey(event))}`;
   const lockKey = key + ":lock",
     owner = randomUUID();
+  const formatDescription = (
+    descriptionEvent: SlackThreadEvent,
+    marker: string,
+    followup: boolean,
+    replyContext: Awaited<ReturnType<typeof getSlackReplyContext>>,
+  ): string => {
+    const authorizationContext = buildAuthorizationContext(
+      descriptionEvent,
+      config.authorizationPolicy,
+    );
+    const authorizationProof = config.authorizationSigningKey
+      ? createAuthorizationProof(
+          authorizationContext,
+          config.authorizationSigningKey,
+        )
+      : undefined;
+    return formatTaskDescription(
+      descriptionEvent,
+      marker,
+      followup,
+      replyContext,
+      authorizationContext,
+      authorizationProof,
+    );
+  };
   if (!(await config.store.setIfAbsent(lockKey, owner, 120)))
     throw new Error("thread_lock_busy");
   try {
@@ -117,7 +147,7 @@ export async function routeSlackThreadEvent(
           const created = await createIssue(
             config,
             formatTaskTitle(event, scope),
-            formatTaskDescription(event, marker, false, replyContext),
+            formatDescription(event, marker, false, replyContext),
             fetchImpl,
           );
           state.issueId = created.id;
@@ -176,7 +206,7 @@ export async function routeSlackThreadEvent(
         await createComment(
           config,
           state.issueId,
-          formatTaskDescription(event, messageMarker, true, replyContext),
+          formatDescription(event, messageMarker, true, replyContext),
           fetchImpl,
         );
       } catch (error) {

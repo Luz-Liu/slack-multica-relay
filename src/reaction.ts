@@ -1,4 +1,8 @@
+import type { ThreadStore } from "./thread-store.js";
+
 const SLACK_API_URL = 'https://slack.com/api/reactions.add';
+export const REACTION_ATTEMPT_BUDGET_MS = 750;
+export const REACTION_STATE_TTL_SECONDS = 90 * 24 * 60 * 60;
 
 export class SlackReactionError extends Error {
   constructor(readonly code: string, readonly httpStatus?: number) {
@@ -64,4 +68,59 @@ export async function addSlackReaction(
       ? result.error : 'unknown_error',
     response.status,
   );
+}
+
+/**
+ * Add the acknowledgement reaction at most once for a message. The KV marker
+ * is written durably before the Slack request, so an ambiguous or failed
+ * request can never cause a later delivery to add a late reaction. A
+ * competing delivery waits for the first bounded attempt before dispatching.
+ */
+export async function ensureSlackReaction(
+  stateKey: string,
+  token: string,
+  channelId: string,
+  messageTs: string,
+  reactionName: string,
+  store: ThreadStore,
+  fetchImpl: typeof fetch = fetch,
+): Promise<"reacted" | "skipped"> {
+  const attemptedAtMs = Date.now();
+  const marker = JSON.stringify({ attemptedAtMs });
+  if (!await store.setIfAbsent(stateKey, marker, REACTION_STATE_TTL_SECONDS)) {
+    const existing = await store.get(stateKey);
+    let existingAttemptedAtMs: number | undefined;
+    try {
+      const parsed: unknown = existing ? JSON.parse(existing) : undefined;
+      if (
+        parsed &&
+        typeof parsed === "object" &&
+        !Array.isArray(parsed) &&
+        typeof (parsed as { attemptedAtMs?: unknown }).attemptedAtMs === "number"
+      )
+        existingAttemptedAtMs = (parsed as { attemptedAtMs: number }).attemptedAtMs;
+    } catch {
+      // A legacy marker still means the attempt was already claimed. It does
+      // not carry an active-attempt timestamp, so no additional wait is needed.
+    }
+    const remaining = existingAttemptedAtMs === undefined ||
+      !Number.isFinite(existingAttemptedAtMs)
+      ? 0
+      : Math.min(
+        REACTION_ATTEMPT_BUDGET_MS,
+        Math.max(0, attemptedAtMs + REACTION_ATTEMPT_BUDGET_MS - Date.now()),
+        Math.max(0, existingAttemptedAtMs + REACTION_ATTEMPT_BUDGET_MS - Date.now()),
+      );
+    if (remaining > 0)
+      await new Promise<void>((resolve) => setTimeout(resolve, remaining));
+    return "skipped";
+  }
+  await addSlackReaction(
+    token,
+    channelId,
+    messageTs,
+    reactionName,
+    fetchImpl,
+  );
+  return "reacted";
 }

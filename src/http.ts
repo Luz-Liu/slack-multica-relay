@@ -1,12 +1,22 @@
+import { admitDuty } from "./duty-http.js";
 import { Receiver } from "@upstash/qstash";
 import { loadRelayConfig, type RelayConfig } from "./config.js";
 import { verifySlackSignature } from "./signature.js";
 import {
   findTargetMention,
+  findUserMention,
   isSupportedMessage,
   type SlackMessageEvent,
 } from "./mentions.js";
-import { addSlackReaction, reactionErrorDetails } from "./reaction.js";
+import {
+  lookupSlackAuthor,
+  SlackAuthorLookupError,
+} from "./slack-author.js";
+import {
+  ensureSlackReaction,
+  REACTION_ATTEMPT_BUDGET_MS,
+  reactionErrorDetails,
+} from "./reaction.js";
 import {
   routeSlackThreadEvent,
   digest,
@@ -15,6 +25,10 @@ import {
   type SlackThreadEvent,
 } from "./thread-router.js";
 import { UpstashThreadStore } from "./thread-store.js";
+import { threadScopeId } from "./multica-api.js";
+
+export const ADMISSION_BUDGET_MS = 2750;
+export const QUEUE_PUBLISH_BUDGET_MS = 1800;
 
 export function json(value: unknown, status = 200): Response {
   return Response.json(value, { status });
@@ -40,18 +54,73 @@ async function readBody(request: Request): Promise<string> {
 function record(value: unknown): value is Record<string, unknown> {
   return !!value && typeof value === "object" && !Array.isArray(value);
 }
+function configuredTargetMention(
+  text: string,
+  config: RelayConfig,
+) {
+  return (
+    findTargetMention(text, config.targetUserIds, config.targetSubteamIds) ??
+    findUserMention(text, config.botUserIds)
+  );
+}
 function admitted(event: SlackThreadEvent, config: RelayConfig): boolean {
+  const botMention = findUserMention(event.text, config.botUserIds);
   return (
     event.teamId === config.teamId &&
     (config.allowAllChannels || config.allowedChannelIds.has(event.channelId)) &&
     !config.blockedChannelIds.has(event.channelId) &&
     (config.allowAllSenders || config.allowedSenderIds.has(event.senderUserId)) &&
     !config.blockedSenderIds.has(event.senderUserId) &&
-    !!findTargetMention(
-      event.text,
-      config.targetUserIds,
-      config.targetSubteamIds,
-    )
+    !!configuredTargetMention(event.text, config) &&
+    (!botMention ||
+      config.botAllowAllSenders ||
+      config.botAllowedSenderIds.has(event.senderUserId))
+  );
+}
+function reactionStateKey(
+  event: SlackThreadEvent,
+  config: RelayConfig,
+): string {
+  const scope = digest(
+    config.multicaWorkspaceId +
+      ":" +
+      config.multicaProjectId +
+      ":" +
+      threadScopeId(config),
+  );
+  return `relay:${scope}:reaction:${digest(messageKey(event))}`;
+}
+function reactionFetch(
+  fetchImpl: typeof fetch,
+  deadline: AbortSignal,
+): typeof fetch {
+  return (input, init = {}) =>
+    fetchImpl(input, {
+      ...init,
+      signal: init.signal
+        ? AbortSignal.any([init.signal, deadline])
+        : deadline,
+    });
+}
+async function acknowledgeSlackMessage(
+  event: SlackThreadEvent,
+  config: RelayConfig,
+  fetchImpl: typeof fetch,
+): Promise<"reacted" | "skipped"> {
+  const deadline = AbortSignal.timeout(REACTION_ATTEMPT_BUDGET_MS);
+  const boundedFetch = reactionFetch(fetchImpl, deadline);
+  return ensureSlackReaction(
+    reactionStateKey(event, config),
+    config.slackReactionToken,
+    event.channelId,
+    event.messageTs,
+    config.slackReactionName,
+    new UpstashThreadStore(
+      config.kvRestApiUrl,
+      config.kvRestApiToken,
+      boundedFetch,
+    ),
+    boundedFetch,
   );
 }
 function parsedEvent(value: unknown): SlackThreadEvent {
@@ -151,12 +220,14 @@ export async function acceptSlack(
     !isSupportedMessage(body.event as SlackMessageEvent)
   )
     return json({ action: "ignored" });
+  try {
+    const duty = await admitDuty(body, config, env, fetchImpl);
+    if (duty) return duty;
+  } catch {
+    return json({ error: "duty_admission_failed", retryable: true }, 503);
+  }
   const event = body.event;
-  const mention = findTargetMention(
-    event.text as string,
-    config.targetUserIds,
-    config.targetSubteamIds,
-  );
+  const mention = configuredTargetMention(event.text as string, config);
   if (!mention) return json({ action: "ignored", reason: "not_addressed" });
   let payload: SlackThreadEvent;
   try {
@@ -176,6 +247,42 @@ export async function acceptSlack(
   if (!admitted(payload, config))
     return json({ action: "ignored", reason: "not_allowed" });
   try {
+    const author = await lookupSlackAuthor(
+      payload.senderUserId,
+      config.slackReactionToken,
+      fetchImpl,
+    );
+    if (author.isBot)
+      return json({ action: "ignored", reason: "bot_author" });
+  } catch (error) {
+    console.warn("relay_author", {
+      messageKey: messageKey(payload),
+      reason: error instanceof SlackAuthorLookupError
+        ? error.code
+        : "request_failed",
+      durationMs: Date.now() - start,
+    });
+    return json({ error: "author_unavailable", retryable: true }, 503);
+  }
+  try {
+    await acknowledgeSlackMessage(payload, config, fetchImpl);
+  } catch (error) {
+    console.warn("relay_reaction", {
+      messageKey: messageKey(payload),
+      reason: "reaction_failed",
+      ...reactionErrorDetails(error),
+    });
+  }
+  const remainingBudgetMs = ADMISSION_BUDGET_MS - (Date.now() - start);
+  if (remainingBudgetMs <= 0) {
+    console.warn("relay_admission", {
+      messageKey: messageKey(payload),
+      reason: "admission_timeout",
+      durationMs: Date.now() - start,
+    });
+    return json({ error: "queue_unavailable", retryable: true }, 503);
+  }
+  try {
     const response = await fetchImpl(
       config.queueUrl + "/v2/publish/" + config.consumerUrl,
       {
@@ -194,7 +301,9 @@ export async function acceptSlack(
           "Upstash-Flow-Control-Value": "parallelism=1",
         },
         body: JSON.stringify(payload),
-        signal: AbortSignal.timeout(2000),
+        signal: AbortSignal.timeout(
+          Math.min(QUEUE_PUBLISH_BUDGET_MS, remainingBudgetMs),
+        ),
       },
     );
     if (!response.ok) throw new Error("queue_publish_failed");
@@ -277,21 +386,6 @@ export async function consumeQueue(
       },
       boundedFetch,
     );
-    try {
-      await addSlackReaction(
-        config.slackReactionToken,
-        event.channelId,
-        event.messageTs,
-        config.slackReactionName,
-        boundedFetch,
-      );
-    } catch (error) {
-      console.warn("relay_reaction", {
-        messageKey: messageKey(event),
-        reason: "reaction_failed",
-        ...reactionErrorDetails(error),
-      });
-    }
     console.info("relay_dispatch", {
       ...result,
       messageKey: messageKey(event),
