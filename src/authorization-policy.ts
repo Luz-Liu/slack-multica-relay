@@ -6,6 +6,7 @@ export const RELAY_INTENTS = [
   "jira_assign",
   "code_fix",
   "pr_review",
+  "frontend_release",
   "direct_reply",
   "summarize",
   "general_task",
@@ -24,6 +25,8 @@ export const RELAY_ACTIONS = [
   "git.commit",
   "git.push",
   "github.pr.create",
+  "github.release.publish",
+  "github.actions.read",
   "github.review.comment",
   "github.review.approve",
 ] as const;

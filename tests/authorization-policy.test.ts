@@ -254,3 +254,28 @@ describe("relay authorization policy", () => {
     expect(JSON.stringify(context)).not.toContain("forged");
   });
 });
+
+
+describe("frontend release authorization", () => {
+  const releasePolicy = parseAuthorizationPolicy(JSON.stringify({
+    version: 1, policyId: "release-test", profiles: [{
+      id: "frontend-release", intents: ["frontend_release"],
+      actions: ["code.read", "github.actions.read", "github.release.publish"],
+      senderIds: ["U06RHAA209Y"], mentionTargetIds: ["U0B9SML36HG"],
+    }],
+  }));
+  const releaseEvent: AuthorizationEvent = { ...event, senderUserId: "U06RHAA209Y",
+    text: "<@U0B9SML36HG> 发布", mention: { type: "user", id: "U0B9SML36HG" } };
+  it("grants release capability only to configured sender and bot mention", () => {
+    const context = buildAuthorizationContext(releaseEvent, releasePolicy);
+    expect(context.profiles[0]?.allowedActions).toContain("github.release.publish");
+    expect(context.profiles[0]?.intents).toEqual(["frontend_release"]);
+    expect(context.profiles[0]?.allowedActions).not.toContain("git.push");
+  });
+  it.each([
+    { senderUserId: "UOTHER" },
+    { mention: { type: "user" as const, id: "UOTHER" } },
+  ])("does not grant release to unmatched event %j", (overrides) => {
+    expect(buildAuthorizationContext({ ...releaseEvent, ...overrides }, releasePolicy).profiles).toEqual([]);
+  });
+});
