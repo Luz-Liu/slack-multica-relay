@@ -1,4 +1,5 @@
 import { admitDuty } from "./duty-http.js";
+import { admitBanter } from "./banter-http.js";
 import { Receiver } from "@upstash/qstash";
 import { loadRelayConfig, type RelayConfig } from "./config.js";
 import { verifySlackSignature } from "./signature.js";
@@ -227,6 +228,18 @@ export async function acceptSlack(
     return json({ error: "duty_admission_failed", retryable: true }, 503);
   }
   const event = body.event;
+  try {
+    const banter = await admitBanter(
+      body,
+      config,
+      env,
+      fetchImpl,
+      !!configuredTargetMention(String(event.text ?? ""), config),
+    );
+    if (banter) return banter;
+  } catch {
+    return json({ error: "banter_admission_failed", retryable: true }, 503);
+  }
   const mention = configuredTargetMention(event.text as string, config);
   if (!mention) return json({ action: "ignored", reason: "not_addressed" });
   let payload: SlackThreadEvent;
