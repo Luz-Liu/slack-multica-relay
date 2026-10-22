@@ -40,6 +40,25 @@ describe("banter admission", () => {
     expect((init?.headers as Record<string, string>)["Upstash-Flow-Control-Value"]).toBe("parallelism=1");
   });
 
+  it("queues a numbered product post as a thread root so the agent can like it first", async () => {
+    const f = queue();
+    const root = { team_id: "T1", event: { channel: "C1", ts: "9.9", user: "UPOSTER", text: "03｜<@UAUTHOR> 带来了《打工猫狗三件套》" } };
+    const r = await admitBanter(root, relay, env, f, false);
+    expect(await r?.json()).toEqual({ action: "banter_accepted" });
+    expect(JSON.parse(String(published(f)[0]![1]?.body))).toMatchObject({ kind: "product_post", threadTs: "9.9", messageTs: "9.9" });
+    const restricted = { BANTER_SETUP: JSON.stringify({ ...setup, productPosterIds: ["UOTHER"] }) };
+    expect(await admitBanter(root, relay, restricted, queue(), false)).toBeUndefined();
+  });
+
+  it.each([
+    ["ordinary root message", { ts: "9.9", thread_ts: undefined, text: "大家午饭吃什么" }],
+    ["root that only looks numbered", { ts: "9.9", thread_ts: undefined, text: "3｜没有 @ 作者" }],
+  ])("ignores %s", async (_name, patch) => {
+    const f = queue();
+    expect(await admitBanter({ ...reply, event: { ...reply.event, ...patch } }, relay, env, f, false)).toBeUndefined();
+    expect(published(f)).toHaveLength(0);
+  });
+
   it.each([
     ["other channel", { channel: "C2" }],
     ["thread root", { thread_ts: "2.2" }],
@@ -138,6 +157,25 @@ describe("banter consumer", () => {
     expect(await second.json()).toEqual({ action: "banter_commented" });
     expect(calls.filter((c) => c.url.endsWith("/api/issues"))).toHaveLength(1);
     expect((calls.find((c) => c.url.endsWith("/comments"))!.body as { content: string }).content).toContain("笑死");
+  });
+
+  it("creates the issue for a product post with its kind and readable author names", async () => {
+    const { fetcher, calls } = consumerFixture();
+    const root = { ...event, messageTs: "9.9", threadTs: "9.9", text: "03｜<@UAUTHOR> 带来了《打工猫狗三件套》", kind: "product_post" };
+    const r = await consumeBanter(post(root), consumerEnv, fetcher);
+    expect(await r.json()).toEqual({ action: "banter_created" });
+    const created = calls.find((c) => c.url.endsWith("/api/issues"))!.body as Record<string, string>;
+    expect(created.description).toContain("kind: product_post");
+    expect(created.description).toContain("## 新产品帖（根消息）");
+    expect(created.description).toContain("@小王 带来了");
+    expect(created.description).not.toContain("<@UAUTHOR>");
+  });
+
+  it("rejects a root message that is not a product post", async () => {
+    const { fetcher, calls } = consumerFixture();
+    const r = await consumeBanter(post({ ...event, messageTs: "9.9", threadTs: "9.9", text: "随便聊聊" }), consumerEnv, fetcher);
+    expect(await r.json()).toEqual({ action: "ignored" });
+    expect(calls.some((c) => c.url.endsWith("/api/issues"))).toBe(false);
   });
 
   it("ignores bot authors, owners, and unsigned or disabled requests", async () => {

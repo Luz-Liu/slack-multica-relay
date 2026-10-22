@@ -12,12 +12,15 @@ const MAX_TEXT = 2000;
 const CONTEXT_MESSAGES = 10;
 const MAPPING_TTL_SECONDS = 14 * 24 * 3600;
 const LOCK_TTL_SECONDS = 30;
+// "03｜<@U123> 带来了…" — a numbered product announcement posted as a thread root.
+const PRODUCT_POST = /^\s*\d+\s*[｜|]\s*<@[UW][A-Z0-9]+>/u;
 
 export interface BanterSetup {
   channelIds: string[];
   agentId: string;
   ownerSlackIds: string[];
   projectId?: string;
+  productPosterIds?: string[];
   mode: "live" | "test";
 }
 
@@ -28,6 +31,7 @@ export interface BanterEvent {
   messageTs: string;
   threadTs: string;
   text: string;
+  kind?: "product_post";
 }
 
 function reply(value: unknown, status = 200): Response {
@@ -61,11 +65,14 @@ export function banterSetup(raw: string | undefined): BanterSetup | undefined {
   if (value.projectId !== undefined && (typeof value.projectId !== "string" || !UUID.test(value.projectId)))
     return undefined;
   if (value.mode !== undefined && value.mode !== "live" && value.mode !== "test") return undefined;
+  const productPosterIds = value.productPosterIds === undefined ? undefined : idList(value.productPosterIds);
+  if (value.productPosterIds !== undefined && !productPosterIds) return undefined;
   return {
     channelIds,
     ownerSlackIds,
     agentId: value.agentId,
     ...(typeof value.projectId === "string" ? { projectId: value.projectId } : {}),
+    ...(productPosterIds ? { productPosterIds } : {}),
     mode: value.mode === "test" ? "test" : "live",
   };
 }
@@ -94,16 +101,21 @@ export async function admitBanter(
   if (addressedToTarget) return;
   if (e.subtype !== undefined || e.bot_id !== undefined) return;
   if (typeof e.user !== "string" || typeof e.ts !== "string" || typeof e.text !== "string") return;
-  if (typeof e.thread_ts !== "string" || e.thread_ts === e.ts) return;
   if (setup.ownerSlackIds.includes(e.user) || relay.blockedSenderIds.has(e.user)) return;
   if (!e.text.trim()) return;
+  const isRoot = e.thread_ts === undefined || e.thread_ts === e.ts;
+  if (isRoot) {
+    if (!PRODUCT_POST.test(e.text)) return;
+    if (setup.productPosterIds && !setup.productPosterIds.includes(e.user)) return;
+  } else if (typeof e.thread_ts !== "string") return;
   const event: BanterEvent = {
     teamId: relay.teamId,
     channelId: e.channel,
     senderUserId: e.user,
     messageTs: e.ts,
-    threadTs: e.thread_ts,
+    threadTs: isRoot ? e.ts : (e.thread_ts as string),
     text: e.text.slice(0, MAX_TEXT),
+    ...(isRoot ? { kind: "product_post" as const } : {}),
   };
   const response = await fetchImpl(`${relay.queueUrl}/v2/publish/${consumerHref(relay)}`, {
     method: "POST",
@@ -206,6 +218,21 @@ async function renderMessage(
   return `- ${who}（${message.ts}）：${message.text.replace(/\n/gu, " ")}`;
 }
 
+async function humanize(
+  text: string,
+  token: string,
+  fetchImpl: typeof fetch,
+  cache: Map<string, string>,
+): Promise<string> {
+  const ids = [...new Set([...text.matchAll(/<@([UW][A-Z0-9]+)(?:\|[^>]+)?>/gu)].map((m) => m[1]!))];
+  let out = text;
+  for (const id of ids.slice(0, 5)) {
+    const name = await displayName(id, token, fetchImpl, cache);
+    out = out.replaceAll(new RegExp(`<@${id}(?:\\|[^>]+)?>`, "gu"), `@${name}`);
+  }
+  return out;
+}
+
 function apiConfig(relay: RelayConfig, setup: BanterSetup): ApiConfig {
   return {
     ...relay,
@@ -228,7 +255,9 @@ async function dispatchBanter(
   const api = apiConfig(relay, setup);
   const names = new Map<string, string>();
   const author = await displayName(event.senderUserId, token, fetchImpl, names);
-  const newLine = `- ${author}（${event.messageTs}）：${event.text.replace(/\n/gu, " ")}`;
+  const bodyText = await humanize(event.text, token, fetchImpl, names);
+  const newLine = `- ${author}（${event.messageTs}）：${bodyText.replace(/\n/gu, " ")}`;
+  const product = event.kind === "product_post";
   const scope = digest(`${relay.multicaWorkspaceId}:${setup.agentId}`);
   const threadId = digest(`${event.channelId}:${event.threadTs}`);
   const mappingKey = `banter:${scope}:thread:${threadId}`;
@@ -238,7 +267,7 @@ async function dispatchBanter(
   try {
     const existing = await store.get(mappingKey);
     if (existing) {
-      await createComment(api, existing, `新消息：\n${newLine}`, fetchImpl);
+      await createComment(api, existing, `${product ? "新产品帖" : "新消息"}：\n${newLine}`, fetchImpl);
       return { action: "banter_commented" };
     }
     const context = await threadContext(event, token, fetchImpl);
@@ -251,11 +280,12 @@ async function dispatchBanter(
       `channel: ${event.channelId}`,
       `thread_ts: ${event.threadTs}`,
       `mode: ${setup.mode}`,
+      ...(product ? ["kind: product_post"] : []),
       "",
       "## Thread 上下文（旧→新）",
       ...(lines.length ? lines : ["（读取失败，仅有下面的新消息）"]),
       "",
-      "## 新消息",
+      product ? "## 新产品帖（根消息）" : "## 新消息",
       newLine,
     ].join("\n");
     const issue = await createIssue(api, `1024 捧哏 · thread ${event.threadTs}`, description, fetchImpl);
@@ -308,7 +338,9 @@ export async function consumeBanter(
       relay.blockedSenderIds.has(event.senderUserId) ||
       !TS.test(event.messageTs) ||
       !TS.test(event.threadTs) ||
-      event.messageTs === event.threadTs ||
+      (event.messageTs === event.threadTs && event.kind !== "product_post") ||
+      (event.kind !== undefined && event.kind !== "product_post") ||
+      (event.kind === "product_post" && !PRODUCT_POST.test(event.text)) ||
       typeof event.text !== "string"
     )
       return reply({ action: "ignored" });
