@@ -21,6 +21,9 @@ const relay = {
   consumerUrl: "https://relay.test/api/queue/consume",
 } as RelayConfig;
 const env = { BANTER_SETUP: JSON.stringify(setup) };
+// In production the owner is itself a mention target; the intake strips owner mentions before asking.
+const isTarget = (text: string) => /<@UBOT>|<!subteam\^S1>|<@UOWNER>/u.test(text);
+const noTarget = () => false;
 const reply = { team_id: "T1", event: { channel: "C1", ts: "2.2", thread_ts: "1.1", user: "UA", text: "好家伙" } };
 
 function published(fetcher: ReturnType<typeof vi.fn>) {
@@ -32,7 +35,7 @@ describe("banter admission", () => {
 
   it("queues a human thread reply from a configured channel", async () => {
     const f = queue();
-    const r = await admitBanter(reply, relay, env, f, false);
+    const r = await admitBanter(reply, relay, env, f, noTarget);
     expect(await r?.json()).toEqual({ action: "banter_accepted" });
     const [url, init] = published(f)[0]!;
     expect(String(url)).toBe("https://q.test/v2/publish/https://relay.test/api/banter/consume");
@@ -43,11 +46,11 @@ describe("banter admission", () => {
   it("queues a numbered product post as a thread root so the agent can like it first", async () => {
     const f = queue();
     const root = { team_id: "T1", event: { channel: "C1", ts: "9.9", user: "UPOSTER", text: "03｜<@UAUTHOR> 带来了《打工猫狗三件套》" } };
-    const r = await admitBanter(root, relay, env, f, false);
+    const r = await admitBanter(root, relay, env, f, noTarget);
     expect(await r?.json()).toEqual({ action: "banter_accepted" });
     expect(JSON.parse(String(published(f)[0]![1]?.body))).toMatchObject({ kind: "product_post", threadTs: "9.9", messageTs: "9.9" });
     const restricted = { BANTER_SETUP: JSON.stringify({ ...setup, productPosterIds: ["UOTHER"] }) };
-    expect(await admitBanter(root, relay, restricted, queue(), false)).toBeUndefined();
+    expect(await admitBanter(root, relay, restricted, queue(), noTarget)).toBeUndefined();
   });
 
   it.each([
@@ -55,7 +58,7 @@ describe("banter admission", () => {
     ["root that only looks numbered", { ts: "9.9", thread_ts: undefined, text: "3｜没有 @ 作者" }],
   ])("ignores %s", async (_name, patch) => {
     const f = queue();
-    expect(await admitBanter({ ...reply, event: { ...reply.event, ...patch } }, relay, env, f, false)).toBeUndefined();
+    expect(await admitBanter({ ...reply, event: { ...reply.event, ...patch } }, relay, env, f, noTarget)).toBeUndefined();
     expect(published(f)).toHaveLength(0);
   });
 
@@ -69,15 +72,32 @@ describe("banter admission", () => {
     ["empty text", { text: "  " }],
   ])("ignores %s", async (_name, patch) => {
     const f = queue();
-    expect(await admitBanter({ ...reply, event: { ...reply.event, ...patch } }, relay, env, f, false)).toBeUndefined();
+    expect(await admitBanter({ ...reply, event: { ...reply.event, ...patch } }, relay, env, f, noTarget)).toBeUndefined();
     expect(published(f)).toHaveLength(0);
+  });
+
+  it("takes a message that only @s the owner and flags it as addressed", async () => {
+    const f = queue();
+    const ping = { ...reply, event: { ...reply.event, text: "<@UOWNER> 在吗 这个怎么看" } };
+    const r = await admitBanter(ping, relay, env, f, isTarget);
+    expect(await r?.json()).toEqual({ action: "banter_accepted" });
+    expect(JSON.parse(String(published(f)[0]![1]?.body))).toMatchObject({ addressed: true, threadTs: "1.1" });
+  });
+
+  it("keeps the normal flow when the owner is @ed together with another target", async () => {
+    for (const text of ["<@UOWNER> <!subteam^S1> review 下", "<@UOWNER> <@UBOT> 帮忙"]) {
+      const f = queue();
+      expect(await admitBanter({ ...reply, event: { ...reply.event, text } }, relay, env, f, isTarget)).toBeUndefined();
+      expect(published(f)).toHaveLength(0);
+    }
   });
 
   it("leaves messages addressed to the normal targets, and a missing or invalid setup, alone", async () => {
     const f = queue();
-    expect(await admitBanter(reply, relay, env, f, true)).toBeUndefined();
-    expect(await admitBanter(reply, relay, {}, f, false)).toBeUndefined();
-    expect(await admitBanter(reply, relay, { BANTER_SETUP: "{" }, f, false)).toBeUndefined();
+    const toBot = { ...reply, event: { ...reply.event, text: "<@UBOT> 帮忙 review 下" } };
+    expect(await admitBanter(toBot, relay, env, f, isTarget)).toBeUndefined();
+    expect(await admitBanter(reply, relay, {}, f, noTarget)).toBeUndefined();
+    expect(await admitBanter(reply, relay, { BANTER_SETUP: "{" }, f, noTarget)).toBeUndefined();
     expect(banterSetup(JSON.stringify({ ...setup, agentId: "x" }))).toBeUndefined();
     expect(banterSetup(JSON.stringify({ ...setup, ownerSlackIds: [] }))).toBeUndefined();
     expect(published(f)).toHaveLength(0);
@@ -169,6 +189,16 @@ describe("banter consumer", () => {
     expect(created.description).toContain("## 新产品帖（根消息）");
     expect(created.description).toContain("@小王 带来了");
     expect(created.description).not.toContain("<@UAUTHOR>");
+  });
+
+  it("marks messages that @ the owner so the agent answers immediately", async () => {
+    const { fetcher, calls } = consumerFixture();
+    await consumeBanter(post({ ...event, addressed: true, text: "<@UOWNER> 在吗" }), consumerEnv, fetcher);
+    const created = calls.find((c) => c.url.endsWith("/api/issues"))!.body as Record<string, string>;
+    expect(created.description).toContain("addressed: true");
+    expect(created.description).toContain("## 新消息（@了你，必须马上接话）");
+    await consumeBanter(post({ ...event, messageTs: "4.4", addressed: true, text: "<@UOWNER> 人呢" }), consumerEnv, fetcher);
+    expect((calls.find((c) => c.url.endsWith("/comments"))!.body as { content: string }).content).toContain("必须马上接话");
   });
 
   it("rejects a root message that is not a product post", async () => {

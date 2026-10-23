@@ -32,6 +32,7 @@ export interface BanterEvent {
   threadTs: string;
   text: string;
   kind?: "product_post";
+  addressed?: true;
 }
 
 function reply(value: unknown, status = 200): Response {
@@ -81,6 +82,17 @@ function consumerHref(relay: RelayConfig): string {
   return new URL("/api/banter/consume", relay.consumerUrl).href;
 }
 
+function stripOwnerMentions(text: string, ownerIds: string[]): { text: string; mentioned: boolean } {
+  let mentioned = false;
+  let out = text;
+  for (const id of ownerIds) {
+    const pattern = new RegExp(`<@${id}(?:\\|[^>]+)?>`, "gu");
+    if (pattern.test(out)) mentioned = true;
+    out = out.replace(pattern, " ");
+  }
+  return { text: out, mentioned };
+}
+
 /**
  * Called after Slack signature and envelope checks. Only human thread replies
  * in configured channels are accepted; anything addressed to the normal
@@ -91,18 +103,21 @@ export async function admitBanter(
   relay: RelayConfig,
   env: NodeJS.ProcessEnv,
   fetchImpl: typeof fetch,
-  addressedToTarget: boolean,
+  hasTargetMention: (text: string) => boolean,
 ): Promise<Response | undefined> {
   const setup = banterSetup(env.BANTER_SETUP);
   const e = body.event;
   if (!setup || !record(e)) return;
   if (body.team_id !== relay.teamId || typeof e.channel !== "string") return;
   if (!setup.channelIds.includes(e.channel) || relay.blockedChannelIds.has(e.channel)) return;
-  if (addressedToTarget) return;
   if (e.subtype !== undefined || e.bot_id !== undefined) return;
   if (typeof e.user !== "string" || typeof e.ts !== "string" || typeof e.text !== "string") return;
   if (setup.ownerSlackIds.includes(e.user) || relay.blockedSenderIds.has(e.user)) return;
   if (!e.text.trim()) return;
+  // An @ of the owner alone is someone talking to Luz: banter takes it. Any other
+  // configured target (bot, user group) keeps the normal workflow routing.
+  const owner = stripOwnerMentions(e.text, setup.ownerSlackIds);
+  if (hasTargetMention(owner.text)) return;
   const isRoot = e.thread_ts === undefined || e.thread_ts === e.ts;
   if (isRoot) {
     if (!PRODUCT_POST.test(e.text)) return;
@@ -116,6 +131,7 @@ export async function admitBanter(
     threadTs: isRoot ? e.ts : (e.thread_ts as string),
     text: e.text.slice(0, MAX_TEXT),
     ...(isRoot ? { kind: "product_post" as const } : {}),
+    ...(owner.mentioned && !isRoot ? { addressed: true as const } : {}),
   };
   const response = await fetchImpl(`${relay.queueUrl}/v2/publish/${consumerHref(relay)}`, {
     method: "POST",
@@ -258,6 +274,7 @@ async function dispatchBanter(
   const bodyText = await humanize(event.text, token, fetchImpl, names);
   const newLine = `- ${author}（${event.messageTs}）：${bodyText.replace(/\n/gu, " ")}`;
   const product = event.kind === "product_post";
+  const addressed = event.addressed === true;
   const scope = digest(`${relay.multicaWorkspaceId}:${setup.agentId}`);
   const threadId = digest(`${event.channelId}:${event.threadTs}`);
   const mappingKey = `banter:${scope}:thread:${threadId}`;
@@ -267,7 +284,7 @@ async function dispatchBanter(
   try {
     const existing = await store.get(mappingKey);
     if (existing) {
-      await createComment(api, existing, `${product ? "新产品帖" : "新消息"}：\n${newLine}`, fetchImpl);
+      await createComment(api, existing, `${product ? "新产品帖" : addressed ? "新消息（@了你，必须马上接话）" : "新消息"}：\n${newLine}`, fetchImpl);
       return { action: "banter_commented" };
     }
     const context = await threadContext(event, token, fetchImpl);
@@ -281,11 +298,12 @@ async function dispatchBanter(
       `thread_ts: ${event.threadTs}`,
       `mode: ${setup.mode}`,
       ...(product ? ["kind: product_post"] : []),
+      ...(addressed ? ["addressed: true"] : []),
       "",
       "## Thread 上下文（旧→新）",
       ...(lines.length ? lines : ["（读取失败，仅有下面的新消息）"]),
       "",
-      product ? "## 新产品帖（根消息）" : "## 新消息",
+      product ? "## 新产品帖（根消息）" : addressed ? "## 新消息（@了你，必须马上接话）" : "## 新消息",
       newLine,
     ].join("\n");
     const issue = await createIssue(api, `1024 捧哏 · thread ${event.threadTs}`, description, fetchImpl);
@@ -340,6 +358,7 @@ export async function consumeBanter(
       !TS.test(event.threadTs) ||
       (event.messageTs === event.threadTs && event.kind !== "product_post") ||
       (event.kind !== undefined && event.kind !== "product_post") ||
+      (event.addressed !== undefined && event.addressed !== true) ||
       (event.kind === "product_post" && !PRODUCT_POST.test(event.text)) ||
       typeof event.text !== "string"
     )

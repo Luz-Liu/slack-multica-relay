@@ -234,7 +234,7 @@ export async function acceptSlack(
       config,
       env,
       fetchImpl,
-      !!configuredTargetMention(String(event.text ?? ""), config),
+      (text) => !!configuredTargetMention(text, config),
     );
     if (banter) return banter;
   } catch {
