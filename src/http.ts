@@ -1,4 +1,5 @@
 import { admitDuty } from "./duty-http.js";
+import { admitDeployClose } from "./deploy-close.js";
 import { Receiver } from "@upstash/qstash";
 import { loadRelayConfig, type RelayConfig } from "./config.js";
 import { verifySlackSignature } from "./signature.js";
@@ -220,6 +221,13 @@ export async function acceptSlack(
     !isSupportedMessage(body.event as SlackMessageEvent)
   )
     return json({ action: "ignored" });
+  try {
+    // 发布关单窄入口：仅 DEPLOY_CLOSE_SETUP 配置且精确命中时绕过 mention/bot 过滤。
+    const deploy = await admitDeployClose(body, config, env, fetchImpl);
+    if (deploy) return deploy;
+  } catch {
+    return json({ error: "deploy_close_admission_failed", retryable: true }, 503);
+  }
   try {
     const duty = await admitDuty(body, config, env, fetchImpl);
     if (duty) return duty;
