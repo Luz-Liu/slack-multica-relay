@@ -113,11 +113,27 @@ EdgeOne Cloud Functions 会把 `Request.body` 暴露为解析值，入口通过 
 
 消费端按当前配置重新匹配，用 `SLACK_REACTION_TOKEN` 调 `conversations.replies` 取根帖（需 `channels:history`），根帖必须是同一 bot、含 `Confirm Deploy` 与 `(production)`；`rootPrefilterMention=true`（默认）时根帖还须 @ 了 `ownerSlackUserId`，否则静默丢弃。通过后复用 thread→issue 路由，在 `projectId` 下建卡并指派 `assigneeId`；KV scope 与普通 @ 卡独立。成功/失败共用一张 thread 卡，由 Agent 按已签名的 `eventPayload.text` 区分 phase（成功=ask，失败=只记录）。
 
-授权策略需新增 profile（P1 不含 Jira 写动作）：
+### P2：✅ 确认关单
+
+`DEPLOY_CLOSE_SETUP` 可选新增字段（未配置 `askBotUserId` 时整个 ✅ 确认关闭，行为同 P1）：
+
+- `askBotUserId`：发出询问消息的 bot 用户 ID（niuagent 为 `U0B9SML36HG`）。
+- `confirmReaction`：确认表情名，默认 `white_check_mark`（仅 `a-z0-9_+-`）。
+- `askMarker`：询问消息必须包含的标记文本，默认 `[deploy-close:v1]`。
+
+入站对 `reaction_added` 只做字段过滤：`user = ownerSlackUserId`、表情等于 `confirmReaction`、`item.type=message`、频道在 `channelIds` 且未被屏蔽、`item_user = askBotUserId`。不匹配直接 200 `ignored`，不查 users.info、不入队、不打 👀；匹配则投递到 `/api/deploy-close/consume`（QStash 按 `channel:ts:user:reaction` 去重）。
+
+消费端按当前配置重新匹配，用 `conversations.replies` 取被点的消息，要求作者为 `askBotUserId`、含 `askMarker` 且是 thread 回复（根帖上的 ✅ 忽略），再校验根帖为 Confirm Deploy (production)。通过后以 `phase=confirm` 评论到同一 thread 的 issue（去重键 `reaction:<askTs>:<user>:<reaction>`），已签名的 `authorizationContext.deployClose` 带 `confirmedBy`、`askTs`、`reactionEventTs`。
+
+`jira.transition` 只在 `deployClose.phase=confirm` 且 `confirmedBy` 等于事件发送者时保留；ask 阶段、普通 @ 路径一律剔除。
+
+Slack App 需订阅 `reaction_added` 事件，并补充 scope `reactions:read`。
+
+授权策略需新增 profile。确认事件的发送者是 owner，因此 `senderIds` 同时包含 GitHub Actions bot 与 owner（`U06RHAA209Y`）：
 
 ```json
-{"id":"deploy-close-luz","intents":["deploy_close"],"actions":["slack.read","slack.reply","jira.read"],
- "channelIds":["C01K60LEP7E"],"senderIds":["U081137G64T"],"mentionTargetIds":["U06RHAA209Y"]}
+{"id":"deploy-close-luz","intents":["deploy_close"],"actions":["slack.read","slack.reply","jira.read","jira.transition"],
+ "channelIds":["C01K60LEP7E"],"senderIds":["U081137G64T","U06RHAA209Y"],"mentionTargetIds":["U06RHAA209Y"]}
 ```
 
-✅ 确认关单（`reaction_added` 入口、`jira.transition`）属于 P2，本入口不处理 reaction。EdgeOne 部署未暴露该消费函数。
+EdgeOne 部署未暴露该消费函数。

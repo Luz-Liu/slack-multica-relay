@@ -24,6 +24,9 @@ export interface DeployCloseSetup {
   projectId: string;
   assigneeType: "agent" | "squad";
   assigneeId: string;
+  askBotUserId?: string;
+  confirmReaction: string;
+  askMarker: string;
 }
 export type DeploySignal = "success" | "failed";
 export interface DeployCloseEvent {
@@ -38,6 +41,7 @@ export interface DeployCloseEvent {
 
 const SLACK_ID = /^[A-Z][A-Z0-9]+$/u;
 const TS = /^\d+\.\d+$/u;
+const EMOJI_NAME = /^[a-z0-9_+\-]+$/u;
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/u;
 // 只认首行标题里的环境，避免单号标题里出现 "(production)" 误判。
 const PRODUCTION_HEADER = /^[^\n]*Confirm Deploy:\s*<[^>\n]+>\s*\(production\)/u;
@@ -69,7 +73,10 @@ export function deployCloseSetup(raw: string | undefined): DeployCloseSetup | un
     typeof value.ownerSlackUserId !== "string" || !SLACK_ID.test(value.ownerSlackUserId) ||
     typeof value.projectId !== "string" || !UUID.test(value.projectId) ||
     typeof value.assigneeId !== "string" || !UUID.test(value.assigneeId) ||
-    (value.rootPrefilterMention !== undefined && typeof value.rootPrefilterMention !== "boolean")
+    (value.rootPrefilterMention !== undefined && typeof value.rootPrefilterMention !== "boolean") ||
+    (value.askBotUserId !== undefined && (typeof value.askBotUserId !== "string" || !SLACK_ID.test(value.askBotUserId))) ||
+    (value.confirmReaction !== undefined && (typeof value.confirmReaction !== "string" || !EMOJI_NAME.test(value.confirmReaction))) ||
+    (value.askMarker !== undefined && (typeof value.askMarker !== "string" || !value.askMarker.trim() || value.askMarker.trim() !== value.askMarker))
   )
     throw new Error("invalid_deploy_close_setup");
   return {
@@ -83,6 +90,9 @@ export function deployCloseSetup(raw: string | undefined): DeployCloseSetup | un
     projectId: value.projectId,
     assigneeType,
     assigneeId: value.assigneeId,
+    ...(value.askBotUserId !== undefined ? { askBotUserId: value.askBotUserId } : {}),
+    confirmReaction: value.confirmReaction ?? "white_check_mark",
+    askMarker: value.askMarker ?? "[deploy-close:v1]",
   };
 }
 function loadSetup(env: NodeJS.ProcessEnv): DeployCloseSetup | undefined {
@@ -128,6 +138,31 @@ export function matchDeploySignal(
   return undefined;
 }
 
+async function publishDeployClose(
+  relay: RelayConfig,
+  fetchImpl: typeof fetch,
+  body: unknown,
+  deduplicationId: string,
+  flowControlKey: string,
+): Promise<boolean> {
+  const consumer = new URL(CONSUME_PATH, relay.consumerUrl).href;
+  const response = await fetchImpl(relay.queueUrl + "/v2/publish/" + consumer, {
+    method: "POST",
+    headers: {
+      authorization: `Bearer ${relay.queueToken}`,
+      "content-type": "application/json",
+      "Upstash-Deduplication-Id": deduplicationId,
+      "Upstash-Retries": "3",
+      "Upstash-Timeout": "50s",
+      "Upstash-Flow-Control-Key": flowControlKey,
+      "Upstash-Flow-Control-Value": "parallelism=1",
+    },
+    body: JSON.stringify(body),
+    signal: AbortSignal.timeout(1800),
+  });
+  return response.ok;
+}
+
 /** 在原有 mention/bot 过滤之前调用；只对精确命中的信号生效。 */
 export async function admitDeployClose(
   body: Record<string, unknown>,
@@ -149,24 +184,76 @@ export async function admitDeployClose(
     botId: e.bot_id as string,
     text: (e.text as string).trim(),
   };
-  const consumer = new URL(CONSUME_PATH, relay.consumerUrl).href;
-  const response = await fetchImpl(relay.queueUrl + "/v2/publish/" + consumer, {
-    method: "POST",
-    headers: {
-      authorization: `Bearer ${relay.queueToken}`,
-      "content-type": "application/json",
-      "Upstash-Deduplication-Id": digest("deploy-close:" + event.channelId + ":" + event.messageTs),
-      "Upstash-Retries": "3",
-      "Upstash-Timeout": "50s",
-      "Upstash-Flow-Control-Key": digest("deploy-close:" + event.channelId + ":" + event.threadTs),
-      "Upstash-Flow-Control-Value": "parallelism=1",
-    },
-    body: JSON.stringify(event),
-    signal: AbortSignal.timeout(1800),
-  });
-  if (!response.ok) return Response.json({ error: "deploy_close_queue_unavailable", retryable: true }, { status: 503 });
+  const published = await publishDeployClose(
+    relay,
+    fetchImpl,
+    event,
+    digest("deploy-close:" + event.channelId + ":" + event.messageTs),
+    digest("deploy-close:" + event.channelId + ":" + event.threadTs),
+  );
+  if (!published) return Response.json({ error: "deploy_close_queue_unavailable", retryable: true }, { status: 503 });
   console.info("deploy_close_admission", { signal, channelId: event.channelId, messageTs: event.messageTs });
   return Response.json({ action: "deploy_close_accepted", signal });
+}
+
+export interface DeployConfirm {
+  channelId: string;
+  askTs: string;
+  user: string;
+  reaction: string;
+  eventTs: string;
+}
+
+/** 纯字段匹配：owner 在 bot 询问消息上点确认表情，全部满足才返回。 */
+export function matchDeployConfirm(
+  teamId: unknown,
+  event: Record<string, unknown>,
+  relay: Pick<RelayConfig, "teamId" | "blockedChannelIds" | "blockedSenderIds">,
+  setup: DeployCloseSetup,
+): DeployConfirm | undefined {
+  const item = event.item;
+  if (
+    teamId !== relay.teamId ||
+    event.type !== "reaction_added" ||
+    setup.askBotUserId === undefined ||
+    event.reaction !== setup.confirmReaction ||
+    event.user !== setup.ownerSlackUserId ||
+    relay.blockedSenderIds.has(event.user) ||
+    event.item_user !== setup.askBotUserId ||
+    !record(item) ||
+    item.type !== "message" ||
+    typeof item.channel !== "string" ||
+    !setup.channelIds.includes(item.channel) ||
+    relay.blockedChannelIds.has(item.channel) ||
+    typeof item.ts !== "string" ||
+    !TS.test(item.ts) ||
+    typeof event.event_ts !== "string" ||
+    !TS.test(event.event_ts)
+  )
+    return undefined;
+  return { channelId: item.channel, askTs: item.ts, user: event.user, reaction: event.reaction, eventTs: event.event_ts };
+}
+
+/** reaction_added 入口：不匹配一律 ignored，不产生任何外部调用。 */
+export async function admitDeployConfirm(
+  body: Record<string, unknown>,
+  relay: RelayConfig,
+  env: NodeJS.ProcessEnv,
+  fetchImpl: typeof fetch,
+): Promise<Response> {
+  const setup = loadSetup(env);
+  const confirm = setup && matchDeployConfirm(body.team_id, body.event as Record<string, unknown>, relay, setup);
+  if (!confirm) return Response.json({ action: "ignored" });
+  const published = await publishDeployClose(
+    relay,
+    fetchImpl,
+    { kind: "confirm", teamId: relay.teamId, event: body.event },
+    digest(`deploy-close:reaction:${confirm.channelId}:${confirm.askTs}:${confirm.user}:${confirm.reaction}`),
+    digest(`deploy-close:${confirm.channelId}:${confirm.askTs}`),
+  );
+  if (!published) return Response.json({ error: "deploy_close_queue_unavailable", retryable: true }, { status: 503 });
+  console.info("deploy_close_admission", { signal: "confirm", channelId: confirm.channelId, messageTs: confirm.askTs });
+  return Response.json({ action: "deploy_close_accepted", signal: "confirm" });
 }
 
 export interface DeployRoot {
@@ -197,16 +284,118 @@ export function deployCloseTitle(rootText: string, signal: DeploySignal, event: 
   return `Deploy close · ${Array.from(repo).slice(0, 60).join("")}${signal === "failed" ? " · failed" : ""} · [${identity}]`;
 }
 
-async function fetchRoot(event: DeployCloseEvent, relay: RelayConfig, fetchImpl: typeof fetch): Promise<unknown> {
-  const query = new URLSearchParams({ channel: event.channelId, ts: event.threadTs, limit: "1", inclusive: "true" });
-  const response = await fetchImpl("https://slack.com/api/conversations.replies?" + query, {
+async function fetchReplies(
+  query: Record<string, string>,
+  relay: RelayConfig,
+  fetchImpl: typeof fetch,
+): Promise<unknown[]> {
+  const response = await fetchImpl("https://slack.com/api/conversations.replies?" + new URLSearchParams(query), {
     headers: { authorization: `Bearer ${relay.slackReactionToken}` },
     signal: AbortSignal.timeout(8000),
   });
   const value: unknown = await response.json();
   if (!response.ok || !record(value) || value.ok !== true || !Array.isArray(value.messages))
-    throw new Error("deploy_close_root_unavailable");
-  return value.messages[0];
+    throw new Error("deploy_close_slack_unavailable");
+  return value.messages;
+}
+
+function reply(value: unknown, status = 200): Response {
+  return Response.json(value, { status });
+}
+
+/** 复用 thread→issue 路由，在专用 project 下写入 issue / 评论。 */
+async function dispatch(
+  threadEvent: SlackThreadEvent,
+  rootText: string,
+  signal: DeploySignal,
+  relay: RelayConfig,
+  setup: DeployCloseSetup,
+  fetchImpl: typeof fetch,
+  requireExistingIssue = false,
+) {
+  const deadline = AbortSignal.timeout(45000);
+  const boundedFetch: typeof fetch = (input, init = {}) =>
+    fetchImpl(input, { ...init, signal: init.signal ? AbortSignal.any([init.signal, deadline]) : deadline });
+  const { multicaThreadScopeId: _scope, multicaLegacyAgentId: _legacy, ...base } = relay;
+  return routeSlackThreadEvent(
+    threadEvent,
+    {
+      ...base,
+      multicaProjectId: setup.projectId,
+      multicaAssigneeType: setup.assigneeType,
+      multicaAssigneeId: setup.assigneeId,
+      store: new UpstashThreadStore(relay.kvRestApiUrl, relay.kvRestApiToken, boundedFetch),
+      formatTitle: (e, scope) => deployCloseTitle(rootText, signal, e, scope),
+      requireExistingIssue,
+    },
+    boundedFetch,
+  );
+}
+
+function failure(error: unknown, messageTs: string): Response {
+  const code = error instanceof Error && /^[a-z_]+$/u.test(error.message) ? error.message : "deploy_close_failed";
+  console.warn("deploy_close_dispatch", { reason: code, messageTs });
+  return reply({ error: code, retryable: true }, 503);
+}
+
+async function consumeConfirm(
+  payload: Record<string, unknown>,
+  relay: RelayConfig,
+  setup: DeployCloseSetup,
+  fetchImpl: typeof fetch,
+): Promise<Response> {
+  // 配置可能在排队期间变化：按当前配置重新做同一组精确匹配。
+  const confirm = record(payload.event) ? matchDeployConfirm(payload.teamId, payload.event, relay, setup) : undefined;
+  if (!confirm) return reply({ action: "ignored", reason: "policy_changed" });
+  try {
+    const messages = await fetchReplies(
+      { channel: confirm.channelId, ts: confirm.askTs, oldest: confirm.askTs, latest: confirm.askTs, inclusive: "true", limit: "10" },
+      relay,
+      fetchImpl,
+    );
+    const ask = messages.find((m) => record(m) && m.ts === confirm.askTs);
+    if (
+      !record(ask) ||
+      ask.user !== setup.askBotUserId ||
+      typeof ask.text !== "string" ||
+      !ask.text.includes(setup.askMarker) ||
+      typeof ask.thread_ts !== "string" ||
+      !TS.test(ask.thread_ts) ||
+      ask.thread_ts === confirm.askTs
+    )
+      return reply({ action: "ignored", reason: "not_ask_message" });
+    const [root] = await fetchReplies(
+      { channel: confirm.channelId, ts: ask.thread_ts, limit: "1", inclusive: "true" },
+      relay,
+      fetchImpl,
+    );
+    if (!validDeployRoot(root, ask.thread_ts, setup)) return reply({ action: "ignored", reason: "not_confirm_deploy_root" });
+    const result = await dispatch(
+      {
+        teamId: relay.teamId,
+        channelId: confirm.channelId,
+        messageTs: confirm.askTs,
+        threadTs: ask.thread_ts,
+        senderUserId: confirm.user,
+        text: "✅ confirmed deploy-close ask",
+        mention: { type: "user", id: setup.ownerSlackUserId },
+        dedupKey: `reaction:${confirm.askTs}:${confirm.user}:${confirm.reaction}`,
+        deployClose: { phase: "confirm", confirmedBy: confirm.user, askTs: confirm.askTs, reactionEventTs: confirm.eventTs },
+      },
+      root.text,
+      "success",
+      relay,
+      setup,
+      fetchImpl,
+      true,
+    );
+    console.info("deploy_close_dispatch", { ...result, phase: "confirm", messageTs: confirm.askTs });
+    return reply({ ...result, phase: "confirm" });
+  } catch (error) {
+    if (error instanceof Error && error.message === "no_thread_issue")
+      return reply({ action: "ignored", reason: "no_ask_issue" });
+    return failure(error, confirm.askTs);
+  }
 }
 
 export async function consumeDeployClose(
@@ -214,7 +403,6 @@ export async function consumeDeployClose(
   env: NodeJS.ProcessEnv = process.env,
   fetchImpl: typeof fetch = fetch,
 ): Promise<Response> {
-  const reply = (value: unknown, status = 200) => Response.json(value, { status });
   if (request.method !== "POST") return reply({ error: "method_not_allowed" }, 405);
   let relay: RelayConfig;
   try {
@@ -238,7 +426,10 @@ export async function consumeDeployClose(
   }
   let event: DeployCloseEvent;
   try {
-    event = JSON.parse(raw) as DeployCloseEvent;
+    const payload: unknown = JSON.parse(raw);
+    // 旧排队消息没有 kind，按 signal 处理。
+    if (record(payload) && payload.kind === "confirm") return consumeConfirm(payload, relay, setup, fetchImpl);
+    event = payload as DeployCloseEvent;
   } catch {
     return reply({ error: "invalid_event" }, 400);
   }
@@ -256,40 +447,34 @@ export async function consumeDeployClose(
     : undefined;
   if (!signal) return reply({ action: "ignored", reason: "policy_changed" });
   try {
-    const root = await fetchRoot(event, relay, fetchImpl);
+    const [root] = await fetchReplies(
+      { channel: event.channelId, ts: event.threadTs, limit: "1", inclusive: "true" },
+      relay,
+      fetchImpl,
+    );
     if (!validDeployRoot(root, event.threadTs, setup)) return reply({ action: "ignored", reason: "not_confirm_deploy_root" });
     if (setup.rootPrefilterMention && !rootMentionsOwner(root.text, setup.ownerSlackUserId))
       return reply({ action: "ignored", reason: "owner_not_mentioned" });
-    const threadEvent: SlackThreadEvent = {
-      teamId: event.teamId,
-      channelId: event.channelId,
-      messageTs: event.messageTs,
-      threadTs: event.threadTs,
-      senderUserId: event.senderUserId,
-      text: event.text,
-      mention: { type: "user", id: setup.ownerSlackUserId },
-    };
-    const deadline = AbortSignal.timeout(45000);
-    const boundedFetch: typeof fetch = (input, init = {}) =>
-      fetchImpl(input, { ...init, signal: init.signal ? AbortSignal.any([init.signal, deadline]) : deadline });
-    const { multicaThreadScopeId: _scope, multicaLegacyAgentId: _legacy, ...base } = relay;
-    const result = await routeSlackThreadEvent(
-      threadEvent,
+    const result = await dispatch(
       {
-        ...base,
-        multicaProjectId: setup.projectId,
-        multicaAssigneeType: setup.assigneeType,
-        multicaAssigneeId: setup.assigneeId,
-        store: new UpstashThreadStore(relay.kvRestApiUrl, relay.kvRestApiToken, boundedFetch),
-        formatTitle: (e, scope) => deployCloseTitle(root.text, signal, e, scope),
+        teamId: event.teamId,
+        channelId: event.channelId,
+        messageTs: event.messageTs,
+        threadTs: event.threadTs,
+        senderUserId: event.senderUserId,
+        text: event.text,
+        mention: { type: "user", id: setup.ownerSlackUserId },
+        deployClose: { phase: "ask" },
       },
-      boundedFetch,
+      root.text,
+      signal,
+      relay,
+      setup,
+      fetchImpl,
     );
     console.info("deploy_close_dispatch", { ...result, signal, messageTs: event.messageTs });
     return reply({ ...result, signal });
   } catch (error) {
-    const code = error instanceof Error && /^[a-z_]+$/u.test(error.message) ? error.message : "deploy_close_failed";
-    console.warn("deploy_close_dispatch", { reason: code, messageTs: event.messageTs });
-    return reply({ error: code, retryable: true }, 503);
+    return failure(error, event.messageTs);
   }
 }

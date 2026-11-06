@@ -256,6 +256,37 @@ describe("relay authorization policy", () => {
 });
 
 
+describe("deploy close transition authorization", () => {
+  const transitionPolicy = parseAuthorizationPolicy(JSON.stringify({
+    version: 1, policyId: "dc-test", profiles: [{
+      id: "deploy-close-luz", intents: ["deploy_close"],
+      actions: ["jira.read", "jira.transition"], senderIds: ["U1"],
+    }],
+  }));
+  const actions = (deployClose?: AuthorizationEvent["deployClose"]) =>
+    buildAuthorizationContext({ ...event, deployClose }, transitionPolicy).profiles[0]?.allowedActions;
+  it("keeps jira.transition only for the owner's own confirm", () => {
+    expect(actions({ phase: "confirm", confirmedBy: "U1", askTs: "99.000002", reactionEventTs: "100.000002" }))
+      .toEqual(["jira.read", "jira.transition"]);
+  });
+  it.each([
+    ["the ask phase", { phase: "ask" as const }],
+    ["a confirm by someone else", { phase: "confirm" as const, confirmedBy: "UOTHER" }],
+    ["a confirm without confirmedBy", { phase: "confirm" as const }],
+    ["no deployClose", undefined],
+  ])("drops jira.transition for %s", (_name, deployClose) => {
+    expect(actions(deployClose)).toEqual(["jira.read"]);
+  });
+  it("signs the deployClose phase into the context and omits it otherwise", () => {
+    const confirmed = buildAuthorizationContext({ ...event, deployClose: { phase: "confirm", confirmedBy: "U1" } }, transitionPolicy);
+    expect(confirmed.deployClose).toEqual({ phase: "confirm", confirmedBy: "U1" });
+    expect(Object.hasOwn(buildAuthorizationContext(event, transitionPolicy), "deployClose")).toBe(false);
+  });
+  it("accepts jira.transition in a policy", () => {
+    expect(transitionPolicy.profiles[0]?.actions).toContain("jira.transition");
+  });
+});
+
 describe("frontend release authorization", () => {
   const releasePolicy = parseAuthorizationPolicy(JSON.stringify({
     version: 1, policyId: "release-test", profiles: [{
