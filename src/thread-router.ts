@@ -35,6 +35,7 @@ export interface SlackThreadEvent {
 export interface ThreadRouterConfig extends ApiConfig {
   store: ThreadStore;
   authorizationSigningKey?: string;
+  formatTitle?: (event: SlackThreadEvent, scope: string) => string;
 }
 interface ThreadState {
   version: 2;
@@ -146,7 +147,7 @@ export async function routeSlackThreadEvent(
         try {
           const created = await createIssue(
             config,
-            formatTaskTitle(event, scope),
+            (config.formatTitle ?? formatTaskTitle)(event, scope),
             formatDescription(event, marker, false, replyContext),
             fetchImpl,
           );

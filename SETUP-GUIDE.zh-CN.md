@@ -104,3 +104,20 @@ EdgeOne Cloud Functions 会把 `Request.body` 暴露为解析值，入口通过 
 准入反映提报时的经办人，服务不再依赖 Jira 查询，也不修改 Jira 优先级。Agent 自主读取 Jira 和其他证据；转项目或 Jira 暂时不可用不自动撤销已接纳任务。`check` 仍验证凭证、值守会话与截止时间、绑定频道；关闭或重新开启后旧会话凭证不可继续发送。
 
 格式无法识别时不猜测归属，记录 `duty_intake_warning`，管理接口的 `intakeWarning` 可查看最近一次异常。异常消息不会阻断同页其他正常消息。原有 `qaAccountIds`、`priorityIds`、`DUTY_JIRA_*` 配置不再参与接单或写入，可以在后续凭据清理时移除。
+
+## 发布后关单（deploy-close，P1 只询问）
+
+`DEPLOY_CLOSE_SETUP`（JSON）未配置、为空或格式非法时整体关闭，入站行为与原链路完全一致；删除该变量即回滚。
+
+入站在 mention / bot 作者过滤**之前**做纯字段精确匹配，全部满足才放行，否则交回原流程：`type=message` 且无 subtype、频道在 `channelIds`、`bot_id ∈ signalBotIds` 且 `user ∈ signalUserIds`、是 thread 回复（`thread_ts≠ts`）、`text.trim()` 精确等于 `successTexts` 或 `failedTexts` 之一。命中后不查 users.info、不打 👀，直接投递到 `/api/deploy-close/consume`（QStash 按 `channel:ts` 去重、按 thread 串行）。
+
+消费端按当前配置重新匹配，用 `SLACK_REACTION_TOKEN` 调 `conversations.replies` 取根帖（需 `channels:history`），根帖必须是同一 bot、含 `Confirm Deploy` 与 `(production)`；`rootPrefilterMention=true`（默认）时根帖还须 @ 了 `ownerSlackUserId`，否则静默丢弃。通过后复用 thread→issue 路由，在 `projectId` 下建卡并指派 `assigneeId`；KV scope 与普通 @ 卡独立。成功/失败共用一张 thread 卡，由 Agent 按已签名的 `eventPayload.text` 区分 phase（成功=ask，失败=只记录）。
+
+授权策略需新增 profile（P1 不含 Jira 写动作）：
+
+```json
+{"id":"deploy-close-luz","intents":["deploy_close"],"actions":["slack.read","slack.reply","jira.read"],
+ "channelIds":["C01K60LEP7E"],"senderIds":["U081137G64T"],"mentionTargetIds":["U06RHAA209Y"]}
+```
+
+✅ 确认关单（`reaction_added` 入口、`jira.transition`）属于 P2，本入口不处理 reaction。EdgeOne 部署未暴露该消费函数。

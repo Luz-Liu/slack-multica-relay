@@ -7,6 +7,7 @@ export const RELAY_INTENTS = [
   "code_fix",
   "pr_review",
   "frontend_release",
+  "deploy_close",
   "direct_reply",
   "summarize",
   "general_task",
