@@ -15,6 +15,7 @@ import { type ThreadStore } from "./thread-store.js";
 import {
   buildAuthorizationContext,
   createAuthorizationProof,
+  type DeployCloseAuthorization,
 } from "./authorization-policy.js";
 import {
   formatTaskTitle,
@@ -31,11 +32,16 @@ export interface SlackThreadEvent {
   text: string;
   mention: MentionMatch;
   files?: unknown;
+  /** 非消息事件（如 reaction 确认）的去重键；缺省时按 messageTs。 */
+  dedupKey?: string;
+  deployClose?: DeployCloseAuthorization;
 }
 export interface ThreadRouterConfig extends ApiConfig {
   store: ThreadStore;
   authorizationSigningKey?: string;
   formatTitle?: (event: SlackThreadEvent, scope: string) => string;
+  /** 为 true 时 thread 尚无 issue 则抛 no_thread_issue，不建卡。 */
+  requireExistingIssue?: boolean;
 }
 interface ThreadState {
   version: 2;
@@ -55,7 +61,7 @@ export function threadKey(event: SlackThreadEvent): string {
   return `${event.teamId}:${event.channelId}:${event.threadTs}`;
 }
 export function messageKey(event: SlackThreadEvent): string {
-  return `${event.teamId}:${event.channelId}:${event.messageTs}`;
+  return `${event.teamId}:${event.channelId}:${event.dedupKey ?? event.messageTs}`;
 }
 export function digest(value: string): string {
   return createHash("sha256").update(value).digest("hex");
@@ -139,6 +145,7 @@ export async function routeSlackThreadEvent(
           state.rootMessageKey = `${original.teamId}:${original.channelId}:${original.messageTs}`;
         }
       } else {
+        if (config.requireExistingIssue) throw new Error("no_thread_issue");
         if (state.creating) throw new Error("ambiguous_issue_create");
         const replyContext = await getSlackReplyContext(config, fetchImpl);
         state.rootMessageKey = messageKey(event);

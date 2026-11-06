@@ -20,6 +20,7 @@ export const RELAY_ACTIONS = [
   "jira.read",
   "jira.transfer",
   "jira.assign",
+  "jira.transition",
   "telemetry.read",
   "code.read",
   "code.modify",
@@ -54,6 +55,13 @@ export interface AuthorizationPolicy {
   profiles: AuthorizationPolicyProfile[];
 }
 
+export interface DeployCloseAuthorization {
+  phase: "ask" | "confirm";
+  confirmedBy?: string;
+  askTs?: string;
+  reactionEventTs?: string;
+}
+
 export interface AuthorizationEvent {
   teamId: string;
   channelId: string;
@@ -62,6 +70,7 @@ export interface AuthorizationEvent {
   senderUserId: string;
   text: string;
   mention: { type: "user" | "subteam"; id: string };
+  deployClose?: DeployCloseAuthorization;
 }
 
 export interface AuthorizationContextProfile {
@@ -87,6 +96,7 @@ export interface AuthorizationContext {
     text: string;
     mention: { type: "user" | "subteam"; id: string };
   };
+  deployClose?: DeployCloseAuthorization;
   requester: { slackUserId: string; jiraAccountId?: string };
   profiles: AuthorizationContextProfile[];
 }
@@ -270,6 +280,10 @@ export function buildAuthorizationContext(
   };
   const jiraAccountId = activePolicy.requesterMappings[event.senderUserId];
   if (jiraAccountId) requester.jiraAccountId = jiraAccountId;
+  // jira.transition 只在 owner 本人确认的 confirm 阶段放行。
+  const confirmed =
+    event.deployClose?.phase === "confirm" &&
+    event.deployClose.confirmedBy === event.senderUserId;
   const profiles = activePolicy.profiles
     .filter(
       (profile) =>
@@ -281,7 +295,9 @@ export function buildAuthorizationContext(
       const projected: AuthorizationContextProfile = {
         id: profile.id,
         intents: [...profile.intents],
-        allowedActions: [...profile.actions],
+        allowedActions: profile.actions.filter(
+          (action) => action !== "jira.transition" || confirmed,
+        ),
         resumeEligible: profile.resumeSenderIds?.includes(event.senderUserId) ?? false,
       };
       if (profile.assigneeAccountId)
@@ -304,6 +320,7 @@ export function buildAuthorizationContext(
       text: event.text,
       mention: { type: event.mention.type, id: event.mention.id },
     },
+    ...(event.deployClose ? { deployClose: { ...event.deployClose } } : {}),
     requester,
     profiles,
   };

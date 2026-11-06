@@ -1,5 +1,5 @@
 import { admitDuty } from "./duty-http.js";
-import { admitDeployClose } from "./deploy-close.js";
+import { admitDeployClose, admitDeployConfirm } from "./deploy-close.js";
 import { Receiver } from "@upstash/qstash";
 import { loadRelayConfig, type RelayConfig } from "./config.js";
 import { verifySlackSignature } from "./signature.js";
@@ -215,6 +215,17 @@ export async function acceptSlack(
   if (!record(body)) return json({ error: "invalid_envelope" }, 400);
   if (body.type === "url_verification" && typeof body.challenge === "string")
     return json({ challenge: body.challenge });
+  if (
+    body.type === "event_callback" &&
+    record(body.event) &&
+    body.event.type === "reaction_added"
+  ) {
+    try {
+      return await admitDeployConfirm(body, config, env, fetchImpl);
+    } catch {
+      return json({ error: "deploy_close_admission_failed", retryable: true }, 503);
+    }
+  }
   if (
     body.type !== "event_callback" ||
     !record(body.event) ||
