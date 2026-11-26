@@ -31,6 +31,11 @@ export function findTargetMention(
   return undefined;
 }
 
+/** Slack 私聊（IM）频道 ID 以 D 开头；多人私聊与频道不在此列。 */
+export function isDirectMessageChannel(channelId: string): boolean {
+  return /^D[A-Z0-9]+$/u.test(channelId);
+}
+
 export function isSupportedMessage(event: SlackMessageEvent): boolean {
   const subtype = typeof event.subtype === 'string' ? event.subtype : undefined;
   return (event.type === 'message' || event.type === 'app_mention')
