@@ -8,6 +8,7 @@
 
 - 支持 Slack `message` 与 `app_mention` 事件，只处理当前消息明确 mention 目标用户、User Group 或配置的 Bot 的事件。Team 必填；频道和发送者支持白名单（可设为 `all`）及黑名单，黑名单优先。作者过滤通过 `users.info(event.user)` 查询，仅将 `user.is_bot=true` 判为 Bot 并忽略；真人作者即使带有 `bot_id`、`app_id` 或 `bot_message` 标记也继续处理。编辑/删除、普通讨论不触发。作者查询失败或响应无法确认身份时返回可重试 503，不添加 reaction、不入队。
 - Bot 目标单独由 `SLACK_BOT_USER_IDS` 配置；消息包含 Bot mention 时，发送者还必须命中 `SLACK_BOT_ALLOWED_SENDER_IDS`，未配置该白名单时默认拒绝所有 Bot mention。只 mention 真人目标的消息继续使用原有发送者策略；入站和消费都会按正文检查 Bot mention，因此不依赖事件类型或新增队列字段。
+- 私聊 Bot 无需 mention：`message.im` 事件（`channel_type=im`、频道 ID 以 `D` 开头）的事件授权方 `authorizations[].user_id` 命中 `SLACK_BOT_USER_IDS` 时视为指向该 Bot。私聊不受频道白名单限制，频道黑名单、发送者黑白名单与 `SLACK_BOT_ALLOWED_SENDER_IDS` 照常生效；消费端按 D 频道与 Bot mention 目标重新校验。
 - 同一条真人消息可能同时收到 `message` 和 `app_mention`；两种事件按 Team、频道和 Slack `ts` 归一化，使用同一个去重键，不会创建重复任务。
 - 通过准入校验的消息会在入队前尽力添加 `SLACK_REACTION_NAME`（默认 `eyes`）。reaction 先写入 90 天的 KV attempted 标记，再调用 Slack；并发重复 delivery 最多等待 750ms，完成、失败或结果不明后都不会再次尝试，失败可能因此没有 eyes，但不阻塞 QStash 派发。
 - 消费函数不再添加 reaction，避免任务执行较晚时把 `typingcat` 或 `done` 等后续状态覆盖为 `eyes`。

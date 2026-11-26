@@ -6,7 +6,9 @@ import { verifySlackSignature } from "./signature.js";
 import {
   findTargetMention,
   findUserMention,
+  isDirectMessageChannel,
   isSupportedMessage,
+  type MentionMatch,
   type SlackMessageEvent,
 } from "./mentions.js";
 import {
@@ -64,16 +66,54 @@ function configuredTargetMention(
     findUserMention(text, config.botUserIds)
   );
 }
+/** 私聊 Bot：事件授权方中的 Bot user ID 必须是已配置的 Bot 目标。 */
+function directBotMention(
+  body: Record<string, unknown>,
+  event: Record<string, unknown>,
+  config: RelayConfig,
+): MentionMatch | undefined {
+  if (
+    event.channel_type !== "im" ||
+    typeof event.channel !== "string" ||
+    !isDirectMessageChannel(event.channel) ||
+    !Array.isArray(body.authorizations)
+  )
+    return undefined;
+  for (const authorization of body.authorizations) {
+    if (
+      record(authorization) &&
+      typeof authorization.user_id === "string" &&
+      config.botUserIds.has(authorization.user_id)
+    )
+      return { type: "user", id: authorization.user_id };
+  }
+  return undefined;
+}
+function isDirectBotEvent(
+  event: SlackThreadEvent,
+  config: RelayConfig,
+): boolean {
+  return (
+    isDirectMessageChannel(event.channelId) &&
+    event.mention.type === "user" &&
+    config.botUserIds.has(event.mention.id)
+  );
+}
 function admitted(event: SlackThreadEvent, config: RelayConfig): boolean {
-  const botMention = findUserMention(event.text, config.botUserIds);
+  // 私聊频道是每个用户独立的 D 频道，不走频道白名单；发送者与 Bot 发送者白名单照常生效。
+  const direct = isDirectBotEvent(event, config);
+  const botAddressed =
+    direct || !!findUserMention(event.text, config.botUserIds);
   return (
     event.teamId === config.teamId &&
-    (config.allowAllChannels || config.allowedChannelIds.has(event.channelId)) &&
+    (direct ||
+      config.allowAllChannels ||
+      config.allowedChannelIds.has(event.channelId)) &&
     !config.blockedChannelIds.has(event.channelId) &&
     (config.allowAllSenders || config.allowedSenderIds.has(event.senderUserId)) &&
     !config.blockedSenderIds.has(event.senderUserId) &&
-    !!configuredTargetMention(event.text, config) &&
-    (!botMention ||
+    (direct || !!configuredTargetMention(event.text, config)) &&
+    (!botAddressed ||
       config.botAllowAllSenders ||
       config.botAllowedSenderIds.has(event.senderUserId))
   );
@@ -246,7 +286,9 @@ export async function acceptSlack(
     return json({ error: "duty_admission_failed", retryable: true }, 503);
   }
   const event = body.event;
-  const mention = configuredTargetMention(event.text as string, config);
+  const mention =
+    configuredTargetMention(event.text as string, config) ??
+    directBotMention(body, event, config);
   if (!mention) return json({ action: "ignored", reason: "not_addressed" });
   let payload: SlackThreadEvent;
   try {

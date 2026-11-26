@@ -266,6 +266,54 @@ describe("durable admission", () => {
     });
     expect(fetcher).not.toHaveBeenCalled();
   });
+  const directEvent = {
+    type: "message",
+    channel_type: "im",
+    channel: "D1",
+    user: "U2",
+    ts: "100.000001",
+    text: "帮我看看这个 CS 单",
+  };
+  function directRequest(
+    eventValue: unknown,
+    authorizations: unknown = [{ user_id: "UBOT", is_bot: true }],
+  ): Request {
+    return signedRequest({
+      type: "event_callback",
+      team_id: "T1",
+      authorizations,
+      event: eventValue,
+    });
+  }
+  it("accepts an allowed sender's direct message to a configured Bot without mention", async () => {
+    const { fetcher } = admissionFixture();
+    const response = await acceptSlack(
+      directRequest(directEvent),
+      botPolicyEnv,
+      fetcher,
+    );
+    expect(response.status).toBe(200);
+    const [call] = queueCalls(fetcher);
+    expect(JSON.parse(String(call![1]!.body))).toMatchObject({
+      channelId: "D1",
+      threadTs: "100.000001",
+      mention: { type: "user", id: "UBOT" },
+    });
+  });
+  it.each([
+    ["disallowed sender", { user: "U3" }, undefined],
+    ["unconfigured Bot authorization", {}, [{ user_id: "UOTHER", is_bot: true }]],
+    ["non-IM channel type", { channel_type: "mpim" }, undefined],
+  ])("ignores a direct message from %s", async (_name, change, authorizations) => {
+    const fetcher = vi.fn<typeof fetch>();
+    const response = await acceptSlack(
+      directRequest({ ...directEvent, ...change }, authorizations),
+      botPolicyEnv,
+      fetcher,
+    );
+    expect((await response.json()).action).toBe("ignored");
+    expect(fetcher).not.toHaveBeenCalled();
+  });
   it("adds eyes during admission and skips message/app_mention replays", async () => {
     const fixture = admissionFixture();
     const first = await acceptSlack(request(event), env, fixture.fetcher);
@@ -590,6 +638,32 @@ describe("durable admission", () => {
       messageTs: "1.000001",
       threadTs: "1.000001",
       text: "<@UBOT> test",
+      mention: { type: "user", id: "UBOT" },
+    };
+    const response = await consumeQueue(
+      new Request(botPolicyEnv.RELAY_CONSUMER_URL, {
+        method: "POST",
+        body: JSON.stringify(queued),
+      }),
+      botPolicyEnv,
+      f,
+    );
+    expect(await response.json()).toEqual({
+      action: "ignored",
+      reason: "policy_changed",
+    });
+    expect(f).not.toHaveBeenCalled();
+  });
+
+  it("rechecks Bot sender policy for queued direct messages", async () => {
+    const f = vi.fn<typeof fetch>();
+    const queued = {
+      teamId: "T1",
+      channelId: "D1",
+      senderUserId: "U3",
+      messageTs: "1.000001",
+      threadTs: "1.000001",
+      text: "hello",
       mention: { type: "user", id: "UBOT" },
     };
     const response = await consumeQueue(
