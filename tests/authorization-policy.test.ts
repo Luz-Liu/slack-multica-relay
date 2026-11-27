@@ -62,6 +62,8 @@ describe("relay authorization policy", () => {
         mention: { type: "subteam", id: "S1" },
       },
       requester: { slackUserId: "U1" },
+      allowedActions: [],
+      workflows: [],
       profiles: [],
     });
   });
@@ -308,5 +310,74 @@ describe("frontend release authorization", () => {
     { mention: { type: "user" as const, id: "UOTHER" } },
   ])("does not grant release to unmatched event %j", (overrides) => {
     expect(buildAuthorizationContext({ ...releaseEvent, ...overrides }, releasePolicy).profiles).toEqual([]);
+  });
+});
+
+describe("flattened allowedActions and workflows projection", () => {
+  it("allows omitting intents and aggregates allowedActions, workflows, and defaults", () => {
+    const parsed = parseAuthorizationPolicy(
+      policy({
+        version: 1,
+        policyId: "simplified",
+        profiles: [
+          {
+            id: "base-actions",
+            actions: ["slack.read", "slack.reply", "jira.read", "jira.transfer"],
+            handoffSlackUserId: "U9",
+          },
+          {
+            id: "legacy-cs",
+            intents: ["cs_investigation", "direct_reply", "summarize", "jira_transfer"],
+            actions: ["jira.read", "telemetry.read"],
+            resumeSenderIds: ["U1"],
+          },
+          {
+            id: "pr",
+            workflows: ["pr_review"],
+            actions: ["code.read", "github.review.comment"],
+          },
+          {
+            id: "deploy-close",
+            workflows: ["deploy_close"],
+            actions: ["jira.transition"],
+          },
+        ],
+      }),
+    );
+
+    const context = buildAuthorizationContext(event, parsed);
+    expect(context.allowedActions).toEqual([
+      "slack.read",
+      "slack.reply",
+      "jira.read",
+      "jira.transfer",
+      "telemetry.read",
+      "code.read",
+      "github.review.comment",
+    ]);
+    expect(context.allowedActions).not.toContain("jira.transition");
+    expect(context.workflows).toEqual(["cs", "pr_review", "deploy_close"]);
+    expect(context.defaults).toEqual({
+      handoffTarget: { slackUserId: "U9" },
+      resumeEligible: true,
+    });
+
+    const confirmed = buildAuthorizationContext(
+      { ...event, deployClose: { phase: "confirm", confirmedBy: "U1" } },
+      parsed,
+    );
+    expect(confirmed.allowedActions).toContain("jira.transition");
+  });
+
+  it("rejects unknown workflow names", () => {
+    expect(() =>
+      parseAuthorizationPolicy(
+        policy({
+          version: 1,
+          policyId: "bad-wf",
+          profiles: [{ id: "x", workflows: ["direct_reply"], actions: ["slack.read"] }],
+        }),
+      ),
+    ).toThrow("invalid_authorization_policy");
   });
 });

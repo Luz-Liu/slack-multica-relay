@@ -1,16 +1,27 @@
 import { createHmac } from "node:crypto";
 
-export const RELAY_INTENTS = [
+export const RELAY_WORKFLOWS = [
+  "pr_review",
+  "frontend_release",
+  "deploy_close",
+  "cs",
+] as const;
+
+// Legacy intent names accepted in existing RELAY_AUTHORIZATION_POLICY configs
+// so policy env vars can be simplified incrementally without breaking startup.
+const LEGACY_INTENTS = [
   "cs_investigation",
   "jira_transfer",
   "jira_assign",
   "code_fix",
-  "pr_review",
-  "frontend_release",
-  "deploy_close",
   "direct_reply",
   "summarize",
   "general_task",
+] as const;
+
+export const RELAY_INTENTS = [
+  ...RELAY_WORKFLOWS,
+  ...LEGACY_INTENTS,
 ] as const;
 
 export const RELAY_ACTIONS = [
@@ -33,12 +44,14 @@ export const RELAY_ACTIONS = [
   "github.review.approve",
 ] as const;
 
+export type RelayWorkflow = (typeof RELAY_WORKFLOWS)[number];
 export type RelayIntent = (typeof RELAY_INTENTS)[number];
 export type RelayAction = (typeof RELAY_ACTIONS)[number];
 
 export interface AuthorizationPolicyProfile {
   id: string;
   intents: RelayIntent[];
+  workflows: RelayWorkflow[];
   actions: RelayAction[];
   channelIds?: string[];
   senderIds?: string[];
@@ -82,6 +95,12 @@ export interface AuthorizationContextProfile {
   resumeEligible: boolean;
 }
 
+export interface AuthorizationContextDefaults {
+  assigneeAccountId?: string;
+  handoffTarget?: { slackUserId: string };
+  resumeEligible: boolean;
+}
+
 export interface AuthorizationContext {
   version: 1;
   source: "relay_policy";
@@ -98,6 +117,9 @@ export interface AuthorizationContext {
   };
   deployClose?: DeployCloseAuthorization;
   requester: { slackUserId: string; jiraAccountId?: string };
+  allowedActions: RelayAction[];
+  workflows: RelayWorkflow[];
+  defaults?: AuthorizationContextDefaults;
   profiles: AuthorizationContextProfile[];
 }
 
@@ -187,12 +209,31 @@ function optionalSlackIdArray(
   return Object.hasOwn(value, key) ? slackIdArray(value[key]) : undefined;
 }
 
+function deriveWorkflows(
+  explicitWorkflows: readonly RelayWorkflow[],
+  intents: readonly RelayIntent[],
+): RelayWorkflow[] {
+  const result: RelayWorkflow[] = [];
+  const add = (workflow: RelayWorkflow) => {
+    if (!result.includes(workflow)) result.push(workflow);
+  };
+  for (const workflow of explicitWorkflows) add(workflow);
+  for (const intent of intents) {
+    if (intent === "cs_investigation") add("cs");
+    else if ((RELAY_WORKFLOWS as readonly string[]).includes(intent))
+      add(intent as RelayWorkflow);
+  }
+  return result;
+}
+
 function parseProfile(value: unknown): AuthorizationPolicyProfile {
   if (!record(value)) return failPolicy();
   exactKeys(
     value,
-    ["id", "intents", "actions"],
+    ["id", "actions"],
     [
+      "intents",
+      "workflows",
       "channelIds",
       "senderIds",
       "mentionTargetIds",
@@ -202,9 +243,16 @@ function parseProfile(value: unknown): AuthorizationPolicyProfile {
     ],
   );
   if (!text(value.id)) return failPolicy();
+  const intents = Object.hasOwn(value, "intents")
+    ? uniqueStringArray(value.intents, RELAY_INTENTS)
+    : [];
+  const explicitWorkflows = Object.hasOwn(value, "workflows")
+    ? uniqueStringArray(value.workflows, RELAY_WORKFLOWS)
+    : [];
   const result: AuthorizationPolicyProfile = {
     id: value.id,
-    intents: uniqueStringArray(value.intents, RELAY_INTENTS),
+    intents,
+    workflows: deriveWorkflows(explicitWorkflows, intents),
     actions: uniqueStringArray(value.actions, RELAY_ACTIONS),
   };
   const channelIds = optionalSlackIdArray(value, "channelIds");
@@ -284,28 +332,63 @@ export function buildAuthorizationContext(
   const confirmed =
     event.deployClose?.phase === "confirm" &&
     event.deployClose.confirmedBy === event.senderUserId;
-  const profiles = activePolicy.profiles
-    .filter(
-      (profile) =>
-        filterMatches(profile.channelIds, event.channelId) &&
-        filterMatches(profile.senderIds, event.senderUserId) &&
-        filterMatches(profile.mentionTargetIds, event.mention.id),
-    )
-    .map((profile): AuthorizationContextProfile => {
-      const projected: AuthorizationContextProfile = {
-        id: profile.id,
-        intents: [...profile.intents],
-        allowedActions: profile.actions.filter(
-          (action) => action !== "jira.transition" || confirmed,
-        ),
-        resumeEligible: profile.resumeSenderIds?.includes(event.senderUserId) ?? false,
-      };
-      if (profile.assigneeAccountId)
-        projected.assigneeAccountId = profile.assigneeAccountId;
-      if (profile.handoffSlackUserId)
-        projected.handoffTarget = { slackUserId: profile.handoffSlackUserId };
-      return projected;
-    });
+  const matched = activePolicy.profiles.filter(
+    (profile) =>
+      filterMatches(profile.channelIds, event.channelId) &&
+      filterMatches(profile.senderIds, event.senderUserId) &&
+      filterMatches(profile.mentionTargetIds, event.mention.id),
+  );
+  const allowedActions: RelayAction[] = [];
+  const workflows: RelayWorkflow[] = [];
+  let defaultAssignee: string | undefined;
+  let defaultHandoff: { slackUserId: string } | undefined;
+  let resumeEligible = false;
+
+  const profiles = matched.map((profile): AuthorizationContextProfile => {
+    const profileActions = profile.actions.filter(
+      (action) => action !== "jira.transition" || confirmed,
+    );
+    for (const action of profileActions) {
+      if (!allowedActions.includes(action)) allowedActions.push(action);
+    }
+    for (const workflow of profile.workflows) {
+      if (!workflows.includes(workflow)) workflows.push(workflow);
+    }
+    const profileResume =
+      profile.resumeSenderIds?.includes(event.senderUserId) ?? false;
+    if (profileResume) resumeEligible = true;
+    const projected: AuthorizationContextProfile = {
+      id: profile.id,
+      intents: [...profile.intents],
+      allowedActions: profileActions,
+      resumeEligible: profileResume,
+    };
+    if (profile.assigneeAccountId) {
+      projected.assigneeAccountId = profile.assigneeAccountId;
+      if (defaultAssignee === undefined)
+        defaultAssignee = profile.assigneeAccountId;
+    }
+    if (profile.handoffSlackUserId) {
+      projected.handoffTarget = { slackUserId: profile.handoffSlackUserId };
+      if (defaultHandoff === undefined)
+        defaultHandoff = { slackUserId: profile.handoffSlackUserId };
+    }
+    return projected;
+  });
+
+  const defaults: AuthorizationContextDefaults | undefined =
+    defaultAssignee !== undefined || defaultHandoff !== undefined || resumeEligible
+      ? {
+          ...(defaultAssignee !== undefined
+            ? { assigneeAccountId: defaultAssignee }
+            : {}),
+          ...(defaultHandoff !== undefined
+            ? { handoffTarget: defaultHandoff }
+            : {}),
+          resumeEligible,
+        }
+      : undefined;
+
   return {
     version: 1,
     source: "relay_policy",
@@ -322,6 +405,9 @@ export function buildAuthorizationContext(
     },
     ...(event.deployClose ? { deployClose: { ...event.deployClose } } : {}),
     requester,
+    allowedActions,
+    workflows,
+    ...(defaults ? { defaults } : {}),
     profiles,
   };
 }
